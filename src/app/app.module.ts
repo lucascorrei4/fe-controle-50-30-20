@@ -9,6 +9,7 @@ import { NgxChartsModule, PieChartModule } from '@swimlane/ngx-charts';
 import { CalculeAgoraComponent } from './calcule-agora/calcule-agora.component';
 import { MenuComponent } from './menu/menu.component';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -21,13 +22,15 @@ import { BottomSheetDespesasComponent } from './calcule-agora/bottom-sheet-despe
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { BottomSheetCodigoSecretoComponent } from './calcule-agora/bottom-sheet-codigo-secreto/bottom-sheet-codigo-secreto.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     CalculeAgoraComponent,
-    BottomSheetDespesasComponent
+    BottomSheetDespesasComponent,
+    BottomSheetCodigoSecretoComponent
   ],
   imports: [
     CommonModule,
@@ -38,6 +41,7 @@ import { HttpClientModule } from '@angular/common/http';
     NgxChartsModule,
     MatTooltipModule,
     MatButtonModule,
+    MatIconModule,
     MatButtonToggleModule,
     MatProgressBarModule,
     MatBottomSheetModule,
@@ -53,12 +57,14 @@ import { HttpClientModule } from '@angular/common/http';
     MatProgressBarModule,
     MatBottomSheetModule,
     MatListModule,
+    MatIconModule,
     MatSnackBarModule
   ],
   providers: [CalculeAgoraService],
   bootstrap: [AppComponent],
   entryComponents: [
-    BottomSheetDespesasComponent
+    BottomSheetDespesasComponent,
+    BottomSheetCodigoSecretoComponent
   ], schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]

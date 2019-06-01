@@ -37,24 +37,30 @@
             </div>
           </div>
           <h2 class="title" style="margin: 0px;">Comece agora!</h2>
-          <h5 class="description">É gratuito e não precisa de cadastro.</h5>
+          <p>Adicione abaixo as receitas e despesas, veja como ficou o seu gráfico e envie o controle para o seu e-mail.
+            <button class="p-1 btn-tooltip m-0" mat-button #matTooltipSaibaMais="matTooltip"
+              matTooltip="Toda vez que você enviar as suas despesas do mês para o seu e-mail, iremos informar o seu código secreto. Este código é unicamente seu e será usado aqui para que você revise o seu histórico de gastos."
+              (click)="matTooltipSaibaMais.toggle()">
+              Saiba mais.
+            </button></p>
         </div>
       </div>
       <div class="description text-center">
-        <p>Adicione abaixo as receitas e despesas, veja como ficou o seu gráfico e envie o controle para o seu e-mail.
-        </p>
+
       </div>
       <div class="row">
         <div class="col-md-4 ml-auto mr-auto text-center">
           <div class="form-group bmd-form-group">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="material-icons">date_range</i>
-                </span>
-              </div>
-              <input type="text" class="form-control" placeholder="Mês/Ano">
-            </div>
+            <mat-button-toggle-group #group="matButtonToggleGroup" aria-label="Selecione o mês" [value]="selectedMonth"
+              (change)="onMonthChange(group)">
+              <mat-button-toggle buttonId="{{lastMonth}}" value="lastMonth">{{lastMonth}}</mat-button-toggle>
+              <mat-button-toggle buttonId="{{currentMonth}}" value="currentMonth">{{currentMonth}}</mat-button-toggle>
+              <mat-button-toggle buttonId="{{nextMonth}}" value="nextMonth" [disabled]="true">{{nextMonth}}
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+            <p>
+              <small>Mês selecionado: <span style="font-weight: bold;">{{selectedMonthDesc}}</span></small>
+            </p>
           </div>
         </div>
       </div>
@@ -176,4 +182,8 @@
     </div>
     <app-pie></app-pie>
   </div>
+  <button mat-fab #matTooltipCodigoSecreto="matTooltip" class="floating-button" matTooltip="Informar código secreto."
+    (click)="abrirCodigoSecretoBottomSheet()">
+    <mat-icon>vpn_key</mat-icon>
+  </button>
 </div>

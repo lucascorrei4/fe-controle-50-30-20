@@ -4,4 +4,11 @@
 
 .btn-tooltip {
     line-height: 15px;
+    text-transform: none;
+}
+
+.floating-button {
+    bottom: 15px;
+    right: 20px;
+    position: fixed;
 }
