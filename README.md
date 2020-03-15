@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+# controle-50-30-20
+Controle 50-30-20
+=======
+>>>>>>> 78c1f2eda8f0c57c41e9bd5c68599a9a55329730
 # Desorganizados
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.1.
@@ -25,3 +32,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+<<<<<<< HEAD
+=======
+>>>>>>> initial commit
+>>>>>>> 78c1f2eda8f0c57c41e9bd5c68599a9a55329730
