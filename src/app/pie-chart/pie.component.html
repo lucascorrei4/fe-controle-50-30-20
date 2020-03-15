@@ -1,0 +1,5 @@
+<div id="pie-chart-parent" style="display: flex; overflow: hidden;">
+    <ngx-charts-pie-grid [scheme]="colorScheme" [results]="single" (select)="onSelect($event)"
+        (window:resize)="onResize($event)" [view]="view" style="margin: 0 auto !important;">
+    </ngx-charts-pie-grid>
+</div>

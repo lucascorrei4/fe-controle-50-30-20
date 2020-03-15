@@ -1,0 +1,166 @@
+<div class="page-header header-filter" data-parallax="true"
+  style="background-image: url('../assets/img/profile_city.jpg')">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1 style="font-size: 3rem;" class="title">Regra 50-30-20. Calcule aqui.</h1>
+        <h4 style="font-weight: 400">Neste controle financeiro, você deve separar 50% para seus gastos fixos, 30% para
+          <i>lifestyle</i> (sua diversão) e
+          20% para investimentos (poupança/dívidas).</h4>
+        <h4 style="font-weight: 400">"Não se controla o que não se mede..."</h4>
+        <br>
+        <a (click)="scroll()" class="btn btn-info btn-raised btn-lg">
+          <i class="fa fa-calculator"></i>&nbsp;&nbsp;CALCULE AGORA
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div #calculeAgora class="main main-raised">
+  <div class="profile-content">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-8 ml-auto mr-auto">
+          <div class="info text-center" style="padding: 30px 0px 0px 0px;">
+            <div class="icon icon-info">
+              <i class="material-icons">sentiment_satisfied_alt</i>
+            </div>
+          </div>
+          <h2 class="title" style="margin: 0px;">Comece agora!</h2>
+          <h5 class="description">É gratuito e não precisa de cadastro.</h5>
+        </div>
+      </div>
+      <div class="description text-center">
+        <p>Adicione abaixo as receitas e despesas, veja como ficou o seu gráfico e envie o controle para o seu e-mail.
+        </p>
+      </div>
+      <div class="row">
+        <div class="col-md-6 ml-auto mr-auto">
+          <div class="profile-tabs">
+            <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" href="#studio" role="tab" data-toggle="tab">
+                  <i class="material-icons">money</i> Ganhos
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#works" role="tab" data-toggle="tab">
+                  <i class="material-icons">fastfood</i> Despesas
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
+                  <i class="material-icons">mail</i> Enviar
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content tab-space">
+        <div class="tab-pane active text-center gallery" id="studio">
+          <div class="row">
+            <div class="col-md-4 ml-auto mr-auto">
+              <div class="form-group bmd-form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="material-icons">date_range</i>
+                    </span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Mês/Ano">
+                </div>
+              </div>
+              <div class="form-group bmd-form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="material-icons">monetization_on</i>
+                    </span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Quanto você recebeu neste mês?">
+                </div>
+              </div>
+              <div class="form-group bmd-form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="material-icons">monetization_on</i>
+                    </span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Renda do(a) parceiro(a)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 ml-auto mr-auto text-center">
+              <a href="#" class="btn btn-primary btn-link btn-wd btn-lg">Ir Para Despesas<div class="ripple-container">
+                </div></a>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane text-center gallery" id="works">
+          <div class="row">
+            <div class="col-md-4 ml-auto mr-auto">
+              <div class="form-group bmd-form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="material-icons">sentiment_dissatisfied</i>
+                    </span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Despesa">
+                </div>
+              </div>
+              <div class="form-group bmd-form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="material-icons">monetization_on</i>
+                    </span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Valor">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 ml-auto mr-auto text-center">
+              <a href="#" class="btn btn-primary btn-link btn-wd btn-lg">Adicionar Despesa<div class="ripple-container">
+                </div></a>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane text-center gallery" id="favorite">
+          <div class="row">
+            <div class="col-md-3 ml-auto">
+              <div class="form-group bmd-form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="material-icons">mail</i>
+                    </span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="E-mail">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 ml-auto mr-auto text-center">
+              <a href="#" class="btn btn-primary btn-link btn-wd btn-lg">Enviar<div class="ripple-container"></div></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-8 ml-auto mr-auto">
+          <h2 class="title" style="margin: 0px;">Gráfico 50-30-20</h2>
+          <h5 class="description">Será que esse mês fecha no azul?</h5>
+        </div>
+      </div>
+    </div>
+    <app-pie></app-pie>
+  </div>
+</div>
