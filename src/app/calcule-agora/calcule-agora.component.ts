@@ -1,6 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, LOCALE_ID, Inject } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
-import { CalculeAgoraService } from './calcule-agora.service';
 import { BottomSheetDespesasComponent } from './bottom-sheet-despesas/bottom-sheet-despesas.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { formatDate } from '@angular/common';
