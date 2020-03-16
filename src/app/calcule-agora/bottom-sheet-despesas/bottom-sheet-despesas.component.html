@@ -2,7 +2,8 @@
     <ng-container *ngFor="let item of despesas">
         <mat-list-item>{{item.name}}</mat-list-item>
         <mat-selection-list>
-            <mat-list-option style="margin-left: 15px;" *ngFor="let subItem of item.subItems">
+            <mat-list-option style="margin-left: 15px;" *ngFor="let subItem of item.subItems"
+                (click)="select($event, item.name, subItem.title)">
                 {{ subItem.title }}
             </mat-list-option>
         </mat-selection-list>

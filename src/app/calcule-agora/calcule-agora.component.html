@@ -45,6 +45,20 @@
         </p>
       </div>
       <div class="row">
+        <div class="col-md-4 ml-auto mr-auto text-center">
+          <div class="form-group bmd-form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="material-icons">date_range</i>
+                </span>
+              </div>
+              <input type="text" class="form-control" placeholder="Mês/Ano">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-md-6 ml-auto mr-auto">
           <div class="profile-tabs">
             <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
@@ -75,16 +89,6 @@
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
-                      <i class="material-icons">date_range</i>
-                    </span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="Mês/Ano">
-                </div>
-              </div>
-              <div class="form-group bmd-form-group">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
                       <i class="material-icons">monetization_on</i>
                     </span>
                   </div>
@@ -105,8 +109,7 @@
           </div>
           <div class="row">
             <div class="col-md-4 ml-auto mr-auto text-center">
-              <a href="#" class="btn btn-primary btn-link btn-wd btn-lg">Ir Para Despesas<div class="ripple-container">
-                </div></a>
+              <a mat-stroked-button href="#works">Ir Para Despesas</a>
             </div>
           </div>
         </div>
@@ -114,13 +117,14 @@
           <div class="row">
             <div class="col-md-4 ml-auto mr-auto">
               <div class="form-group bmd-form-group">
+                <button mat-button (click)="openBottomSheet()">Selecionar Despesa</button>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
-                      <i class="material-icons">sentiment_dissatisfied</i>
+                      <i class="material-icons">list</i>
                     </span>
                   </div>
-                  <button mat-raised-button (click)="openBottomSheet()">Selecionar</button>
+                  <input type="text" class="form-control" placeholder="Descrição da Despesa">
                 </div>
               </div>
               <div class="form-group bmd-form-group">
@@ -137,14 +141,13 @@
           </div>
           <div class="row">
             <div class="col-md-4 ml-auto mr-auto text-center">
-              <a href="#" class="btn btn-primary btn-link btn-wd btn-lg">Adicionar Despesa<div class="ripple-container">
-                </div></a>
+              <button mat-stroked-button (click)="openBottomSheet()">Adicionar na Lista</button>
             </div>
           </div>
         </div>
         <div class="tab-pane text-center gallery" id="favorite">
           <div class="row">
-            <div class="col-md-3 ml-auto">
+            <div class="col-md-4 ml-auto mr-auto text-center">
               <div class="form-group bmd-form-group">
                 <div class="input-group">
                   <div class="input-group-prepend">
@@ -152,14 +155,14 @@
                       <i class="material-icons">mail</i>
                     </span>
                   </div>
-                  <input type="text" class="form-control" placeholder="E-mail">
+                  <input type="text" class="form-control" placeholder="Digite seu e-mail">
                 </div>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-4 ml-auto mr-auto text-center">
-              <a href="#" class="btn btn-primary btn-link btn-wd btn-lg">Enviar<div class="ripple-container"></div></a>
+              <button mat-stroked-button (click)="openBottomSheet()">Salvar e Enviar</button>
             </div>
           </div>
         </div>

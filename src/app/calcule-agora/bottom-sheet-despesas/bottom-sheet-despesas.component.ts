@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { CalculeAgoraService } from '../calcule-agora.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'bottom-sheet-despesas',
@@ -8,12 +9,22 @@ import { CalculeAgoraService } from '../calcule-agora.service';
 })
 export class BottomSheetDespesasComponent {
     public despesas: any;
-    constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetDespesasComponent>, private calculeAgoraService: CalculeAgoraService) {
+    constructor(
+        private bottomSheetRef: MatBottomSheetRef<BottomSheetDespesasComponent>,
+        private calculeAgoraService: CalculeAgoraService,
+        private snackBar: MatSnackBar) {
         this.despesas = this.calculeAgoraService.gastos();
     }
 
-    openLink(event: MouseEvent): void {
-        this._bottomSheetRef.dismiss();
+    select(event: MouseEvent, item: string, subItem: string): void {
+        this.openSnackBar('Você selecionou:', subItem);
+        this.bottomSheetRef.dismiss();
         event.preventDefault();
+    }
+
+    openSnackBar(message: string, action: string) {
+        this.snackBar.open(message, action, {
+            duration: 2000,
+        });
     }
 }
