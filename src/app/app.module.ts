@@ -1,39 +1,57 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-<<<<<<< HEAD
 import { PieComponent } from './pie-chart/pie.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalculeAgoraComponent } from './calcule-agora/calcule-agora.component';
 import { MenuComponent } from './menu/menu.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import 'hammerjs'; 
+import { CalculeAgoraService } from './calcule-agora/calcule-agora.service';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatListModule } from '@angular/material/list';
+import { BottomSheetDespesasComponent } from './calcule-agora/bottom-sheet-despesas/bottom-sheet-despesas.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PieComponent,
     MenuComponent,
-    CalculeAgoraComponent
+    CalculeAgoraComponent,
+    BottomSheetDespesasComponent 
   ],
   imports: [
+    CommonModule,
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     NgxChartsModule,
-    BrowserAnimationsModule
-=======
-
-@NgModule({
-  declarations: [
-    AppComponent
+    MatTooltipModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatProgressBarModule,
+    MatBottomSheetModule,
+    MatListModule
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
->>>>>>> 78c1f2eda8f0c57c41e9bd5c68599a9a55329730
+  exports:   [
+    MatTooltipModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatProgressBarModule,
+    MatBottomSheetModule,
+    MatListModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [CalculeAgoraService],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    BottomSheetDespesasComponent
+  ],
 })
 export class AppModule { }
