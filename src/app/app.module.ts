@@ -30,6 +30,9 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxCurrencyModule } from "ngx-currency";
 import { UtilService } from './services/util.service';
 import { MatBadgeModule } from '@angular/material/badge';
+import { BottomSheetGraficoDespesasComponent } from './calcule-agora/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component';
+import { BottomSheetLancamentosDespesasComponent } from './calcule-agora/bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component';
+import { BottomSheetComoFuncionaComponent } from './calcule-agora/bottom-sheet-como-funciona/bottom-sheet-como-funciona.component';
 
 registerLocaleData(localePtBr);
 
@@ -39,7 +42,10 @@ registerLocaleData(localePtBr);
     MenuComponent,
     CalculeAgoraComponent,
     BottomSheetDespesasComponent,
-    BottomSheetCodigoSecretoComponent
+    BottomSheetCodigoSecretoComponent,
+    BottomSheetGraficoDespesasComponent,
+    BottomSheetLancamentosDespesasComponent,
+    BottomSheetComoFuncionaComponent
   ],
   imports: [
     CommonModule,
@@ -82,7 +88,10 @@ registerLocaleData(localePtBr);
   bootstrap: [AppComponent],
   entryComponents: [
     BottomSheetDespesasComponent,
-    BottomSheetCodigoSecretoComponent
+    BottomSheetCodigoSecretoComponent,
+    BottomSheetGraficoDespesasComponent,
+    BottomSheetLancamentosDespesasComponent,
+    BottomSheetComoFuncionaComponent
   ], schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]

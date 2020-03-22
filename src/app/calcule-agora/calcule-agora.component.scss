@@ -41,3 +41,15 @@
     background-color: #00bcd4;
     color: #fff;
 }
+
+#pie-chart-parent { 
+    display: grid; 
+}
+
+ngx-charts-pie-chart { 
+    position:absolute; 
+    top:0; 
+    bottom:0; 
+    left:0; 
+    right:0; 
+}

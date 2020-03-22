@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, LOCALE_ID, Inject, NgZone } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, LOCALE_ID, Inject, NgZone, ViewEncapsulation, HostListener } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
 import { BottomSheetDespesasComponent } from './bottom-sheet-despesas/bottom-sheet-despesas.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -9,6 +9,10 @@ import { ApiService } from '../services/api.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UtilService } from '../services/util.service';
+import { BottomSheetGraficoDespesasComponent } from './bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component';
+import { BottomSheetLancamentosDespesasComponent } from './bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component';
+import { BottomSheetComoFuncionaComponent } from './bottom-sheet-como-funciona/bottom-sheet-como-funciona.component';
+import { single } from './../charts.data';
 
 @Component({
   selector: 'app-calcule-agora',
@@ -39,6 +43,16 @@ export class CalculeAgoraComponent implements OnInit {
 
   submitted = false;
 
+  single: any[];
+  view: any[] = [500, 400];
+
+  showLegend: boolean = true;
+  showLabels: boolean = true;
+
+  colorScheme = {
+    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+  };
+
   constructor(
     public fb: FormBuilder,
     private ngZone: NgZone,
@@ -52,6 +66,7 @@ export class CalculeAgoraComponent implements OnInit {
     this.currentMonth = formatDate(new Date(), 'MM/yyyy', this.locale);
     this.nextMonth = formatDate(new Date().setMonth(new Date().getMonth() + 1), 'MM/yyyy', this.locale);
     this.mainForm();
+    Object.assign(this, { single });
   }
 
   ngOnInit() {
@@ -63,10 +78,10 @@ export class CalculeAgoraComponent implements OnInit {
   mainForm() {
     this.formGroup = this.fb.group({
       secretCode: ["123", [Validators.required]],
-      renda1: [0, [Validators.required]],
-      renda2: [0, [Validators.required]],
+      renda1: [null, [Validators.required]],
+      renda2: [null, [Validators.required]],
       descricaoDespesa: ['', [Validators.required]],
-      valorDespesa: [0, [Validators.required]],
+      valorDespesa: [null, [Validators.required]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]]
     });
   }
@@ -85,6 +100,24 @@ export class CalculeAgoraComponent implements OnInit {
 
   atualizarRendaTotal() {
     this.rendaTotal = Number(this.renda1.value) + Number(this.renda2.value);
+    this.atualizarGraficoIdeal(this.rendaTotal);
+  }
+
+  private atualizarGraficoIdeal(rendaTotal: number) {
+    this.single = [
+      {
+        name: 'Fixos (50%)',
+        value: rendaTotal * 0.5
+      },
+      {
+        name: 'Lazer (30%)',
+        value: rendaTotal * 0.3
+      },
+      {
+        name: 'Invest. (20%)',
+        value: rendaTotal * 0.2
+      }
+    ];
   }
 
   updateForm(e) {
@@ -106,6 +139,10 @@ export class CalculeAgoraComponent implements OnInit {
           console.log(error);
         });
     }
+  }
+
+  @HostListener('window:resize', ['$event']) onResize(event) {
+    this.view = [event.target.innerWidth / 1.35, 500];
   }
 
   // Getter to access form control
@@ -152,6 +189,18 @@ export class CalculeAgoraComponent implements OnInit {
 
   abrirCodigoSecretoBottomSheet(): void {
     this.bottomSheet.open(BottomSheetCodigoSecretoComponent);
+  }
+
+  abrirGraficoDespesasBottomSheet() {
+    this.bottomSheet.open(BottomSheetGraficoDespesasComponent);
+  }
+
+  abrirLancamentosDespesasMesBottomSheet() {
+    this.bottomSheet.open(BottomSheetLancamentosDespesasComponent);
+  }
+
+  abrirComoFuncionaBottomSheet() {
+    this.bottomSheet.open(BottomSheetComoFuncionaComponent);
   }
 
   getFormattedPrice(price: number) {

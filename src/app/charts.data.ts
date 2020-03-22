@@ -1,11 +1,11 @@
 export const single = [
   {
     name: 'Fixos (50%)',
-    value: 100
+    value: 0
   },
   {
     name: 'Lazer (30%)',
-    value: 900
+    value: 0
   },
   {
     name: 'Invest. (20%)',

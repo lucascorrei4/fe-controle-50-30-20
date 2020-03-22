@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <h1 style="font-size: 2rem;" class="title">Regra 50-30-20.</h1>
+        <h1 style="font-size: 2rem;" class="title">Controle 50-30-20</h1>
         <span style="font-weight: 400">Neste controle financeiro, seus ganhos devem ser divididos em 50% para seus
           <button class="p-1 btn-tooltip btn" mat-button #matTooltip="matTooltip" matTooltip={{strGastos50}}
             (click)="matTooltip.toggle()">
@@ -30,25 +30,18 @@
   <div class="profile-content">
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
       <div class="container">
-        <div class="row text-center">
-          <div class="col-md-8 ml-auto mr-auto">
-            <div class="info text-center" style="padding: 30px 0px 0px 0px;">
-              <div class="icon icon-info">
-                <i class="material-icons">sentiment_satisfied_alt</i>
-              </div>
-            </div>
-            <h2 class="title" style="margin: 0px;">Comece agora!</h2>
-            <p>Adicione abaixo as receitas e despesas, veja como ficou o seu gráfico e envie o controle para o seu
-              e-mail.
-              <button class="p-1 btn-tooltip m-0" mat-button #matTooltipSaibaMais="matTooltip"
+        <div class="profile-content">
+          <div class="row text-center">
+            <div class="col-md-8 ml-auto mr-auto">
+              <button class="p-2 btn-tooltip m-0" mat-button #matTooltipSaibaMais="matTooltip"
                 matTooltip="Sempre que você enviar as suas despesas do mês ao seu e-mail, o seu código secreto será informado. Este código é unicamente seu e será usado aqui para que você revise o seu histórico de gastos."
-                (click)="matTooltipSaibaMais.toggle()">
-                Saiba mais.
-              </button></p>
+                (click)="abrirComoFuncionaBottomSheet()">
+                <mat-icon>info</mat-icon>
+              </button>
+            </div>
           </div>
         </div>
         <div class="description text-center">
-
         </div>
         <div class="row">
           <div class="col-md-4 ml-auto mr-auto text-center">
@@ -121,7 +114,16 @@
             </div>
             <div class="row">
               <div class="col-md-4 ml-auto mr-auto text-center">
-                <p>Renda do mês {{selectedMonthDesc}}: R$ {{getFormattedPrice(rendaTotal)}}</p>
+                <h5 class="description">Renda do mês {{selectedMonthDesc}}: <span style="font-weight: bold;">R$
+                    {{getFormattedPrice(rendaTotal)}}</span></h5>
+              </div>
+              <div class="col-md-8 ml-auto mr-auto">
+                <h3 class="title" style="margin: 0px;">Gráfico 50-30-20 Ideal</h3>
+                <div id="pie-chart-parent" style="display: flex; overflow: hidden;">
+                  <ngx-charts-pie-grid [scheme]=" colorScheme" [results]="single" (select)="onSelect($event)"
+                    (onWindowResize)="onResize($event)" [view]="view" style="margin: 0 auto !important;" [width]="auto">
+                  </ngx-charts-pie-grid>
+                </div>
               </div>
             </div>
           </div>
@@ -156,7 +158,9 @@
             </div>
             <div class="row">
               <div class="col-md-4 ml-auto mr-auto text-center">
-                <button mat-stroked-button (click)="openBottomSheet()">Adicionar na Lista</button>
+                <button mat-fab matTooltip="Selecionar Despesa" (click)="openBottomSheet()">
+                  <mat-icon>add</mat-icon>
+                </button>
               </div>
             </div>
           </div>
@@ -188,23 +192,17 @@
             </div>
           </div>
         </div>
-        <div class="row text-center">
-          <div class="col-md-8 ml-auto mr-auto">
-            <h3 class="title" style="margin: 0px;">Seu Gráfico 50-30-20</h3>
-            <h5 class="description">Veja como está ficando!</h5>
-          </div>
-        </div>
       </div>
     </form>
-    <app-pie></app-pie>
   </div>
   <div class="d-flex justify-content-center bd-highlight mb-3">
-    <button mat-fab #matTooltipCodigoSecreto="matTooltip" class="floating-button-right"
-      matTooltip="Informar código secreto." (click)="abrirCodigoSecretoBottomSheet()">
+    <button mat-fab #matTooltipGraficoDespesas="matTooltip" class="floating-button-right"
+      matTooltip="Gráficos de Despesas" (click)="abrirGraficoDespesasBottomSheet()">
       <mat-icon>vpn_key</mat-icon>
     </button>
-    <button mat-fab #matTooltipCodigoSecreto="matTooltip" class="floating-button-center"
-      matTooltip="Informar código secreto." (click)="abrirCodigoSecretoBottomSheet()" matBadge="0" matBadgeColor="warn">
+    <button mat-fab #matTooltipLancamentosDespesas="matTooltip" class="floating-button-center"
+      matTooltip="Lançamentos de Despesas do Mês" (click)="abrirLancamentosDespesasMesBottomSheet()" matBadge="0"
+      matBadgeColor="warn">
       <mat-icon>fastfood</mat-icon>
     </button>
     <button mat-fab #matTooltipCodigoSecreto="matTooltip" class="floating-button-left"
