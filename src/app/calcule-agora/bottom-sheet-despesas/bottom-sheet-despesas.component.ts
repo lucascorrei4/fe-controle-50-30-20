@@ -18,7 +18,7 @@ export class BottomSheetDespesasComponent {
 
     select(event: MouseEvent, item: string, subItem: string): void {
         this.openSnackBar('Você selecionou:', subItem);
-        this.bottomSheetRef.dismiss();
+        this.bottomSheetRef.dismiss(subItem);
         event.preventDefault();
     }
 

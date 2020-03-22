@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +23,15 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { BottomSheetCodigoSecretoComponent } from './calcule-agora/bottom-sheet-codigo-secreto/bottom-sheet-codigo-secreto.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import localePtBr from '@angular/common/locales/pt';
+import { LOCALE_ID } from '@angular/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { NgxCurrencyModule } from "ngx-currency";
+import { UtilService } from './services/util.service';
+import { MatBadgeModule } from '@angular/material/badge';
+
+registerLocaleData(localePtBr);
 
 @NgModule({
   declarations: [
@@ -35,6 +44,8 @@ import { BottomSheetCodigoSecretoComponent } from './calcule-agora/bottom-sheet-
   imports: [
     CommonModule,
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
@@ -48,7 +59,9 @@ import { BottomSheetCodigoSecretoComponent } from './calcule-agora/bottom-sheet-
     MatListModule,
     MatSnackBarModule,
     PieChartModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    NgxCurrencyModule,
+    MatBadgeModule
   ],
   exports: [
     MatTooltipModule,
@@ -60,7 +73,12 @@ import { BottomSheetCodigoSecretoComponent } from './calcule-agora/bottom-sheet-
     MatIconModule,
     MatSnackBarModule
   ],
-  providers: [CalculeAgoraService],
+  providers: [
+    CalculeAgoraService,
+    UtilService,
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     BottomSheetDespesasComponent,

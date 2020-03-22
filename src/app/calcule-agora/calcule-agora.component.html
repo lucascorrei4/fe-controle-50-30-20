@@ -28,162 +28,188 @@
 </div>
 <div #calculeAgora class="main main-raised">
   <div class="profile-content">
-    <div class="container">
-      <div class="row text-center">
-        <div class="col-md-8 ml-auto mr-auto">
-          <div class="info text-center" style="padding: 30px 0px 0px 0px;">
-            <div class="icon icon-info">
-              <i class="material-icons">sentiment_satisfied_alt</i>
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-md-8 ml-auto mr-auto">
+            <div class="info text-center" style="padding: 30px 0px 0px 0px;">
+              <div class="icon icon-info">
+                <i class="material-icons">sentiment_satisfied_alt</i>
+              </div>
             </div>
+            <h2 class="title" style="margin: 0px;">Comece agora!</h2>
+            <p>Adicione abaixo as receitas e despesas, veja como ficou o seu gráfico e envie o controle para o seu
+              e-mail.
+              <button class="p-1 btn-tooltip m-0" mat-button #matTooltipSaibaMais="matTooltip"
+                matTooltip="Sempre que você enviar as suas despesas do mês ao seu e-mail, o seu código secreto será informado. Este código é unicamente seu e será usado aqui para que você revise o seu histórico de gastos."
+                (click)="matTooltipSaibaMais.toggle()">
+                Saiba mais.
+              </button></p>
           </div>
-          <h2 class="title" style="margin: 0px;">Comece agora!</h2>
-          <p>Adicione abaixo as receitas e despesas, veja como ficou o seu gráfico e envie o controle para o seu e-mail.
-            <button class="p-1 btn-tooltip m-0" mat-button #matTooltipSaibaMais="matTooltip"
-              matTooltip="Toda vez que você enviar as suas despesas do mês para o seu e-mail, iremos informar o seu código secreto. Este código é unicamente seu e será usado aqui para que você revise o seu histórico de gastos."
-              (click)="matTooltipSaibaMais.toggle()">
-              Saiba mais.
-            </button></p>
         </div>
-      </div>
-      <div class="description text-center">
+        <div class="description text-center">
 
-      </div>
-      <div class="row">
-        <div class="col-md-4 ml-auto mr-auto text-center">
-          <div class="form-group bmd-form-group">
-            <mat-button-toggle-group #group="matButtonToggleGroup" aria-label="Selecione o mês" [value]="selectedMonth"
-              (change)="onMonthChange(group)">
-              <mat-button-toggle buttonId="{{lastMonth}}" value="lastMonth">{{lastMonth}}</mat-button-toggle>
-              <mat-button-toggle buttonId="{{currentMonth}}" value="currentMonth">{{currentMonth}}</mat-button-toggle>
-              <mat-button-toggle buttonId="{{nextMonth}}" value="nextMonth" [disabled]="true">{{nextMonth}}
-              </mat-button-toggle>
-            </mat-button-toggle-group>
-            <p>
-              <small>Mês selecionado: <span style="font-weight: bold;">{{selectedMonthDesc}}</span></small>
-            </p>
-          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 ml-auto mr-auto">
-          <div class="profile-tabs">
-            <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" href="#studio" role="tab" data-toggle="tab">
-                  <i class="material-icons">money</i> Ganhos
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#works" role="tab" data-toggle="tab">
-                  <i class="material-icons">fastfood</i> Despesas
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
-                  <i class="material-icons">mail</i> Enviar
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="tab-content tab-space">
-        <div class="tab-pane active text-center gallery" id="studio">
-          <div class="row">
-            <div class="col-md-4 ml-auto mr-auto">
-              <div class="form-group bmd-form-group">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">monetization_on</i>
-                    </span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="Quanto você recebeu neste mês?">
-                </div>
-              </div>
-              <div class="form-group bmd-form-group">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">monetization_on</i>
-                    </span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="Renda do(a) parceiro(a)">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 ml-auto mr-auto text-center">
-              <a mat-stroked-button href="#works">Ir Para Despesas</a>
+        <div class="row">
+          <div class="col-md-4 ml-auto mr-auto text-center">
+            <div class="form-group bmd-form-group">
+              <mat-button-toggle-group #group="matButtonToggleGroup" aria-label="Selecione o mês"
+                [value]="selectedMonth" (change)="onMonthChange(group)">
+                <mat-button-toggle buttonId="{{lastMonth}}" value="lastMonth">{{lastMonth}}</mat-button-toggle>
+                <mat-button-toggle buttonId="{{currentMonth}}" value="currentMonth">{{currentMonth}}</mat-button-toggle>
+                <mat-button-toggle buttonId="{{nextMonth}}" value="nextMonth" [disabled]="true">{{nextMonth}}
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+              <p>
+                <small>Mês selecionado: <span style="font-weight: bold;">{{selectedMonthDesc}}</span></small>
+              </p>
             </div>
           </div>
         </div>
-        <div class="tab-pane text-center gallery" id="works">
-          <div class="row">
-            <div class="col-md-4 ml-auto mr-auto">
-              <div class="form-group bmd-form-group">
-                <button mat-button (click)="openBottomSheet()">Selecionar Despesa</button>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">list</i>
-                    </span>
+        <div class="row">
+          <div class="col-md-6 ml-auto mr-auto">
+            <div class="profile-tabs">
+              <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#studio" role="tab" data-toggle="tab">
+                    <i class="material-icons">money</i> Ganhos
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#works" role="tab" data-toggle="tab">
+                    <i class="material-icons">fastfood</i> Despesas
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
+                    <i class="material-icons">mail</i> Enviar
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="tab-content tab-space">
+          <div class="tab-pane active text-center gallery" id="studio">
+            <div class="row">
+              <div class="col-md-4 ml-auto mr-auto">
+                <div class="form-group bmd-form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">monetization_on</i>
+                      </span>
+                    </div>
+                    <input placeholder="Quanto você recebeu este mês?" formControlName="renda1" currencyMask required
+                      autocomplete="off" [options]="{ prefix: '', thousands: '.', decimal: ',' }" type="text"
+                      #inputRenda1 tabindex="1" class="form-control input-renda" pattern="[0-9]*" inputmode="numeric">
                   </div>
-                  <input type="text" class="form-control" placeholder="Descrição da Despesa">
                 </div>
-              </div>
-              <div class="form-group bmd-form-group">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">monetization_on</i>
-                    </span>
+                <div class="form-group bmd-form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">monetization_on</i>
+                      </span>
+                    </div>
+                    <input placeholder="Renda do(a) parceiro(a)" formControlName="renda2" currencyMask required
+                      autocomplete="off" [options]="{ prefix: '', thousands: '.', decimal: ',' }" type="text"
+                      #inputRenda2 tabindex="2" class="form-control input-renda" pattern="[0-9]*" inputmode="numeric">
                   </div>
-                  <input type="text" class="form-control" placeholder="Valor">
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 ml-auto mr-auto text-center">
-              <button mat-stroked-button (click)="openBottomSheet()">Adicionar na Lista</button>
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane text-center gallery" id="favorite">
-          <div class="row">
-            <div class="col-md-4 ml-auto mr-auto text-center">
-              <div class="form-group bmd-form-group">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">mail</i>
-                    </span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="Digite seu e-mail">
-                </div>
+            <div class="row">
+              <div class="col-md-4 ml-auto mr-auto text-center">
+                <p>Renda do mês {{selectedMonthDesc}}: R$ {{getFormattedPrice(rendaTotal)}}</p>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-4 ml-auto mr-auto text-center">
-              <button mat-stroked-button (click)="openBottomSheet()">Salvar e Enviar</button>
+          <div class="tab-pane text-center gallery" id="works">
+            <div class="row">
+              <div class="col-md-4 ml-auto mr-auto">
+                <div class="form-group bmd-form-group">
+                  <button mat-button (click)="openBottomSheet()">Selecionar Despesa</button>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">list</i>
+                      </span>
+                    </div>
+                    <input type="text" formControlName="descricaoDespesa" class="form-control"
+                      placeholder="Descrição da Despesa">
+                  </div>
+                </div>
+                <div class="form-group bmd-form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">monetization_on</i>
+                      </span>
+                    </div>
+                    <input placeholder="Valor da Despesa" formControlName="valorDespesa" currencyMask required
+                      autocomplete="off" [options]="{ prefix: '', thousands: '.', decimal: ',' }" type="text"
+                      #valorDespesa tabindex="2" class="form-control input-renda" pattern="[0-9]*" inputmode="numeric">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 ml-auto mr-auto text-center">
+                <button mat-stroked-button (click)="openBottomSheet()">Adicionar na Lista</button>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane text-center gallery" id="favorite">
+            <div class="row">
+              <div class="col-md-4 ml-auto mr-auto text-center">
+                <div class="form-group bmd-form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">mail</i>
+                      </span>
+                    </div>
+                    <input type="text" class="form-control" formControlName="email" placeholder="Digite seu e-mail">
+                    <div class="invalid-feedback" *ngIf="formGroup.controls.email.errors?.required">
+                      Digite seu e-mail!
+                    </div>
+                    <div class="invalid-feedback" *ngIf="formGroup.controls.email.errors?.pattern">
+                      Digite um e-mail válido!
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 ml-auto mr-auto text-center">
+                <button mat-stroked-button type="submit">Salvar e Enviar</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row text-center">
-        <div class="col-md-8 ml-auto mr-auto">
-          <h3 class="title" style="margin: 0px;">Seu Gráfico 50-30-20</h3>
-          <h5 class="description">Veja como está ficando!</h5>
+        <div class="row text-center">
+          <div class="col-md-8 ml-auto mr-auto">
+            <h3 class="title" style="margin: 0px;">Seu Gráfico 50-30-20</h3>
+            <h5 class="description">Veja como está ficando!</h5>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
     <app-pie></app-pie>
   </div>
-  <button mat-fab #matTooltipCodigoSecreto="matTooltip" class="floating-button" matTooltip="Informar código secreto."
-    (click)="abrirCodigoSecretoBottomSheet()">
-    <mat-icon>vpn_key</mat-icon>
-  </button>
+  <div class="d-flex justify-content-center bd-highlight mb-3">
+    <button mat-fab #matTooltipCodigoSecreto="matTooltip" class="floating-button-right"
+      matTooltip="Informar código secreto." (click)="abrirCodigoSecretoBottomSheet()">
+      <mat-icon>vpn_key</mat-icon>
+    </button>
+    <button mat-fab #matTooltipCodigoSecreto="matTooltip" class="floating-button-center"
+      matTooltip="Informar código secreto." (click)="abrirCodigoSecretoBottomSheet()" matBadge="0" matBadgeColor="warn">
+      <mat-icon>fastfood</mat-icon>
+    </button>
+    <button mat-fab #matTooltipCodigoSecreto="matTooltip" class="floating-button-left"
+      matTooltip="Informar código secreto." (click)="abrirCodigoSecretoBottomSheet()">
+      <mat-icon>pie_chart</mat-icon>
+    </button>
+  </div>
 </div>

@@ -7,8 +7,37 @@
     text-transform: none;
 }
 
-.floating-button {
+.input-renda {
+    font-size: 30px;
+}
+
+.input-group-text {
+    padding: 0 10px 0 0;
+}
+
+.form-control {
+    height: 45px;
+}
+
+.floating-button-right {
     bottom: 15px;
-    right: 20px;
+    right: 20%;
     position: fixed;
+    background-color: #9c27b0;
+    color: #fff;
+}
+
+.floating-button-center {
+    bottom: 15px;
+    position: fixed;
+    background-color: #ff9800;
+    color: #fff;
+}
+
+.floating-button-left {
+    bottom: 15px;
+    left: 20%;
+    position: fixed;
+    background-color: #00bcd4;
+    color: #fff;
 }
