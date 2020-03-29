@@ -113,17 +113,24 @@
               </div>
             </div>
             <div class="row">
+              <div class="col-md-4 ml-auto mr-auto">
+              </div>
+            </div>
+            <div class="row">
               <div class="col-md-4 ml-auto mr-auto text-center">
                 <h5 class="description">Renda do mês {{selectedMonthDesc}}: <span style="font-weight: bold;">R$
                     {{getFormattedPrice(rendaTotal)}}</span></h5>
-              </div>
-              <div class="col-md-8 ml-auto mr-auto">
                 <h3 class="title" style="margin: 0px;">Gráfico 50-30-20 Ideal</h3>
-                <div id="pie-chart-parent" style="display: flex; overflow: hidden;">
+                <div id="pie-chart-parent" style="display: flex; overflow: hidden;" *ngIf="rendaTotal > 0; else empty">
                   <ngx-charts-pie-grid [scheme]=" colorScheme" [results]="single" (select)="onSelect($event)"
                     (onWindowResize)="onResize($event)" [view]="view" style="margin: 0 auto !important;" [width]="auto">
                   </ngx-charts-pie-grid>
                 </div>
+                <ng-template #empty>
+                  <mat-chip-list style="display: inline-flex;">
+                    <mat-chip color="accent" selected>Aguardando preenchimento...</mat-chip>
+                  </mat-chip-list>
+                </ng-template>
               </div>
             </div>
           </div>
@@ -158,9 +165,16 @@
             </div>
             <div class="row">
               <div class="col-md-4 ml-auto mr-auto text-center">
-                <button mat-fab matTooltip="Selecionar Despesa" (click)="openBottomSheet()">
+                <button mat-fab class="add-button" matTooltip="Adicionar Despesa" (click)="adicionarDespesa()">
                   <mat-icon>add</mat-icon>
                 </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 ml-auto mr-auto text-center m-2">
+                <mat-chip-list style="display: inline-flex;">
+                  <mat-chip color="accent" selected>{{msgAdicionarDespesas}}</mat-chip>
+                </mat-chip-list>
               </div>
             </div>
           </div>
@@ -198,16 +212,16 @@
   <div class="d-flex justify-content-center bd-highlight mb-3">
     <button mat-fab #matTooltipGraficoDespesas="matTooltip" class="floating-button-right"
       matTooltip="Gráficos de Despesas" (click)="abrirGraficoDespesasBottomSheet()">
-      <mat-icon>vpn_key</mat-icon>
+      <mat-icon>pie_chart</mat-icon>
     </button>
     <button mat-fab #matTooltipLancamentosDespesas="matTooltip" class="floating-button-center"
-      matTooltip="Lançamentos de Despesas do Mês" (click)="abrirLancamentosDespesasMesBottomSheet()" matBadge="0"
-      matBadgeColor="warn">
+      matTooltip="Lançamentos de Despesas do Mês" (click)="abrirLancamentosDespesasMesBottomSheet()"
+      matBadge="{{contLancamentoDespesas}}" matBadgeColor="warn">
       <mat-icon>fastfood</mat-icon>
     </button>
     <button mat-fab #matTooltipCodigoSecreto="matTooltip" class="floating-button-left"
       matTooltip="Informar código secreto." (click)="abrirCodigoSecretoBottomSheet()">
-      <mat-icon>pie_chart</mat-icon>
+      <mat-icon>vpn_key</mat-icon>
     </button>
   </div>
 </div>

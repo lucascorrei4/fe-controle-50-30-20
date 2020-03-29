@@ -1,9 +1,24 @@
 import { Injectable } from '@angular/core';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalculeAgoraService {
+
+  private atualizarDespesasSubject = new Subject<any>();
+
+  constructor() {
+    
+  }
+
+  atualizarDespesasObservable(): Observable<any> {
+    return this.atualizarDespesasSubject.asObservable();
+  }
+
+  atualizarCarrinho() {
+    this.atualizarDespesasSubject.next();
+  }
 
   registros() {
     return [

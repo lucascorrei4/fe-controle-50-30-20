@@ -30,9 +30,11 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxCurrencyModule } from "ngx-currency";
 import { UtilService } from './services/util.service';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatChipsModule } from '@angular/material/chips';
 import { BottomSheetGraficoDespesasComponent } from './calcule-agora/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component';
 import { BottomSheetLancamentosDespesasComponent } from './calcule-agora/bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component';
 import { BottomSheetComoFuncionaComponent } from './calcule-agora/bottom-sheet-como-funciona/bottom-sheet-como-funciona.component';
+import { StorageService } from './services/storage.service';
 
 registerLocaleData(localePtBr);
 
@@ -67,7 +69,8 @@ registerLocaleData(localePtBr);
     PieChartModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     NgxCurrencyModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatChipsModule
   ],
   exports: [
     MatTooltipModule,
@@ -81,6 +84,7 @@ registerLocaleData(localePtBr);
   ],
   providers: [
     CalculeAgoraService,
+    StorageService,
     UtilService,
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     { provide: LOCALE_ID, useValue: 'pt-BR' },

@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, LOCALE_ID, Inject, NgZone, ViewEncapsulation, HostListener } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, LOCALE_ID, Inject, NgZone, ViewEncapsulation, HostListener, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
 import { BottomSheetDespesasComponent } from './bottom-sheet-despesas/bottom-sheet-despesas.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -13,11 +13,22 @@ import { BottomSheetGraficoDespesasComponent } from './bottom-sheet-grafico-desp
 import { BottomSheetLancamentosDespesasComponent } from './bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component';
 import { BottomSheetComoFuncionaComponent } from './bottom-sheet-como-funciona/bottom-sheet-como-funciona.component';
 import { single } from './../charts.data';
+import { StorageService } from '../services/storage.service';
+import { Despesa } from '../models/despesa';
+import { DespesaItem } from '../models/despesa-item';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+enum DespesaEnum {
+  Fixa,
+  Lifestyle,
+  Investimento
+}
 
 @Component({
   selector: 'app-calcule-agora',
   templateUrl: './calcule-agora.component.html',
-  styleUrls: ['./calcule-agora.component.scss']
+  styleUrls: ['./calcule-agora.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalculeAgoraComponent implements OnInit {
 
@@ -33,11 +44,13 @@ export class CalculeAgoraComponent implements OnInit {
   public nextMonth: any;
 
   public rendaTotal: number = 0;
+  public contLancamentoDespesas: number = 0;
 
   public today = new Date();
 
   public selectedMonth: string;
   public selectedMonthDesc: string;
+  public msgAdicionarDespesas: string = "Selecione nova despesa";
 
   public formGroup: FormGroup;
 
@@ -48,6 +61,8 @@ export class CalculeAgoraComponent implements OnInit {
 
   showLegend: boolean = true;
   showLabels: boolean = true;
+
+  despesaEnum: DespesaEnum = DespesaEnum.Fixa;
 
   colorScheme = {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
@@ -60,13 +75,21 @@ export class CalculeAgoraComponent implements OnInit {
     private bottomSheet: MatBottomSheet,
     @Inject(LOCALE_ID) private locale: string,
     private apiService: ApiService,
-    private utilService: UtilService
+    private utilService: UtilService,
+    private storageService: StorageService,
+    private changeDetector: ChangeDetectorRef,
+    private snackBar: MatSnackBar
   ) {
     this.lastMonth = formatDate(this.today.setMonth(this.today.getMonth() - 1), 'MM/yyyy', this.locale);
     this.currentMonth = formatDate(new Date(), 'MM/yyyy', this.locale);
     this.nextMonth = formatDate(new Date().setMonth(new Date().getMonth() + 1), 'MM/yyyy', this.locale);
     this.mainForm();
+
     Object.assign(this, { single });
+
+    setTimeout(() => {
+      this.atualizarContadorLancamentoDespesas();
+    }, 3000);
   }
 
   ngOnInit() {
@@ -106,15 +129,15 @@ export class CalculeAgoraComponent implements OnInit {
   private atualizarGraficoIdeal(rendaTotal: number) {
     this.single = [
       {
-        name: 'Fixos (50%)',
+        name: 'Fixo Ideal',
         value: rendaTotal * 0.5
       },
       {
-        name: 'Lazer (30%)',
+        name: 'Lifestyle Ideal',
         value: rendaTotal * 0.3
       },
       {
-        name: 'Invest. (20%)',
+        name: 'Invest. Ideal',
         value: rendaTotal * 0.2
       }
     ];
@@ -184,7 +207,60 @@ export class CalculeAgoraComponent implements OnInit {
 
   openBottomSheet(): void {
     const bottomSheefRef = this.bottomSheet.open(BottomSheetDespesasComponent);
-    bottomSheefRef.afterDismissed().subscribe((response) => this.descricaoDespesa.setValue(response));
+    bottomSheefRef.afterDismissed().subscribe((response) => {
+      this.descricaoDespesa.setValue(response);
+      this.valorDespesa.reset();
+    });
+  }
+
+  adicionarDespesa() {
+    if (!this.descricaoDespesa.value) {
+      this.openSnackBar('Ops...', "Clique em 'Selecionar Despesa'!")
+      return;
+    }
+
+    if (this.valorDespesa.value < 1) {
+      this.openSnackBar('Ops...', "Preencha o valor da despesa!")
+      return;
+    }
+
+    var despesa = null;
+
+    if (this.storageService.getLocalDespesa().itensDespesa) {
+      despesa = this.storageService.getLocalDespesa();
+    } else {
+      despesa = new Despesa;
+      despesa.id = 0;
+      despesa.name = this.descricaoDespesa.value;
+      despesa.tipo = this.descricaoDespesa.value === DespesaEnum.Fixa.toString()
+        ? DespesaEnum.Lifestyle.toString() : DespesaEnum.Investimento.toString();
+      despesa.itensDespesa = [];
+    }
+
+    const itemDespesa = new DespesaItem;
+    itemDespesa.desc = this.descricaoDespesa.value;
+    itemDespesa.valor = this.valorDespesa.value;
+
+    despesa.itensDespesa.push(itemDespesa);
+
+    this.storageService.setLocalDespesa(despesa);
+    console.log(this.storageService.getLocalDespesa());
+
+    this.atualizarContadorLancamentoDespesas();
+
+    this.msgAdicionarDespesas = "Despesa '" + this.descricaoDespesa.value + "' criada!";
+
+    setTimeout(() => {
+      this.msgAdicionarDespesas = "Selecione nova despesa";
+    }, 3000);
+
+    this.descricaoDespesa.reset();
+    this.valorDespesa.reset();
+  }
+
+  atualizarContadorLancamentoDespesas() {
+    this.contLancamentoDespesas = this.storageService.getLocalDespesa().itensDespesa ? this.storageService.getLocalDespesa().itensDespesa.length : 0;
+    this.changeDetector.detectChanges();
   }
 
   abrirCodigoSecretoBottomSheet(): void {
@@ -205,6 +281,12 @@ export class CalculeAgoraComponent implements OnInit {
 
   getFormattedPrice(price: number) {
     return this.utilService.getFormattedPrice(price).substring(3);
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 
   get strGastos50(): string {
