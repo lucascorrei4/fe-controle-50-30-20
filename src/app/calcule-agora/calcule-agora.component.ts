@@ -17,11 +17,12 @@ import { StorageService } from '../services/storage.service';
 import { Despesa } from '../models/despesa';
 import { DespesaItem } from '../models/despesa-item';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Lancamento } from '../models/lancamento';
 
 enum DespesaEnum {
-  Fixa,
-  Lifestyle,
-  Investimento
+  Fixa = "F",
+  Lifestyle = "L",
+  Investimento = "I"
 }
 
 @Component({
@@ -87,9 +88,11 @@ export class CalculeAgoraComponent implements OnInit {
 
     Object.assign(this, { single });
 
-    setTimeout(() => {
-      this.atualizarContadorLancamentoDespesas();
-    }, 3000);
+    if (this.storageService.getLocalStorageLancamentos().length > 0) {
+      setTimeout(() => {
+        this.atualizarContadorLancamentoDespesas();
+      }, 3000);
+    }
   }
 
   ngOnInit() {
@@ -103,6 +106,7 @@ export class CalculeAgoraComponent implements OnInit {
       secretCode: ["123", [Validators.required]],
       renda1: [null, [Validators.required]],
       renda2: [null, [Validators.required]],
+      tipoDespesa: [''],
       descricaoDespesa: ['', [Validators.required]],
       valorDespesa: [null, [Validators.required]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]]
@@ -208,7 +212,8 @@ export class CalculeAgoraComponent implements OnInit {
   openBottomSheet(): void {
     const bottomSheefRef = this.bottomSheet.open(BottomSheetDespesasComponent);
     bottomSheefRef.afterDismissed().subscribe((response) => {
-      this.descricaoDespesa.setValue(response);
+      this.tipoDespesa.setValue(response.tipoDespesa);
+      this.descricaoDespesa.setValue(response.despesa);
       this.valorDespesa.reset();
     });
   }
@@ -224,18 +229,34 @@ export class CalculeAgoraComponent implements OnInit {
       return;
     }
 
+    var lancamentos = this.storageService.getLocalStorageLancamentos().length > 0 ? this.storageService.getLocalStorageLancamentos() : [];
     var despesa = null;
+    var lancamento = null;
 
-    if (this.storageService.getLocalDespesa().itensDespesa) {
-      despesa = this.storageService.getLocalDespesa();
+    if (lancamentos.length > 0) {
+      lancamento = lancamentos.find(lancamento => lancamento.mes === this.selectedMonthDesc);
+    } else {
+      lancamento = new Lancamento;
+      lancamento.id = 0;
+      lancamento.mes = this.selectedMonthDesc;
+      lancamento.despesas = [];
+    }
+
+    if (lancamento.despesas.length > 0) {
+      despesa = lancamento.despesas.find(despesa => despesa.name === this.tipoDespesa.value);
     } else {
       despesa = new Despesa;
       despesa.id = 0;
-      despesa.name = this.descricaoDespesa.value;
-      despesa.tipo = this.descricaoDespesa.value === DespesaEnum.Fixa.toString()
-        ? DespesaEnum.Lifestyle.toString() : DespesaEnum.Investimento.toString();
-      despesa.itensDespesa = [];
     }
+
+    despesa.name = this.tipoDespesa.value;
+    despesa.tipo = DespesaEnum[this.tipoDespesa.value];
+
+    console.log("Despesas Enum", DespesaEnum[String(this.tipoDespesa.value)])
+
+    console.log(Object.keys(DespesaEnum).find(key => String(DespesaEnum[key]) === String(this.tipoDespesa.value)));
+
+    despesa.itensDespesa = [];
 
     const itemDespesa = new DespesaItem;
     itemDespesa.desc = this.descricaoDespesa.value;
@@ -243,23 +264,43 @@ export class CalculeAgoraComponent implements OnInit {
 
     despesa.itensDespesa.push(itemDespesa);
 
-    this.storageService.setLocalDespesa(despesa);
-    console.log(this.storageService.getLocalDespesa());
+    lancamento.despesas.push(despesa);
 
-    this.atualizarContadorLancamentoDespesas();
+    lancamentos.push(lancamento);
 
-    this.msgAdicionarDespesas = "Despesa '" + this.descricaoDespesa.value + "' criada!";
+    this.storageService.setLocalStorageLancamentos(lancamentos);
 
-    setTimeout(() => {
-      this.msgAdicionarDespesas = "Selecione nova despesa";
-    }, 3000);
+    console.log(this.storageService.getLocalStorageLancamentos());
 
-    this.descricaoDespesa.reset();
-    this.valorDespesa.reset();
+    if (lancamento.despesas.length > 0) {
+
+      this.atualizarContadorLancamentoDespesas();
+
+      this.msgAdicionarDespesas = "Despesa '" + this.descricaoDespesa.value + "' criada!";
+
+      setTimeout(() => {
+        this.msgAdicionarDespesas = "Selecione nova despesa";
+      }, 3000);
+
+      this.descricaoDespesa.reset();
+      this.valorDespesa.reset();
+
+    }
   }
 
   atualizarContadorLancamentoDespesas() {
-    this.contLancamentoDespesas = this.storageService.getLocalDespesa().itensDespesa ? this.storageService.getLocalDespesa().itensDespesa.length : 0;
+    var cont = 0;
+    var lancamentos = this.storageService.getLocalStorageLancamentos();
+
+    if (lancamentos.length > 0) {
+      lancamentos.forEach(lancamento => {
+        lancamento.despesas.forEach(despesa => {
+          cont += despesa.itensDespesa.length;
+        });
+      });
+    }
+
+    this.contLancamentoDespesas = cont;
     this.changeDetector.detectChanges();
   }
 
@@ -311,6 +352,10 @@ export class CalculeAgoraComponent implements OnInit {
 
   get descricaoDespesa(): FormControl {
     return this.formGroup.get('descricaoDespesa') as FormControl;
+  }
+
+  get tipoDespesa(): FormControl {
+    return this.formGroup.get('tipoDespesa') as FormControl;
   }
 
   get valorDespesa(): FormControl {

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { STORAGE_KEYS } from "./../models/storage_keys.config";
 import { User } from '../models/user';
 import { Despesa } from '../models/despesa';
+import { Lancamento } from '../models/lancamento';
 
 @Injectable()
 export class StorageService {
@@ -44,6 +45,24 @@ export class StorageService {
         }
     }
 
+    getLocalStorageLancamentos(): Lancamento[] {
+        const lancamentos = localStorage.getItem(STORAGE_KEYS.localLancamentos);
+        if (lancamentos) {
+            this.cleanLocalStorageLancamentos();
+            return JSON.parse(lancamentos);
+        } else {
+            return [];
+        }
+    }
+
+    setLocalStorageLancamentos(lancamentos: any): void {
+        if (lancamentos) {
+            localStorage.setItem(STORAGE_KEYS.localLancamentos, JSON.stringify(lancamentos));
+        } else {
+            this.cleanLocalStorageLancamentos();
+        }
+    }
+
     cleanLocalStorageUser(): void {
         localStorage.setItem(STORAGE_KEYS.localUser, '');
         localStorage.removeItem(STORAGE_KEYS.localUser);
@@ -52,6 +71,11 @@ export class StorageService {
     cleanLocalStorageDespesa(): void {
         localStorage.setItem(STORAGE_KEYS.localDespesa, '');
         localStorage.removeItem(STORAGE_KEYS.localDespesa);
+    }
+
+    cleanLocalStorageLancamentos(): void {
+        localStorage.setItem(STORAGE_KEYS.localLancamentos, '');
+        localStorage.removeItem(STORAGE_KEYS.localLancamentos);
     }
 
 }

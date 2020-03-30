@@ -31,6 +31,7 @@ import { NgxCurrencyModule } from "ngx-currency";
 import { UtilService } from './services/util.service';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatCardModule } from '@angular/material/card';
 import { BottomSheetGraficoDespesasComponent } from './calcule-agora/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component';
 import { BottomSheetLancamentosDespesasComponent } from './calcule-agora/bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component';
 import { BottomSheetComoFuncionaComponent } from './calcule-agora/bottom-sheet-como-funciona/bottom-sheet-como-funciona.component';
@@ -70,7 +71,8 @@ registerLocaleData(localePtBr);
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     NgxCurrencyModule,
     MatBadgeModule,
-    MatChipsModule
+    MatChipsModule,
+    MatCardModule
   ],
   exports: [
     MatTooltipModule,
