@@ -46,9 +46,8 @@ export class StorageService {
     }
 
     getLocalStorageLancamentos(): Lancamento[] {
-        const lancamentos = localStorage.getItem(STORAGE_KEYS.localLancamentos);
+        let lancamentos = localStorage.getItem(STORAGE_KEYS.localLancamentos);
         if (lancamentos) {
-            this.cleanLocalStorageLancamentos();
             return JSON.parse(lancamentos);
         } else {
             return [];

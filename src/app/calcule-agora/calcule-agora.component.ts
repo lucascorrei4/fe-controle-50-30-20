@@ -154,7 +154,7 @@ export class CalculeAgoraComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.formGroup)
+
     if (!this.formGroup.valid) {
       return false;
     } else {
@@ -219,6 +219,7 @@ export class CalculeAgoraComponent implements OnInit {
   }
 
   adicionarDespesa() {
+
     if (!this.descricaoDespesa.value) {
       this.openSnackBar('Ops...', "Clique em 'Selecionar Despesa'!")
       return;
@@ -229,38 +230,67 @@ export class CalculeAgoraComponent implements OnInit {
       return;
     }
 
-    var lancamentos = this.storageService.getLocalStorageLancamentos().length > 0 ? this.storageService.getLocalStorageLancamentos() : [];
-    var despesa = null;
-    var lancamento = null;
+    let lancamentos = this.storageService.getLocalStorageLancamentos() as Lancamento[];
+    let despesa = null;
+    let lancamento = null;
 
-    if (lancamentos.length > 0) {
-      lancamento = lancamentos.find(lancamento => lancamento.mes === this.selectedMonthDesc);
-    } else {
+    Array.from(lancamentos).forEach(child => {
+      console.log('Array.from')
+      console.log(child)
+    });
+
+    [...lancamentos].forEach(child => {
+      console.log('child')
+      console.log(child);
+    });
+
+    for (var i = 0, len = lancamentos.length; i < len; i++) {
+      console.log('kkkk');
+      console.log(lancamentos[i]);
+    }
+
+    for (const key in lancamentos) {
+      const element = lancamentos[key];
+      console.log("element", element)
+
+    }
+
+
+    lancamentos.forEach(lan => {
+      console.log("passou foreach", lan[0])
+      if (String(lan.mes) === String(this.selectedMonthDesc)) {
+        lancamento = lan;
+      }
+    });
+
+    console.log("lancamento", lancamento)
+
+    if (lancamento == null) {
       lancamento = new Lancamento;
-      lancamento.id = 0;
       lancamento.mes = this.selectedMonthDesc;
       lancamento.despesas = [];
     }
 
-    if (lancamento.despesas.length > 0) {
-      despesa = lancamento.despesas.find(despesa => despesa.name === this.tipoDespesa.value);
-    } else {
+
+    despesa = lancamento.despesas ? lancamento.despesas.find(despesa => String(despesa.name) === String(this.tipoDespesa.value)) : null;
+
+    console.log("despesa", despesa)
+
+    if (despesa == null) {
       despesa = new Despesa;
-      despesa.id = 0;
+      despesa.name = this.tipoDespesa.value;
+      despesa.tipo = DespesaEnum[this.tipoDespesa.value];
     }
 
-    despesa.name = this.tipoDespesa.value;
-    despesa.tipo = DespesaEnum[this.tipoDespesa.value];
-
-    console.log("Despesas Enum", DespesaEnum[String(this.tipoDespesa.value)])
-
-    console.log(Object.keys(DespesaEnum).find(key => String(DespesaEnum[key]) === String(this.tipoDespesa.value)));
-
-    despesa.itensDespesa = [];
+    console.log(Object.keys(DespesaEnum).find(key => console.log(String(this.tipoDespesa.value) == String(key))));
 
     const itemDespesa = new DespesaItem;
     itemDespesa.desc = this.descricaoDespesa.value;
     itemDespesa.valor = this.valorDespesa.value;
+
+    despesa.itensDespesa = despesa.itensDespesa ? despesa.itensDespesa : [];
+
+    console.log("despesa.itensDespesa", despesa.itensDespesa)
 
     despesa.itensDespesa.push(itemDespesa);
 
