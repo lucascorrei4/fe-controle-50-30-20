@@ -18,12 +18,8 @@ import { Despesa } from '../models/despesa';
 import { DespesaItem } from '../models/despesa-item';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Lancamento } from '../models/lancamento';
+import { DespesaEnum } from '../enums/despesas-enum';
 
-enum DespesaEnum {
-  Fixa = "F",
-  Lifestyle = "L",
-  Investimento = "I"
-}
 
 @Component({
   selector: 'app-calcule-agora',
@@ -63,7 +59,7 @@ export class CalculeAgoraComponent implements OnInit {
   showLegend: boolean = true;
   showLabels: boolean = true;
 
-  despesaEnum: DespesaEnum = DespesaEnum.Fixa;
+  despesaEnum: DespesaEnum = DespesaEnum.Fixas;
 
   colorScheme = {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
@@ -212,9 +208,11 @@ export class CalculeAgoraComponent implements OnInit {
   openBottomSheet(): void {
     const bottomSheefRef = this.bottomSheet.open(BottomSheetDespesasComponent);
     bottomSheefRef.afterDismissed().subscribe((response) => {
-      this.tipoDespesa.setValue(response.tipoDespesa);
-      this.descricaoDespesa.setValue(response.despesa);
-      this.valorDespesa.reset();
+      if (response) {
+        this.tipoDespesa.setValue(response.tipoDespesa);
+        this.descricaoDespesa.setValue(response.despesa);
+        this.valorDespesa.reset();
+      }
     });
   }
 
@@ -234,30 +232,7 @@ export class CalculeAgoraComponent implements OnInit {
     let despesa = null;
     let lancamento = null;
 
-    Array.from(lancamentos).forEach(child => {
-      console.log('Array.from')
-      console.log(child)
-    });
-
-    [...lancamentos].forEach(child => {
-      console.log('child')
-      console.log(child);
-    });
-
-    for (var i = 0, len = lancamentos.length; i < len; i++) {
-      console.log('kkkk');
-      console.log(lancamentos[i]);
-    }
-
-    for (const key in lancamentos) {
-      const element = lancamentos[key];
-      console.log("element", element)
-
-    }
-
-
-    lancamentos.forEach(lan => {
-      console.log("passou foreach", lan[0])
+    Array.from(lancamentos).forEach(lan => {
       if (String(lan.mes) === String(this.selectedMonthDesc)) {
         lancamento = lan;
       }
@@ -271,32 +246,61 @@ export class CalculeAgoraComponent implements OnInit {
       lancamento.despesas = [];
     }
 
+    despesa = lancamento.despesas ? lancamento.despesas.find(despesa => String(despesa.tipo) === String(this.tipoDespesa.value)) : null;
 
-    despesa = lancamento.despesas ? lancamento.despesas.find(despesa => String(despesa.name) === String(this.tipoDespesa.value)) : null;
-
-    console.log("despesa", despesa)
+    console.log("despesa do mês", despesa)
 
     if (despesa == null) {
       despesa = new Despesa;
       despesa.name = this.tipoDespesa.value;
-      despesa.tipo = DespesaEnum[this.tipoDespesa.value];
+
+      Object.keys(DespesaEnum).forEach(key => {
+        if (String(this.tipoDespesa.value) === String(key)) {
+          despesa.tipo = DespesaEnum[key];
+        }
+      });
+
     }
 
-    console.log(Object.keys(DespesaEnum).find(key => console.log(String(this.tipoDespesa.value) == String(key))));
-
-    const itemDespesa = new DespesaItem;
+    let itemDespesa = new DespesaItem;
     itemDespesa.desc = this.descricaoDespesa.value;
     itemDespesa.valor = this.valorDespesa.value;
 
     despesa.itensDespesa = despesa.itensDespesa ? despesa.itensDespesa : [];
 
-    console.log("despesa.itensDespesa", despesa.itensDespesa)
-
     despesa.itensDespesa.push(itemDespesa);
 
-    lancamento.despesas.push(despesa);
+    let tipoDespesaAtual = false;
+    Array.from(lancamento.despesas as Despesa[]).forEach(desp => {
+      if (desp.name === String(this.tipoDespesa.value)) {
+        desp = despesa;
+        tipoDespesaAtual = true;
+      }
+    });
 
-    lancamentos.push(lancamento);
+    if (!tipoDespesaAtual || lancamento.despesas.length === 0) {
+      lancamento.despesas.push(despesa);
+    }
+
+
+    despesa.itensDespesa = despesa.itensDespesa ? despesa.itensDespesa : [];
+
+    console.log("despesa.itensDespesa", despesa.itensDespesa)
+
+
+
+
+
+    let mesAtual = false;
+    Array.from(lancamentos as Lancamento[]).forEach(lan => {
+      if (lan.mes === lancamento.mes) {
+        lan = lancamento;
+        mesAtual = true;
+      }
+    });
+    if (!mesAtual || lancamentos.length === 0) {
+      lancamentos.push(lancamento);
+    }
 
     this.storageService.setLocalStorageLancamentos(lancamentos);
 
@@ -330,7 +334,7 @@ export class CalculeAgoraComponent implements OnInit {
       });
     }
 
-    this.contLancamentoDespesas = cont;
+    this.contLancamentoDespesas = lancamentos.length === 0 ? 0 : cont;
     this.changeDetector.detectChanges();
   }
 

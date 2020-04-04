@@ -30,7 +30,7 @@ export class CalculeAgoraService {
             mes: "03/2020",
             despesas: [
               {
-                tipo: "fix",
+                tipo: "F",
                 name: "Fixas",
                 itensDespesa: [
                   {
@@ -48,7 +48,7 @@ export class CalculeAgoraService {
                 ]
               },
               {
-                tipo: "var",
+                tipo: "V",
                 name: "Variáveis",
                 itensDespesa: [
                   {
@@ -65,7 +65,7 @@ export class CalculeAgoraService {
                   }
                 ]
               }, {
-                tipo: "inv",
+                tipo: "I",
                 name: "Investimentos",
                 itensDespesa: [
                   {
@@ -92,7 +92,7 @@ export class CalculeAgoraService {
   gastos() {
     return [
       {
-        tipo: "fix",
+        tipo: "F",
         name: "Fixas",
         subItems: [
           {
@@ -106,7 +106,7 @@ export class CalculeAgoraService {
         ]
       },
       {
-        tipo: "var",
+        tipo: "V",
         name: "Variáveis",
         subItems: [
           {
@@ -119,7 +119,7 @@ export class CalculeAgoraService {
           }
         ]
       }, {
-        tipo: "inv",
+        tipo: "I",
         name: "Investimentos",
         subItems: [
           {
