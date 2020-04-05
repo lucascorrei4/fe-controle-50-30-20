@@ -1,5 +1,5 @@
 export enum DespesaEnum {
-    Fixas = "F",
-    Lifestyle = "L",
-    Investimentos = "I"
+    "Fixas" = "F",
+    "Variáveis" = "V",
+    "Investimentos" = "I"
 }

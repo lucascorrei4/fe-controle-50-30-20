@@ -16,9 +16,9 @@ export class BottomSheetDespesasComponent {
         this.despesas = this.calculeAgoraService.gastos();
     }
 
-    select(event: MouseEvent, item: string, subItem: string): void {
+    select(event: MouseEvent, tipo: string, nome: string, subItem: string): void {
         this.openSnackBar('Você selecionou:', subItem);
-        this.bottomSheetRef.dismiss({ tipoDespesa: item, despesa: subItem });
+        this.bottomSheetRef.dismiss({ tipoDespesa: tipo, nomeDespesa: nome, despesa: subItem });
         event.preventDefault();
     }
 

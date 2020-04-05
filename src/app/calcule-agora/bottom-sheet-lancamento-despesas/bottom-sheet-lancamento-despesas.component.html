@@ -1,31 +1,32 @@
-<div class="row m-1 text-center">
-    <h4>Selecione o Tipo de Despesa</h4>
-    <small>Lançamentos do Mês 03/2020</small>
-
-    <mat-chip-list #chipList aria-label="Tipo de Despesa">
+<div class="ml-auto mr-auto text-center">
+    <p><small>Lançamentos do Mês {{mesAtual}}</small></p>
+    <mat-chip-list aria-label="Tipo de Despesa" class="mb-2 d-inline-flex">
         <mat-chip *ngFor="let despesa of DespesaEnum | keyvalue" [selectable]="selectable"
-            (click)="selecionarDespesa(despesa.value)">
+            [selected]="despesa.value !== despesa.value" (click)="selecionarDespesa(despesa.value)">
             {{despesa.key}}
         </mat-chip>
     </mat-chip-list>
-
 </div>
 
 <ng-container *ngFor="let despesa of despesasSelecionadas">
-    <ng-container *ngFor="let item of despesa.itensDespesa">
+    <ng-container *ngFor="let item of despesa.itensDespesa; let index=index;">
         <mat-card class="example-card">
             <mat-card-header>
-                <div mat-card-avatar class="example-header-image"></div>
+                <div mat-card-avatar style="border-radius: 50%; background-color: aqua;">
+                    <p class="numero">{{index + 1}}</p>
+                </div>
                 <mat-card-title>{{item.desc}}</mat-card-title>
                 <mat-card-subtitle>{{despesa.name}}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <p>
-                    {{item.valor}}
+                <p class="valor-despesa">
+                    R$ {{getFormattedPrice(item.valor)}}
                 </p>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-button>REMOVER</button>
+                <button mat-icon-button color="warn" class="botao-remover" (click)="removerDespesa(item)">
+                    <mat-icon>delete</mat-icon>
+                </button>
             </mat-card-actions>
         </mat-card>
     </ng-container>

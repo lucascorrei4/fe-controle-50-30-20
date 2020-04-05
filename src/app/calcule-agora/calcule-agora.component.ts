@@ -45,7 +45,6 @@ export class CalculeAgoraComponent implements OnInit {
 
   public today = new Date();
 
-  public selectedMonth: string;
   public selectedMonthDesc: string;
   public msgAdicionarDespesas: string = "Selecione nova despesa";
 
@@ -55,6 +54,7 @@ export class CalculeAgoraComponent implements OnInit {
 
   single: any[];
   view: any[] = [500, 400];
+  meses: any[] = [];
 
   showLegend: boolean = true;
   showLabels: boolean = true;
@@ -77,9 +77,9 @@ export class CalculeAgoraComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,
     private snackBar: MatSnackBar
   ) {
-    this.lastMonth = formatDate(this.today.setMonth(this.today.getMonth() - 1), 'MM/yyyy', this.locale);
-    this.currentMonth = formatDate(new Date(), 'MM/yyyy', this.locale);
-    this.nextMonth = formatDate(new Date().setMonth(new Date().getMonth() + 1), 'MM/yyyy', this.locale);
+
+    this.carregarMeses();
+
     this.mainForm();
 
     Object.assign(this, { single });
@@ -89,12 +89,21 @@ export class CalculeAgoraComponent implements OnInit {
         this.atualizarContadorLancamentoDespesas();
       }, 3000);
     }
+
   }
 
   ngOnInit() {
-    this.selectedMonth = 'currentMonth';
-    this.selectedMonthDesc = this.currentMonth;
     this.initObservers();
+  }
+
+  carregarMeses() {
+    this.lastMonth = formatDate(this.today.setMonth(this.today.getMonth() - 1), 'MM/yyyy', this.locale);
+    this.currentMonth = formatDate(new Date(), 'MM/yyyy', this.locale);
+    this.nextMonth = formatDate(new Date().setMonth(new Date().getMonth() + 1), 'MM/yyyy', this.locale);
+
+    this.meses.push(this.lastMonth, this.currentMonth, this.nextMonth);
+
+    this.selectedMonthDesc = this.currentMonth;
   }
 
   mainForm() {
@@ -103,6 +112,7 @@ export class CalculeAgoraComponent implements OnInit {
       renda1: [null, [Validators.required]],
       renda2: [null, [Validators.required]],
       tipoDespesa: [''],
+      nomeDespesa: [''],
       descricaoDespesa: ['', [Validators.required]],
       valorDespesa: [null, [Validators.required]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]]
@@ -133,7 +143,7 @@ export class CalculeAgoraComponent implements OnInit {
         value: rendaTotal * 0.5
       },
       {
-        name: 'Lifestyle Ideal',
+        name: 'Variáveis Ideal',
         value: rendaTotal * 0.3
       },
       {
@@ -173,19 +183,8 @@ export class CalculeAgoraComponent implements OnInit {
     return this.formGroup.controls;
   }
 
-  onMonthChange(val) {
-    this.selectedMonth = val.value;
-    switch (val.value) {
-      case 'lastMonth':
-        this.selectedMonthDesc = this.lastMonth;
-        break;
-      case 'nextMonth':
-        this.selectedMonthDesc = this.nextMonth;
-        break;
-      default:
-        this.selectedMonthDesc = this.currentMonth;
-        break;
-    }
+  selecionarMes(mes) {
+    this.selectedMonthDesc = mes;
   }
 
   public enviarLancamento() {
@@ -197,10 +196,6 @@ export class CalculeAgoraComponent implements OnInit {
     this.apiService.salvar(user);
   }
 
-  public onValChange(val: string) {
-    this.selectedMonth = val;
-  }
-
   scroll() {
     this.calculeAgoraDiv.nativeElement.scrollIntoView({ behavior: "smooth" });
   }
@@ -210,6 +205,7 @@ export class CalculeAgoraComponent implements OnInit {
     bottomSheefRef.afterDismissed().subscribe((response) => {
       if (response) {
         this.tipoDespesa.setValue(response.tipoDespesa);
+        this.nomeDespesa.setValue(response.nomeDespesa);
         this.descricaoDespesa.setValue(response.despesa);
         this.valorDespesa.reset();
       }
@@ -248,18 +244,12 @@ export class CalculeAgoraComponent implements OnInit {
 
     despesa = lancamento.despesas ? lancamento.despesas.find(despesa => String(despesa.tipo) === String(this.tipoDespesa.value)) : null;
 
-    console.log("despesa do mês", despesa)
+    console.log("tipoDespesa", this.tipoDespesa.value)
 
     if (despesa == null) {
       despesa = new Despesa;
-      despesa.name = this.tipoDespesa.value;
-
-      Object.keys(DespesaEnum).forEach(key => {
-        if (String(this.tipoDespesa.value) === String(key)) {
-          despesa.tipo = DespesaEnum[key];
-        }
-      });
-
+      despesa.tipo = this.tipoDespesa.value;
+      despesa.name = this.nomeDespesa.value;
     }
 
     let itemDespesa = new DespesaItem;
@@ -271,8 +261,9 @@ export class CalculeAgoraComponent implements OnInit {
     despesa.itensDespesa.push(itemDespesa);
 
     let tipoDespesaAtual = false;
+
     Array.from(lancamento.despesas as Despesa[]).forEach(desp => {
-      if (desp.name === String(this.tipoDespesa.value)) {
+      if (desp.tipo === String(this.tipoDespesa.value)) {
         desp = despesa;
         tipoDespesaAtual = true;
       }
@@ -282,16 +273,12 @@ export class CalculeAgoraComponent implements OnInit {
       lancamento.despesas.push(despesa);
     }
 
-
     despesa.itensDespesa = despesa.itensDespesa ? despesa.itensDespesa : [];
 
     console.log("despesa.itensDespesa", despesa.itensDespesa)
 
-
-
-
-
     let mesAtual = false;
+
     Array.from(lancamentos as Lancamento[]).forEach(lan => {
       if (lan.mes === lancamento.mes) {
         lan = lancamento;
@@ -390,6 +377,10 @@ export class CalculeAgoraComponent implements OnInit {
 
   get tipoDespesa(): FormControl {
     return this.formGroup.get('tipoDespesa') as FormControl;
+  }
+
+  get nomeDespesa(): FormControl {
+    return this.formGroup.get('nomeDespesa') as FormControl;
   }
 
   get valorDespesa(): FormControl {

@@ -44,15 +44,14 @@
         <div class="description text-center">
         </div>
         <div class="row">
-          <div class="col-md-4 ml-auto mr-auto text-center">
+          <div class="ml-auto mr-auto text-center">
             <div class="form-group bmd-form-group">
-              <mat-button-toggle-group #group="matButtonToggleGroup" aria-label="Selecione o mês"
-                [value]="selectedMonth" (change)="onMonthChange(group)">
-                <mat-button-toggle buttonId="{{lastMonth}}" value="lastMonth">{{lastMonth}}</mat-button-toggle>
-                <mat-button-toggle buttonId="{{currentMonth}}" value="currentMonth">{{currentMonth}}</mat-button-toggle>
-                <mat-button-toggle buttonId="{{nextMonth}}" value="nextMonth" [disabled]="true">{{nextMonth}}
-                </mat-button-toggle>
-              </mat-button-toggle-group>
+              <mat-chip-list #chipList aria-label="Selecione o mês">
+                <mat-chip *ngFor="let mes of meses" [selectable]="selectable" (click)="selecionarMes(mes)"
+                  [selected]="selectedMonthDesc === mes">
+                  {{mes}}
+                </mat-chip>
+              </mat-chip-list>
               <p>
                 <small>Mês selecionado: <span style="font-weight: bold;">{{selectedMonthDesc}}</span></small>
               </p>

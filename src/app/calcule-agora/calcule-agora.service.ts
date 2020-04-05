@@ -9,7 +9,7 @@ export class CalculeAgoraService {
   private atualizarDespesasSubject = new Subject<any>();
 
   constructor() {
-    
+
   }
 
   atualizarDespesasObservable(): Observable<any> {
@@ -31,7 +31,7 @@ export class CalculeAgoraService {
             despesas: [
               {
                 tipo: "F",
-                name: "Fixas",
+                nome: "Fixas",
                 itensDespesa: [
                   {
                     title: 'Supermercado',
@@ -49,7 +49,7 @@ export class CalculeAgoraService {
               },
               {
                 tipo: "V",
-                name: "Variáveis",
+                nome: "Variáveis",
                 itensDespesa: [
                   {
                     title: 'Ida ao Restaurante',
@@ -66,7 +66,7 @@ export class CalculeAgoraService {
                 ]
               }, {
                 tipo: "I",
-                name: "Investimentos",
+                nome: "Investimentos",
                 itensDespesa: [
                   {
                     title: 'Poupança',
@@ -93,7 +93,7 @@ export class CalculeAgoraService {
     return [
       {
         tipo: "F",
-        name: "Fixas",
+        nome: "Fixas",
         subItems: [
           {
             title: 'Supermercado',
@@ -107,7 +107,7 @@ export class CalculeAgoraService {
       },
       {
         tipo: "V",
-        name: "Variáveis",
+        nome: "Variáveis",
         subItems: [
           {
             title: 'Ida ao Restaurante',
@@ -120,7 +120,7 @@ export class CalculeAgoraService {
         ]
       }, {
         tipo: "I",
-        name: "Investimentos",
+        nome: "Investimentos",
         subItems: [
           {
             title: 'Poupança',
