@@ -334,11 +334,18 @@ export class CalculeAgoraComponent implements OnInit {
   }
 
   abrirLancamentosDespesasMesBottomSheet() {
-    this.bottomSheet.open(BottomSheetLancamentosDespesasComponent);
+    const bottomSheetRef = this.bottomSheet.open(BottomSheetLancamentosDespesasComponent);
+
+    bottomSheetRef.afterDismissed().subscribe(() => {
+      this.atualizarContadorLancamentoDespesas();
+    });
   }
 
   abrirComoFuncionaBottomSheet() {
-    this.bottomSheet.open(BottomSheetComoFuncionaComponent);
+    this.bottomSheet.open(BottomSheetComoFuncionaComponent, {
+      panelClass: 'bottom-sheet-style'
+    });
+
   }
 
   getFormattedPrice(price: number) {

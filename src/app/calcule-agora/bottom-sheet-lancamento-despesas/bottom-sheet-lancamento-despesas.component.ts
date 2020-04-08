@@ -28,6 +28,10 @@ export class BottomSheetLancamentosDespesasComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.carregarLancamentos();
+    }
+
+    carregarLancamentos() {
         this.lancamentos = this.localStorage.getLocalStorageLancamentos();
         if (this.lancamentos.length > 0) {
             this.carregarDespesas(this.lancamentos);
@@ -54,11 +58,7 @@ export class BottomSheetLancamentosDespesasComponent implements OnInit {
     }
 
     selecionarDespesa(despesa): void {
-        console.log(despesa)
-        console.log(this.despesas)
         this.carregarDespesasSelecionadas(despesa);
-        console.log(this.despesas)
-        console.log(this.despesasSelecionadas)
     }
 
     carregarDespesasSelecionadas(despesaSelecionada: string) {
@@ -72,6 +72,28 @@ export class BottomSheetLancamentosDespesasComponent implements OnInit {
     removerDespesa(itemDespesa) {
         this.despesasSelecionadas.forEach(item => {
             item.itensDespesa.splice(item.itensDespesa.indexOf(itemDespesa), 1);
+
         });
+
+        this.atualizarDespesas();
+    }
+
+    atualizarDespesas() {
+        this.despesas = [];
+        this.despesas = this.despesasSelecionadas;
+        let atualizarStorage = false;
+
+        this.lancamentos.forEach(lancamento => {
+            if (this.mesAtual === lancamento.mes) {
+                lancamento.despesas = [];
+                lancamento.despesas.push(...this.despesas);
+                atualizarStorage = true;
+            }
+        });
+
+        if (atualizarStorage) {
+            this.localStorage.setLocalStorageLancamentos(this.lancamentos);
+            this.carregarLancamentos();
+        }
     }
 }

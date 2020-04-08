@@ -3,25 +3,9 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <h1 style="font-size: 2rem;" class="title">Controle 50-30-20</h1>
-        <span style="font-weight: 400">Neste controle financeiro, seus ganhos devem ser divididos em 50% para seus
-          <button class="p-1 btn-tooltip btn" mat-button #matTooltip="matTooltip" matTooltip={{strGastos50}}
-            (click)="matTooltip.toggle()">
-            gastos fixos
-          </button>, 30% para
-          <button class="p-1 btn-tooltip btn" mat-button #matTooltip2="matTooltip" matTooltip={{strGastos30}}
-            (click)="matTooltip2.toggle()">
-            <i>lifestyle</i>
-          </button> e
-          20% para <button class="p-1 btn-tooltip btn" mat-button #matTooltip3="matTooltip" matTooltip={{strGastos20}}
-            (click)="matTooltip3.toggle()">
-            investimentos
-          </button>.</span>
-        <br>
-        <br>
-        <a (click)="scroll()" class="btn btn-info btn-raised btn-lg coloured-card-btn-img">
-          <i class="fa fa-calculator"></i>&nbsp;&nbsp;CALCULE AGORA
-        </a>
+        <h1 style="font-size: 2rem;" class="title m-0">Controle 50-30-20</h1>
+        <span style="font-weight: 400; font-size: 14px;"><i>“Não se controla o que não se mede... " W. Edwards
+            Deming</i></span>
       </div>
     </div>
   </div>
@@ -33,7 +17,7 @@
         <div class="profile-content">
           <div class="row text-center">
             <div class="col-md-8 ml-auto mr-auto">
-              <button class="p-2 btn-tooltip m-0" mat-button #matTooltipSaibaMais="matTooltip"
+              <button class="p-2 btn-tooltip m-1" mat-button #matTooltipSaibaMais="matTooltip"
                 matTooltip="Sempre que você enviar as suas despesas do mês ao seu e-mail, o seu código secreto será informado. Este código é unicamente seu e será usado aqui para que você revise o seu histórico de gastos."
                 (click)="abrirComoFuncionaBottomSheet()">
                 <mat-icon>info</mat-icon>
@@ -145,7 +129,7 @@
                       </span>
                     </div>
                     <input type="text" formControlName="descricaoDespesa" class="form-control"
-                      placeholder="Descrição da Despesa">
+                      placeholder="Descrição da Despesa" tabindex="1" (click)="openBottomSheet()" readonly>
                   </div>
                 </div>
                 <div class="form-group bmd-form-group">
@@ -157,7 +141,8 @@
                     </div>
                     <input placeholder="Valor da Despesa" formControlName="valorDespesa" currencyMask required
                       autocomplete="off" [options]="{ prefix: '', thousands: '.', decimal: ',' }" type="text"
-                      #valorDespesa tabindex="2" class="form-control input-renda" pattern="[0-9]*" inputmode="numeric">
+                      #valorDespesa tabindex="2" class="form-control input-renda" pattern="[0-9]*" inputmode="numeric"
+                      autofocus>
                   </div>
                 </div>
               </div>
