@@ -68,6 +68,9 @@
         <div class="tab-content tab-space">
           <div class="tab-pane active text-center gallery" id="studio">
             <div class="row">
+              <p class="text-center w-100">
+                <small>Preencha sua renda e veja o gráfico ideal</small>
+              </p>
               <div class="col-md-4 ml-auto mr-auto">
                 <div class="form-group bmd-form-group">
                   <div class="input-group">
@@ -101,9 +104,9 @@
             </div>
             <div class="row">
               <div class="col-md-4 ml-auto mr-auto text-center">
-                <h5 class="description">Renda do mês {{selectedMonthDesc}}: <span style="font-weight: bold;">R$
-                    {{getFormattedPrice(rendaTotal)}}</span></h5>
-                <h3 class="title" style="margin: 0px;">Gráfico 50-30-20 Ideal</h3>
+                <h4 class="description">Renda do mês {{selectedMonthDesc}}: <span style="font-weight: bold;">R$
+                    {{getFormattedPrice(rendaTotal)}}</span></h4>
+                <h4 class="title" style="margin: 0px;">Gráfico 50-30-20 Ideal</h4>
                 <div id="pie-chart-parent" style="display: flex; overflow: hidden;" *ngIf="rendaTotal > 0; else empty">
                   <ngx-charts-pie-grid [scheme]=" colorScheme" [results]="single" (select)="onSelect($event)"
                     (onWindowResize)="onResize($event)" [view]="view" style="margin: 0 auto !important;" [width]="auto">
@@ -119,8 +122,11 @@
           </div>
           <div class="tab-pane text-center gallery" id="works">
             <div class="row">
+              <p class="text-center w-100">
+                <small>Clique abaixo para selecionar despesa</small>
+              </p>
               <div class="col-md-4 ml-auto mr-auto">
-                <div class="form-group bmd-form-group">
+                <div class="form-group">
                   <button mat-button (click)="openBottomSheet()">Selecionar Despesa</button>
                   <div class="input-group">
                     <div class="input-group-prepend">
