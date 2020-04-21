@@ -100,7 +100,11 @@ export class CalculeAgoraService {
             desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
           },
           {
-            title: 'Aluguel / Prestação',
+            title: 'Aluguel / Prestação Habitacional',
+            desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
+          },
+          {
+            title: 'Aluguel / Prestação Veículo',
             desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
           },
           {
@@ -172,10 +176,6 @@ export class CalculeAgoraService {
             desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
           },
           {
-            title: 'Prestação',
-            desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
-          },
-          {
             title: 'IPVA + Seguro Obrigatório',
             desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
           },
@@ -220,15 +220,11 @@ export class CalculeAgoraService {
             desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
           },
           {
-            title: 'Higiene Pessoal (unha, depilação etc.)',
-            desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
-          },
-          {
             title: 'Cosméticos',
             desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
           },
           {
-            title: 'Cabeleireiro',
+            title: 'Salão de Beleza',
             desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
           },
           {
@@ -270,6 +266,14 @@ export class CalculeAgoraService {
           {
             title: 'Uniformes',
             desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
+          },
+          {
+            title: 'Cartão de Crédito',
+            desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
+          },
+          {
+            title: 'Saques Bancários',
+            desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
           }
         ]
       },
@@ -294,7 +298,7 @@ export class CalculeAgoraService {
             desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
           },
           {
-            title: 'Midias e acessórios',
+            title: 'Mídias e acessórios',
             desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
           },
           {
@@ -326,7 +330,7 @@ export class CalculeAgoraService {
             desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
           },
           {
-            title: 'Fundo para Viagens / Gastos de férias',
+            title: 'Gastos de férias',
             desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
           },
           {
@@ -339,10 +343,6 @@ export class CalculeAgoraService {
           },
           {
             title: 'Manutenção Veículo',
-            desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
-          },
-          {
-            title: 'Prestações',
             desc: 'Mais alcance e menos esforço. Todo processo de compra e venda é realizado sem precisar de telefone ou e-mail para realizar cotações e faturar os pedidos'
           }
         ]

@@ -33,6 +33,7 @@ export class BottomSheetLancamentosDespesasComponent implements OnInit {
 
     carregarLancamentos() {
         this.lancamentos = this.localStorage.getLocalStorageLancamentos();
+        console.log(this.lancamentos)
         if (this.lancamentos.length > 0) {
             this.carregarDespesas(this.lancamentos);
         }
@@ -72,7 +73,6 @@ export class BottomSheetLancamentosDespesasComponent implements OnInit {
     removerDespesa(itemDespesa) {
         this.despesasSelecionadas.forEach(item => {
             item.itensDespesa.splice(item.itensDespesa.indexOf(itemDespesa), 1);
-
         });
 
         this.atualizarDespesas();

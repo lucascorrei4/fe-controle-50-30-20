@@ -19,4 +19,15 @@
   right: 0%;
 }
 
+.div-fixa {
+  height: 80px;
+  position: sticky;
+  top: 0px;
+  background-color: white;
+  z-index: 1;
+}
+
+.div-scroll {
+  overflow: scroll;
+}
 
