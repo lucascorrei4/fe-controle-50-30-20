@@ -6,6 +6,7 @@ import { Lancamento } from 'src/app/models/lancamento';
 import { Despesa } from 'src/app/models/despesa';
 import { DespesaEnum } from 'src/app/enums/despesas-enum';
 import { UtilService } from 'src/app/services/util.service';
+import { DespesaItem } from 'src/app/models/despesa-item';
 
 @Component({
     selector: 'bottom-sheet-lancamento-despesas',
@@ -64,36 +65,38 @@ export class BottomSheetLancamentosDespesasComponent implements OnInit {
 
     carregarDespesasSelecionadas(despesaSelecionada: string) {
         this.despesasSelecionadas = this.despesas.filter(despesa => String(despesa.tipo) === despesaSelecionada);
+        console.log('carregarDespesasSelecionadas', this.despesasSelecionadas);
     }
 
     getFormattedPrice(price: number) {
         return this.utilService.getFormattedPrice(price).substring(3);
     }
 
-    removerDespesa(itemDespesa) {
-        this.despesasSelecionadas.forEach(item => {
-            item.itensDespesa.splice(item.itensDespesa.indexOf(itemDespesa), 1);
+    removerDespesa(itemDespesa: DespesaItem) {
+        this.despesasSelecionadas.forEach(despesa => {
+            despesa.itensDespesa = despesa.itensDespesa.filter(item => item != itemDespesa);
         });
 
         this.atualizarDespesas();
     }
 
     atualizarDespesas() {
-        this.despesas = [];
-        this.despesas = this.despesasSelecionadas;
         let atualizarStorage = false;
 
         this.lancamentos.forEach(lancamento => {
-            if (this.mesAtual === lancamento.mes) {
-                lancamento.despesas = [];
-                lancamento.despesas.push(...this.despesas);
-                atualizarStorage = true;
-            }
+            lancamento.despesas.forEach(despesa => {
+                if (this.mesAtual === lancamento.mes && String(despesa.tipo) === this.despesasSelecionadas[0].tipo) {
+                    lancamento.despesas = [];
+                    lancamento.despesas.push(...this.despesasSelecionadas);
+                    atualizarStorage = true;
+                }
+            })
         });
 
         if (atualizarStorage) {
             this.localStorage.setLocalStorageLancamentos(this.lancamentos);
             this.carregarLancamentos();
         }
+        
     }
 }

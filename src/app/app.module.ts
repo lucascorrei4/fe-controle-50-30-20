@@ -18,6 +18,7 @@ import { CalculeAgoraService } from './calcule-agora/calcule-agora.service';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 import { BottomSheetDespesasComponent } from './calcule-agora/bottom-sheet-despesas/bottom-sheet-despesas.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -72,7 +73,8 @@ registerLocaleData(localePtBr);
     NgxCurrencyModule,
     MatBadgeModule,
     MatChipsModule,
-    MatCardModule
+    MatCardModule,
+    MatTabsModule
   ],
   exports: [
     MatTooltipModule,

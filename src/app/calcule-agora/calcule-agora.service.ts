@@ -348,7 +348,7 @@ export class CalculeAgoraService {
         ]
       }, {
         tipo: "I",
-        nome: "FUNDOS E INVESTIMENTOS",
+        nome: "INVESTIMENTOS",
         subItems: [
           {
             title: 'Poupança',
