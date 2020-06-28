@@ -31,6 +31,7 @@ export class CalculeAgoraComponent implements OnInit {
 
   @ViewChild('tooltip', { static: true }) matTooltip: MatTooltip;
   @ViewChild('calculeAgora', { static: true }) calculeAgoraDiv: ElementRef;
+  @ViewChild("valorDespesa", { static: true }) valorDespesaEl: ElementRef;
 
   public STR_GASTOS_50 = 'Tudo o que você gasta de forma rotineira: moradia, aluguél, contas de energia, água e internet, alimentação, transporte, saúde, mercado, educação, seguros e doações.';
   public STR_GASTOS_30 = 'Tudo o que você gasta de forma variável sem prioridade: despesas pessoais para entretenimento como idas ao cinema, salão de beleza, bares e restaurantes, viagens, academias, compras e cuidados pessoais...';
@@ -46,7 +47,6 @@ export class CalculeAgoraComponent implements OnInit {
   public today = new Date();
 
   public selectedMonthDesc: string;
-  public msgAdicionarDespesas: string = "Selecione nova despesa";
 
   public formGroup: FormGroup;
 
@@ -200,7 +200,7 @@ export class CalculeAgoraComponent implements OnInit {
     this.calculeAgoraDiv.nativeElement.scrollIntoView({ behavior: "smooth" });
   }
 
-  openBottomSheet(): void {
+  abrirBottomSheetDespesas(): void {
     const bottomSheefRef = this.bottomSheet.open(BottomSheetDespesasComponent);
     bottomSheefRef.afterDismissed().subscribe((response) => {
       if (response) {
@@ -208,6 +208,9 @@ export class CalculeAgoraComponent implements OnInit {
         this.nomeDespesa.setValue(response.nomeDespesa);
         this.descricaoDespesa.setValue(response.despesa);
         this.valorDespesa.reset();
+        setTimeout(() => {
+          this.valorDespesaEl.nativeElement.focus();
+        }, 100);
       }
     });
   }
@@ -275,7 +278,6 @@ export class CalculeAgoraComponent implements OnInit {
 
     despesa.itensDespesa = despesa.itensDespesa ? despesa.itensDespesa : [];
 
-    console.log("despesa.itensDespesa", despesa.itensDespesa)
 
     let mesAtual = false;
 
@@ -297,10 +299,10 @@ export class CalculeAgoraComponent implements OnInit {
 
       this.atualizarContadorLancamentoDespesas();
 
-      this.msgAdicionarDespesas = "Despesa '" + this.descricaoDespesa.value + "' criada!";
+      this.openSnackBar('Sucesso', "Despesa '" + this.descricaoDespesa.value + "' criada!")
 
       setTimeout(() => {
-        this.msgAdicionarDespesas = "Selecione nova despesa";
+        this.openSnackBar("E agora?", "Selecione nova despesa");
       }, 3000);
 
       this.descricaoDespesa.reset();

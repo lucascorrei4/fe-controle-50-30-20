@@ -1,7 +1,7 @@
 <mat-tab-group>
     <mat-tab *ngFor="let item of despesas">
         <ng-template mat-tab-label>
-            {{item.nome}}
+            <span matBadge="{{item.subItems.length}}" matBadgeOverlap="false">{{item.nome}}</span>
         </ng-template>
         <mat-list>
             <mat-selection-list>

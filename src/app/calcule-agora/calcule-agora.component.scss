@@ -19,29 +19,22 @@
     height: 45px;
 }
 
-.floating-button-right {
-    bottom: 15px;
-    right: 20%;
-    position: fixed;
-    background-color: #00bcd4;
-    color: #fff;
-}
-
-.floating-button-center {
-    bottom: 15px;
-    position: fixed;
-    background-color: #ff9800;
-    color: #fff;
-}
-
 .add-button {
     background-color: #ff9800;
     color: #fff;
 }
 
-.floating-button-left {
-    bottom: 15px;
-    left: 20%;
+.floating-button-center {
+    bottom: 13%;
+    right: 10%;
+    position: fixed;
+    background-color: #ff9800;
+    color: #fff;
+}
+
+.floating-button-more {
+    bottom: 5%;
+    right: 10%;
     position: fixed;
     background-color: #9c27b0;
     color: #fff;

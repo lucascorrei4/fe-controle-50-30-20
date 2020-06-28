@@ -97,6 +97,35 @@ export class BottomSheetLancamentosDespesasComponent implements OnInit {
             this.localStorage.setLocalStorageLancamentos(this.lancamentos);
             this.carregarLancamentos();
         }
-        
+
+    }
+
+    calcularTotalDespesasAdicionadas(despesaSelecionada: string): number {
+        var despesas = this.despesas.filter(despesa => String(despesa.tipo) === despesaSelecionada);
+        for (let desp of despesas) {
+            return desp.itensDespesa.length;
+        }
+        return 0;
+
+    }
+
+    calcularTotal(itensDespesa): string {
+        let valorTotal = 0;
+        for (let item of itensDespesa) {
+            valorTotal += item.valor;
+        }
+        return this.getFormattedPrice(valorTotal);
+    }
+
+    calcularTotalGeral(): string {
+        let valorTotal = 0;
+        this.lancamentos.forEach(lancamento => {
+            lancamento.despesas.forEach(despesa => {
+                for (let item of despesa.itensDespesa) {
+                    valorTotal += item.valor;
+                }
+            })
+        });
+        return this.getFormattedPrice(valorTotal);
     }
 }

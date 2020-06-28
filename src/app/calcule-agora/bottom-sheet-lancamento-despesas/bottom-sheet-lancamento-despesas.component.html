@@ -1,8 +1,11 @@
 <div class="ml-auto mr-auto text-center div-fixa">
-    <p><small>Lançamentos do Mês {{mesAtual}}</small></p>
-    <mat-chip-list aria-label="Tipo de Despesa" class="mb-2 d-inline-flex">
+    <p>Lançamentos do Mês {{mesAtual}}</p>
+    <p>Total Gasto R$ {{calcularTotalGeral()}}</p>
+    <mat-chip-list aria-label="Tipo de Despesa" class="m-2 d-inline-flex">
         <mat-chip *ngFor="let despesa of DespesaEnum | keyvalue" [selectable]="selectable"
-            [selected]="despesa.value !== despesa.value" (click)="selecionarDespesa(despesa.value)">
+            [selected]="despesa.value !== despesa.value" (click)="selecionarDespesa(despesa.value)"
+            matBadge={{calcularTotalDespesasAdicionadas(despesa.value)}} class="overflow"
+            matBadgePosition="above after" color="accent">
             {{despesa.key}}
         </mat-chip>
     </mat-chip-list>
@@ -35,5 +38,8 @@
                 </mat-chip-list>
             </ng-template>
         </ng-container>
+        <p class="valor-despesa font-weight-bold m-1 text-center">
+            TOTAL: R$ {{calcularTotal(despesa.itensDespesa)}}
+        </p>
     </ng-container>
 </div>

@@ -1,6 +1,7 @@
 .example-card {
     max-width: 400px;
-  }
+    margin: 0 auto;
+}
  
  .numero { 
   line-height: 2;
@@ -20,14 +21,24 @@
 }
 
 .div-fixa {
-  height: 80px;
   position: sticky;
   top: 0px;
   background-color: white;
   z-index: 1;
+  padding: 10px 0;
 }
 
 .div-scroll {
-  overflow: scroll;
+  overflow: overlay;
+  width: 100%;
+  padding-top: 10%;
+}
+
+.overflow {
+  overflow: inherit;
+}
+
+.mat-bottom-sheet-container {
+  padding: 0 16px 8px 16px !important;
 }
 
