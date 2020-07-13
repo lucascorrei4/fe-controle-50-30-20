@@ -19,6 +19,7 @@ import { DespesaItem } from '../models/despesa-item';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Lancamento } from '../models/lancamento';
 import { DespesaEnum } from '../enums/despesas-enum';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 
 @Component({
@@ -193,7 +194,7 @@ export class CalculeAgoraComponent implements OnInit {
     user.codigo = "";
     user.email = "";
     user.lancamentos = [];
-    this.apiService.salvar(user);
+    
   }
 
   scroll() {
@@ -293,7 +294,10 @@ export class CalculeAgoraComponent implements OnInit {
 
     this.storageService.setLocalStorageLancamentos(lancamentos);
 
+    
     console.log(this.storageService.getLocalStorageLancamentos());
+    console.log("lancamentos", lancamentos);
+    this.apiService.salvar(lancamentos);
 
     if (lancamento.despesas.length > 0) {
 
@@ -358,6 +362,13 @@ export class CalculeAgoraComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  selectedTabChange(mes: string) {
+    this.selectedMonthDesc = mes;
+  }
+
+  tabChanged(tabChangeEvent: MatTabChangeEvent): void {
   }
 
   get strGastos50(): string {

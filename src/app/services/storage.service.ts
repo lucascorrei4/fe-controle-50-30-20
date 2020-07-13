@@ -7,7 +7,7 @@ import { Lancamento } from '../models/lancamento';
 @Injectable()
 export class StorageService {
 
-    getLocalUser(): User {
+    getLocalUserLogin(): User {
         let usr = localStorage.getItem(STORAGE_KEYS.localUser);
         if (usr == null) {
             return new User;

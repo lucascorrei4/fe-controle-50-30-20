@@ -28,173 +28,140 @@
         </div>
         <div class="description text-center">
         </div>
-        <div class="row">
-          <div class="ml-auto mr-auto text-center">
-            <div class="form-group bmd-form-group">
-              <mat-chip-list #chipList aria-label="Selecione o mês">
-                <mat-chip *ngFor="let mes of meses" [selectable]="selectable" (click)="selecionarMes(mes)"
-                  [selected]="selectedMonthDesc === mes">
-                  {{mes}}
-                </mat-chip>
-              </mat-chip-list>
-              <p>
-                <small>Mês selecionado: <span style="font-weight: bold;">{{selectedMonthDesc}}</span></small>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 ml-auto mr-auto">
-            <div class="profile-tabs">
-              <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
-                <li class="nav-item">
-                  <a class="nav-link active" href="#studio" role="tab" data-toggle="tab">
-                    <i class="material-icons">money</i> Ganhos
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#works" role="tab" data-toggle="tab">
-                    <i class="material-icons">fastfood</i> Despesas
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
-                    <i class="material-icons">mail</i> Enviar
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="tab-content tab-space">
-          <div class="tab-pane active text-center gallery" id="studio">
+        <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChanged($event)">
+          <mat-tab *ngFor="let mes of meses" (click)="selectedTabChange($event, mes)">
+            <ng-template mat-tab-label>
+              <div (mousedown)="selectedTabChange(mes)">
+                <span> {{ mes }}</span>
+              </div>
+            </ng-template>
+            <p class="text-center">
+              <small>Mês selecionado: <span style="font-weight: bold;">{{selectedMonthDesc}}</span></small>
+            </p>
             <div class="row">
-              <p class="text-center w-100">
-                <small>Preencha sua renda e veja o gráfico ideal</small>
-              </p>
-              <div class="col-md-4 ml-auto mr-auto">
-                <div class="form-group bmd-form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="material-icons">monetization_on</i>
-                      </span>
+              <div class="col-md-6 ml-auto mr-auto">
+                <div class="profile-tabs">
+                  <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#studio" role="tab" data-toggle="tab">
+                        <i class="material-icons">money</i> Ganhos
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#works" role="tab" data-toggle="tab">
+                        <i class="material-icons">fastfood</i> Despesas
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="tab-content tab-space">
+              <div class="tab-pane active text-center gallery" id="studio">
+                <div class="row">
+                  <p class="text-center w-100">
+                    <small>Preencha sua renda e veja o gráfico ideal</small>
+                  </p>
+                  <div class="col-md-4 ml-auto mr-auto">
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">monetization_on</i>
+                          </span>
+                        </div>
+                        <input placeholder="Quanto você recebeu este mês?" formControlName="renda1" currencyMask
+                          required autocomplete="off" [options]="{ prefix: '', thousands: '.', decimal: ',' }"
+                          type="text" #inputRenda1 tabindex="1" class="form-control input-renda" pattern="[0-9]*"
+                          inputmode="numeric">
+                      </div>
                     </div>
-                    <input placeholder="Quanto você recebeu este mês?" formControlName="renda1" currencyMask required
-                      autocomplete="off" [options]="{ prefix: '', thousands: '.', decimal: ',' }" type="text"
-                      #inputRenda1 tabindex="1" class="form-control input-renda" pattern="[0-9]*" inputmode="numeric">
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">monetization_on</i>
+                          </span>
+                        </div>
+                        <input placeholder="Renda do(a) parceiro(a)" formControlName="renda2" currencyMask required
+                          autocomplete="off" [options]="{ prefix: '', thousands: '.', decimal: ',' }" type="text"
+                          #inputRenda2 tabindex="2" class="form-control input-renda" pattern="[0-9]*"
+                          inputmode="numeric">
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="form-group bmd-form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="material-icons">monetization_on</i>
-                      </span>
-                    </div>
-                    <input placeholder="Renda do(a) parceiro(a)" formControlName="renda2" currencyMask required
-                      autocomplete="off" [options]="{ prefix: '', thousands: '.', decimal: ',' }" type="text"
-                      #inputRenda2 tabindex="2" class="form-control input-renda" pattern="[0-9]*" inputmode="numeric">
+                <div class="row">
+                  <div class="col-md-4 ml-auto mr-auto">
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 ml-auto mr-auto">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 ml-auto mr-auto text-center">
-                <h4 class="description">Renda do mês {{selectedMonthDesc}}: <span style="font-weight: bold;">R$
-                    {{getFormattedPrice(rendaTotal)}}</span></h4>
-                <h4 class="title" style="margin: 0px;">Gráfico 50-30-20 Ideal</h4>
-                <div id="pie-chart-parent" style="display: flex; overflow: hidden;" *ngIf="rendaTotal > 0; else empty">
-                  <ngx-charts-pie-grid [scheme]=" colorScheme" [results]="single" (select)="onSelect($event)"
-                    (onWindowResize)="onResize($event)" [view]="view" style="margin: 0 auto !important;" [width]="auto">
-                  </ngx-charts-pie-grid>
-                </div>
-                <ng-template #empty>
-                  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                  <mat-chip-list style="display: inline-flex;" class="m-1">
-                    <mat-chip color="accent" selected>Aguardando preenchimento...</mat-chip>
-                  </mat-chip-list>
-                </ng-template>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane text-center gallery" id="works">
-            <div class="row">
-              <p class="text-center w-100">
-                <small>Clique abaixo para selecionar despesa</small>
-              </p>
-              <div class="row" style="margin: 0 auto;">
-                <mat-chip-list style="display: inline-flex;">
-                  <mat-chip color="accent" (click)="abrirBottomSheetDespesas()">Selecionar Despesa</mat-chip>
-                </mat-chip-list>
-              </div>
-              <div class="col-md-4 ml-auto mr-auto">
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="material-icons">list</i>
-                      </span>
+                <div class="row">
+                  <div class="col-md-4 ml-auto mr-auto text-center">
+                    <h4 class="description">Renda do mês {{selectedMonthDesc}}: <span style="font-weight: bold;">R$
+                        {{getFormattedPrice(rendaTotal)}}</span></h4>
+                    <h4 class="title" style="margin: 0px;">Gráfico 50-30-20 Ideal</h4>
+                    <div id="pie-chart-parent" style="display: flex; overflow: hidden;"
+                      *ngIf="rendaTotal > 0; else empty">
+                      <ngx-charts-pie-grid [scheme]=" colorScheme" [results]="single" (select)="onSelect($event)"
+                        (onWindowResize)="onResize($event)" [view]="view" style="margin: 0 auto !important;"
+                        [width]="auto">
+                      </ngx-charts-pie-grid>
                     </div>
-                    <input type="text" formControlName="descricaoDespesa" class="form-control"
-                      placeholder="Descrição da Despesa" tabindex="1" (click)="openBottomSheet()" readonly>
-                  </div>
-                </div>
-                <div class="form-group bmd-form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="material-icons">monetization_on</i>
-                      </span>
-                    </div>
-                    <input placeholder="Valor da Despesa" formControlName="valorDespesa" currencyMask required
-                      autocomplete="off" [options]="{ prefix: '', thousands: '.', decimal: ',' }" type="text"
-                      #valorDespesa tabindex="2" class="form-control input-renda" pattern="[0-9]*" inputmode="numeric"
-                      autofocus>
+                    <ng-template #empty>
+                      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                      <p><small>Aguardando preenchimento...</small></p>
+                    </ng-template>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 ml-auto mr-auto text-center m-2">
-                <mat-chip-list style="display: inline-flex;">
-                  <mat-chip color="accent" (click)="adicionarDespesa()">Adicionar Despesa</mat-chip>
-                </mat-chip-list>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane text-center gallery" id="favorite">
-            <div class="row">
-              <div class="col-md-4 ml-auto mr-auto text-center">
-                <div class="form-group bmd-form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="material-icons">mail</i>
-                      </span>
+              <div class="tab-pane text-center gallery" id="works">
+                <div class="row">
+                  <p class="text-center w-100">
+                    <small>Clique abaixo para selecionar despesa</small>
+                  </p>
+                  <div class="row" style="margin: 0 auto;">
+                    <mat-chip-list style="display: inline-flex;">
+                      <mat-chip color="accent" (click)="abrirBottomSheetDespesas()">Selecionar Despesa</mat-chip>
+                    </mat-chip-list>
+                  </div>
+                  <div class="col-md-4 ml-auto mr-auto">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">list</i>
+                          </span>
+                        </div>
+                        <input type="text" formControlName="descricaoDespesa" class="form-control"
+                          placeholder="Descrição da Despesa" tabindex="1" (click)="openBottomSheet()" readonly>
+                      </div>
                     </div>
-                    <input type="text" class="form-control" formControlName="email" placeholder="Digite seu e-mail">
-                    <div class="invalid-feedback" *ngIf="formGroup.controls.email.errors?.required">
-                      Digite seu e-mail!
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">monetization_on</i>
+                          </span>
+                        </div>
+                        <input placeholder="Valor da Despesa" formControlName="valorDespesa" currencyMask required
+                          autocomplete="off" [options]="{ prefix: '', thousands: '.', decimal: ',' }" type="text"
+                          #valorDespesa tabindex="2" class="form-control input-renda" pattern="[0-9]*"
+                          inputmode="numeric" autofocus>
+                      </div>
                     </div>
-                    <div class="invalid-feedback" *ngIf="formGroup.controls.email.errors?.pattern">
-                      Digite um e-mail válido!
-                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 ml-auto mr-auto text-center m-2">
+                    <mat-chip-list style="display: inline-flex;">
+                      <mat-chip color="accent" (click)="adicionarDespesa()">Adicionar Despesa</mat-chip>
+                    </mat-chip-list>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-4 ml-auto mr-auto text-center">
-                <button mat-stroked-button type="submit">Salvar e Enviar</button>
-              </div>
-            </div>
-          </div>
-        </div>
+          </mat-tab>
+        </mat-tab-group>
       </div>
     </form>
   </div>

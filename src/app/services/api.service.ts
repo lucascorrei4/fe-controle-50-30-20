@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { User } from '../models/user';
 import { catchError, map } from 'rxjs/operators';
+import { Lancamento } from '../models/lancamento';
+import { StorageService } from './storage.service';
 
 export interface Item {
   name: string;
@@ -20,14 +22,26 @@ export class ApiService {
   baseUri: string = 'http://localhost:4000/api';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storageService: StorageService) { }
 
   fetch(): Observable<Item[]> {
     return <Observable<Item[]>>this.http.get('assets/data/conf.json');
   }
 
-  salvar(user: User) {
-    console.log('abs');
+  salvar(lancamentos: Lancamento[]) {
+    let user = this.storageService.getLocalUserLogin();
+    if (user.email) {
+      user = this.storageService.getLocalUserLogin();
+      console.log("user a salvar", user)
+    } else {
+      user = new User();
+      user.id = 0;
+      user.email = "lucascorreiaevangelista@gmail.com";
+      user.codigo = "lucascorrei4";
+    }
+    user.lancamentos = lancamentos;
+    console.log("user a salvar", user)
+    this.createUser(user);
   }
 
   createUser(data): Observable<any> {
