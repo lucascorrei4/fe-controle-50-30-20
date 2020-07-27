@@ -66,3 +66,15 @@ ngx-charts-chart {
 .form-control:read-only {
     background-color: #fff;
 }
+
+.tabs.mat-tab-body-content {
+    overflow: inherit !important;
+}
+
+.toolbar-bottom {
+    border-radius: 6px 6px 6px 6px;
+}
+
+.spacer {
+    margin: 0 10px;
+}

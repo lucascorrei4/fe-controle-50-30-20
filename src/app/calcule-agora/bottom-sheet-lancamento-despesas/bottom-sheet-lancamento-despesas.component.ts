@@ -106,7 +106,6 @@ export class BottomSheetLancamentosDespesasComponent implements OnInit {
             return desp.itensDespesa.length;
         }
         return 0;
-
     }
 
     calcularTotal(itensDespesa): string {

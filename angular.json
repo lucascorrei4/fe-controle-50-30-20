@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "desorganizados"
+  "defaultProject": "desorganizados",
+  "cli": {
+    "analytics": "12a99123-a50d-4687-a553-d897a1cb7800"
+  }
 }

@@ -19,7 +19,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule, MatTabGroup } from '@angular/material/tabs';
-import { BottomSheetDespesasComponent } from './calcule-agora/bottom-sheet-despesas/bottom-sheet-despesas.component';
+import { BottomSheetListaDespesasComponent } from './calcule-agora/bottom-sheet-lista-despesas/bottom-sheet-lista-despesas.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
@@ -34,10 +34,13 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BottomSheetGraficoDespesasComponent } from './calcule-agora/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component';
 import { BottomSheetLancamentosDespesasComponent } from './calcule-agora/bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component';
 import { BottomSheetComoFuncionaComponent } from './calcule-agora/bottom-sheet-como-funciona/bottom-sheet-como-funciona.component';
 import { StorageService } from './services/storage.service';
+import { MatStepperModule } from '@angular/material/stepper';
+import { BottomSheetNovaDespesa } from './calcule-agora/bottom-sheet-nova-despesa/bottom-sheet-nova-despesa.component';
 
 registerLocaleData(localePtBr);
 
@@ -46,11 +49,12 @@ registerLocaleData(localePtBr);
     AppComponent,
     MenuComponent,
     CalculeAgoraComponent,
-    BottomSheetDespesasComponent,
+    BottomSheetListaDespesasComponent,
     BottomSheetCodigoSecretoComponent,
     BottomSheetGraficoDespesasComponent,
     BottomSheetLancamentosDespesasComponent,
-    BottomSheetComoFuncionaComponent
+    BottomSheetComoFuncionaComponent,
+    BottomSheetNovaDespesa
   ],
   imports: [
     CommonModule,
@@ -76,7 +80,9 @@ registerLocaleData(localePtBr);
     MatChipsModule,
     MatCardModule,
     MatTabsModule,
-    MatMenuModule
+    MatMenuModule,
+    MatToolbarModule,
+    MatStepperModule
   ],
   exports: [
     MatTooltipModule,
@@ -98,11 +104,12 @@ registerLocaleData(localePtBr);
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    BottomSheetDespesasComponent,
+    BottomSheetListaDespesasComponent,
     BottomSheetCodigoSecretoComponent,
     BottomSheetGraficoDespesasComponent,
     BottomSheetLancamentosDespesasComponent,
-    BottomSheetComoFuncionaComponent
+    BottomSheetComoFuncionaComponent,
+    BottomSheetNovaDespesa
   ], schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]

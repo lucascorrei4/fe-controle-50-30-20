@@ -4,13 +4,13 @@ import { CalculeAgoraService } from '../calcule-agora.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-    selector: 'bottom-sheet-despesas',
-    templateUrl: 'bottom-sheet-despesas.component.html',
+    selector: 'bottom-sheet-lista-despesas',
+    templateUrl: 'bottom-sheet-lista-despesas.component.html',
 })
-export class BottomSheetDespesasComponent {
+export class BottomSheetListaDespesasComponent {
     public despesas: any;
     constructor(
-        private bottomSheetRef: MatBottomSheetRef<BottomSheetDespesasComponent>,
+        private bottomSheetRef: MatBottomSheetRef<BottomSheetListaDespesasComponent>,
         private calculeAgoraService: CalculeAgoraService,
         private snackBar: MatSnackBar) {
         this.despesas = this.calculeAgoraService.gastos();

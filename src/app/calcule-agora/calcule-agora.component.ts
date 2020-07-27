@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, LOCALE_ID, Inject, NgZone, ViewEncapsulation, HostListener, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
-import { BottomSheetDespesasComponent } from './bottom-sheet-despesas/bottom-sheet-despesas.component';
+import { BottomSheetListaDespesasComponent } from './bottom-sheet-lista-despesas/bottom-sheet-lista-despesas.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { formatDate } from '@angular/common';
 import { BottomSheetCodigoSecretoComponent } from './bottom-sheet-codigo-secreto/bottom-sheet-codigo-secreto.component';
@@ -20,6 +20,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Lancamento } from '../models/lancamento';
 import { DespesaEnum } from '../enums/despesas-enum';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { BottomSheetNovaDespesa } from './bottom-sheet-nova-despesa/bottom-sheet-nova-despesa.component';
 
 
 @Component({
@@ -115,6 +116,7 @@ export class CalculeAgoraComponent implements OnInit {
       tipoDespesa: [''],
       nomeDespesa: [''],
       descricaoDespesa: ['', [Validators.required]],
+      obsDespesa: ['', [Validators.required]],
       valorDespesa: [null, [Validators.required]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]]
     });
@@ -202,12 +204,21 @@ export class CalculeAgoraComponent implements OnInit {
   }
 
   abrirBottomSheetDespesas(): void {
-    const bottomSheefRef = this.bottomSheet.open(BottomSheetDespesasComponent);
+    const bottomSheefRef = this.bottomSheet.open(BottomSheetListaDespesasComponent);
     bottomSheefRef.afterDismissed().subscribe((response) => {
       if (response) {
+        this.bottomSheet.open(BottomSheetNovaDespesa, {
+          data: {
+            tipoDespesa: response.tipoDespesa,
+            nomeDespesa: response.nomeDespesa,
+            descricaoDespesa: response.despesa,
+            mesSelecionado: this.selectedMonthDesc
+          }
+        });
         this.tipoDespesa.setValue(response.tipoDespesa);
         this.nomeDespesa.setValue(response.nomeDespesa);
         this.descricaoDespesa.setValue(response.despesa);
+        this.obsDespesa.reset();
         this.valorDespesa.reset();
         setTimeout(() => {
           this.valorDespesaEl.nativeElement.focus();
@@ -258,6 +269,7 @@ export class CalculeAgoraComponent implements OnInit {
 
     let itemDespesa = new DespesaItem;
     itemDespesa.desc = this.descricaoDespesa.value;
+    itemDespesa.obs = this.obsDespesa.value;
     itemDespesa.valor = this.valorDespesa.value;
 
     despesa.itensDespesa = despesa.itensDespesa ? despesa.itensDespesa : [];
@@ -311,6 +323,7 @@ export class CalculeAgoraComponent implements OnInit {
 
       this.descricaoDespesa.reset();
       this.valorDespesa.reset();
+      this.obsDespesa.reset();
 
     }
   }
@@ -393,6 +406,10 @@ export class CalculeAgoraComponent implements OnInit {
 
   get descricaoDespesa(): FormControl {
     return this.formGroup.get('descricaoDespesa') as FormControl;
+  }
+  
+  get obsDespesa(): FormControl {
+    return this.formGroup.get('obsDespesa') as FormControl;
   }
 
   get tipoDespesa(): FormControl {
