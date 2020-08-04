@@ -10,6 +10,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { Lancamento } from 'src/app/models/lancamento';
 import { Despesa } from 'src/app/models/despesa';
 import { DespesaItem } from 'src/app/models/despesa-item';
+import { CalculeAgoraService } from '../calcule-agora.service';
 
 @Component({
   selector: 'app-bottom-sheet-nova-despesa',
@@ -27,8 +28,8 @@ export class BottomSheetNovaDespesa implements OnInit {
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
     private snackBar: MatSnackBar,
     private apiService: ApiService,
-    private utilService: UtilService,
     private storageService: StorageService,
+    private calculeAgoraService: CalculeAgoraService
   ) {
     this.initForm();
     console.log(this.data)
@@ -57,7 +58,7 @@ export class BottomSheetNovaDespesa implements OnInit {
 
   adicionarDespesa() {
 
-    if (!this.data.descricaoDespesa.value) {
+    if (!this.obsDespesa.value) {
       this.openSnackBar('Ops...', "Clique em 'Selecionar Despesa'!")
       return;
     }
@@ -141,7 +142,7 @@ export class BottomSheetNovaDespesa implements OnInit {
 
     if (lancamento.despesas.length > 0) {
 
-      //this.atualizarContadorLancamentoDespesas();
+      this.calculeAgoraService.atualizarCarrinho();
 
       this.openSnackBar('Sucesso', "Despesa '" + this.descricaoDespesa.value + "' criada!")
 
@@ -154,22 +155,6 @@ export class BottomSheetNovaDespesa implements OnInit {
       this.obsDespesa.reset();
 
     }
-  }
-
-  atualizarContadorLancamentoDespesas() {
-    var cont = 0;
-    var lancamentos = this.storageService.getLocalStorageLancamentos();
-
-    if (lancamentos.length > 0) {
-      lancamentos.forEach(lancamento => {
-        lancamento.despesas.forEach(despesa => {
-          cont += despesa.itensDespesa.length;
-        });
-      });
-    }
-
-   // this.contLancamentoDespesas = lancamentos.length === 0 ? 0 : cont;
-    //this.changeDetector.detectChanges();
   }
 
   openSnackBar(message: string, action: string) {

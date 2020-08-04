@@ -21,7 +21,8 @@ import { Lancamento } from '../models/lancamento';
 import { DespesaEnum } from '../enums/despesas-enum';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { BottomSheetNovaDespesa } from './bottom-sheet-nova-despesa/bottom-sheet-nova-despesa.component';
-
+import * as moment from 'moment';
+import { CalculeAgoraService } from './calcule-agora.service';
 
 @Component({
   selector: 'app-calcule-agora',
@@ -67,6 +68,9 @@ export class CalculeAgoraComponent implements OnInit {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
   };
 
+  public tabIndex = 1;
+
+
   constructor(
     public fb: FormBuilder,
     private ngZone: NgZone,
@@ -77,7 +81,8 @@ export class CalculeAgoraComponent implements OnInit {
     private utilService: UtilService,
     private storageService: StorageService,
     private changeDetector: ChangeDetectorRef,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private calculeAgoraService: CalculeAgoraService
   ) {
 
     this.carregarMeses();
@@ -92,10 +97,28 @@ export class CalculeAgoraComponent implements OnInit {
       }, 3000);
     }
 
+
+    this.calculeAgoraService.atualizarCarrinhoObservable().subscribe(() => {
+      this.atualizarContadorLancamentoDespesas();
+    })
+
+
   }
 
   ngOnInit() {
     this.initObservers();
+
+    const YEARS = () => {
+      const years = []
+      const dateStart = moment()
+      const dateEnd = moment().add(10, 'y')
+      while (dateEnd.diff(dateStart, 'years') >= 0) {
+        years.push(dateStart.format('YYYY'))
+        dateStart.add(1, 'year')
+      }
+      return years
+    }
+    console.log(YEARS())
   }
 
   carregarMeses() {
@@ -106,6 +129,8 @@ export class CalculeAgoraComponent implements OnInit {
     this.meses.push(this.lastMonth, this.currentMonth, this.nextMonth);
 
     this.selectedMonthDesc = this.currentMonth;
+
+    this.tabIndex = this.meses.findIndex(mes => String(mes) === String(this.currentMonth));
   }
 
   mainForm() {
@@ -196,7 +221,7 @@ export class CalculeAgoraComponent implements OnInit {
     user.codigo = "";
     user.email = "";
     user.lancamentos = [];
-    
+
   }
 
   scroll() {
@@ -306,7 +331,7 @@ export class CalculeAgoraComponent implements OnInit {
 
     this.storageService.setLocalStorageLancamentos(lancamentos);
 
-    
+
     console.log(this.storageService.getLocalStorageLancamentos());
     console.log("lancamentos", lancamentos);
     this.apiService.salvar(lancamentos);
@@ -407,7 +432,7 @@ export class CalculeAgoraComponent implements OnInit {
   get descricaoDespesa(): FormControl {
     return this.formGroup.get('descricaoDespesa') as FormControl;
   }
-  
+
   get obsDespesa(): FormControl {
     return this.formGroup.get('obsDespesa') as FormControl;
   }

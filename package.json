@@ -30,6 +30,7 @@
     "hammerjs": "^2.0.8",
     "material-components-web": "^5.1.0",
     "materialize-css": "^1.0.0-rc.2",
+    "moment": "^2.27.0",
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.5",
     "ngx-currency": "^2.2.2",

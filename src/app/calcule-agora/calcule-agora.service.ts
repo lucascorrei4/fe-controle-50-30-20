@@ -6,18 +6,18 @@ import { Subject, Observable } from 'rxjs';
 })
 export class CalculeAgoraService {
 
-  private atualizarDespesasSubject = new Subject<any>();
+  private atualizarCarrinhoSubject = new Subject<any>();
 
   constructor() {
 
   }
 
-  atualizarDespesasObservable(): Observable<any> {
-    return this.atualizarDespesasSubject.asObservable();
+  atualizarCarrinhoObservable(): Observable<any> {
+    return this.atualizarCarrinhoSubject.asObservable();
   }
 
   atualizarCarrinho() {
-    this.atualizarDespesasSubject.next();
+    this.atualizarCarrinhoSubject.next();
   }
 
   registros() {

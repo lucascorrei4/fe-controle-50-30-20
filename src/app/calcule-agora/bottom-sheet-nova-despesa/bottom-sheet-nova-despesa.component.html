@@ -8,10 +8,11 @@
 
         <p class="mat-headline mb-2 text-center">Ref. {{data.mesSelecionado}}</p>
         <div fxLayout="column" fxLayoutAlign="center center" class="title-section p-2 mb-2 text-center">
-          <p class="secondary-text-color">Quanto você pagou de <strong>{{data.descricaoDespesa}}</strong>?</p>
+          <p class="secondary-text-color">Quanto você pagou de <strong>{{data.descricaoDespesa}}</strong> em
+            {{data.mesSelecionado}}?</p>
         </div>
         <div class="row">
-          <div class="col-md-4 ml-auto mr-auto">
+          <div class="ml-auto mr-auto">
             <div class="form-group">
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -21,7 +22,7 @@
                 </div>
                 <input placeholder="Valor da Despesa" formControlName="valorDespesa" currencyMask required
                   autocomplete="off" [options]="{ prefix: '', thousands: '.', decimal: ',' }" type="text" #valorDespesa
-                  tabindex="2" class="form-control input-renda" pattern="[0-9]*" inputmode="numeric" autofocus
+                  tabindex="2" class="form-control input-size" pattern="[0-9]*" inputmode="numeric" autofocus
                   oninput="valorDespesa.select()">
               </div>
             </div>
@@ -48,7 +49,7 @@
             <strong>{{data.descricaoDespesa}}</strong>?</p>
         </div>
         <div class="row">
-          <div class="col-md-4 ml-auto mr-auto">
+          <div class="ml-auto mr-auto">
             <div class="form-group">
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -56,8 +57,8 @@
                     <i class="material-icons">edit</i>
                   </span>
                 </div>
-                <input type="text" formControlName="obsDespesa" class="form-control" placeholder="Insira uma observação"
-                  tabindex="1">
+                <input type="text" formControlName="obsDespesa" class="form-control input-size"
+                  placeholder="Insira uma observação" tabindex="1">
               </div>
             </div>
           </div>
@@ -67,8 +68,8 @@
           <button mat-stroked-button matStepperPrevious>
             Voltar
           </button>
-          <button mat-raised-button color="primary" [disabled]="formGroup.get('obsDespesa').invalid" matStepperNext>
-            Próxima Etapa
+          <button mat-raised-button color="primary" (click)="adicionarDespesa()" [disabled]="formGroup.get('obsDespesa').invalid" matStepperNext>
+            Salvar
           </button>
         </div>
 
