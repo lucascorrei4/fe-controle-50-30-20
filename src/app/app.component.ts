@@ -7,7 +7,7 @@ import { ApiService, Item } from './services/api.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'desorganizados';
+  title = 'controle-50-30-20';
   items: Array<Item>;
 
   constructor(private apiService: ApiService) { }

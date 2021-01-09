@@ -41,6 +41,7 @@ import { BottomSheetComoFuncionaComponent } from './calcule-agora/bottom-sheet-c
 import { StorageService } from './services/storage.service';
 import { MatStepperModule } from '@angular/material/stepper';
 import { BottomSheetNovaDespesa } from './calcule-agora/bottom-sheet-nova-despesa/bottom-sheet-nova-despesa.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 registerLocaleData(localePtBr);
 
@@ -59,6 +60,7 @@ registerLocaleData(localePtBr);
   imports: [
     CommonModule,
     BrowserModule,
+    FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,

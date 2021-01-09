@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "desorganizados": {
+    "controle-50-30-20": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/desorganizados",
+            "outputPath": "dist/controle-50-30-20",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "desorganizados:build"
+            "browserTarget": "controle-50-30-20:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "desorganizados:build:production"
+              "browserTarget": "controle-50-30-20:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "desorganizados:build"
+            "browserTarget": "controle-50-30-20:build"
           }
         },
         "test": {
@@ -116,18 +116,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "desorganizados:serve"
+            "devServerTarget": "controle-50-30-20:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "desorganizados:serve:production"
+              "devServerTarget": "controle-50-30-20:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "desorganizados",
+  "defaultProject": "controle-50-30-20",
   "cli": {
     "analytics": "12a99123-a50d-4687-a553-d897a1cb7800"
   }
