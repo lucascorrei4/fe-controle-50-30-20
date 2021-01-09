@@ -4,9 +4,9 @@
     <div class="row">
       <div class="col-md-6" fxLayout="column" fxLayoutAlign="space-between center">
         <h1 style="font-size: 2rem;" class="title m-0">Controle 50-30-20</h1>
-        <p style="font-weight: 400; font-size: 12px; height: 12px; margin: 0;"><i>"Não se controla o que não se
+        <p class="description"><i>"Não se controla o que não se
             mede..."</i></p>
-        <p style="font-weight: 400; font-size: 10px; height: 10px; margin: 0;"><i>W. Edwards Deming</i></p>
+        <p class="description-small"><i>W. Edwards Deming</i></p>
       </div>
     </div>
   </div>
@@ -103,7 +103,7 @@
                       *ngIf="rendaTotal > 0; else empty">
                       <ngx-charts-pie-grid [scheme]=" colorScheme" [results]="single" (select)="onSelect($event)"
                         (onWindowResize)="onResize($event)" [view]="view" style="margin: 0 auto !important;"
-                        [width]="auto">
+                        [width]="'auto'">
                       </ngx-charts-pie-grid>
                     </div>
                     <ng-template #empty>

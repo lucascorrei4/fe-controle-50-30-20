@@ -1,80 +1,95 @@
-.nav-tabs, .nav-pills {
-    padding: 0px !important;
+.nav-tabs,
+.nav-pills {
+  padding: 0px !important;
 }
 
 .btn-tooltip {
-    line-height: 15px;
-    text-transform: none;
+  line-height: 15px;
+  text-transform: none;
 }
 
 .input-renda {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 .input-group-text {
-    padding: 0 10px 0 0;
+  padding: 0 10px 0 0;
 }
 
 .form-control {
-    height: 45px;
+  height: 45px;
 }
 
 .add-button {
-    background-color: #ff9800;
-    color: #fff;
+  background-color: #ff9800;
+  color: #fff;
 }
 
 .floating-button-center {
-    bottom: 13%;
-    right: 10%;
-    position: fixed;
-    background-color: #ff9800;
-    color: #fff;
-    z-index: 9999;
+  bottom: 13%;
+  right: 10%;
+  position: fixed;
+  background-color: #ff9800;
+  color: #fff;
+  z-index: 9999;
 }
 
 .floating-button-more {
-    bottom: 5%;
-    right: 10%;
-    position: fixed;
-    background-color: #9c27b0;
-    color: #fff;
-    z-index: 9999;
+  bottom: 5%;
+  right: 10%;
+  position: fixed;
+  background-color: #9c27b0;
+  color: #fff;
+  z-index: 9999;
 }
 
-#pie-chart-parent { 
-    display: grid; 
+#pie-chart-parent {
+  display: grid;
 }
 
-ngx-charts-pie-chart { 
-    position:absolute; 
-    top:0; 
-    bottom:0; 
-    left:0; 
-    right:0; 
+ngx-charts-pie-chart {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 ngx-charts-chart {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .page-header {
-    height: 35vh !important;
+  height: 35vh !important;
 }
 
 .form-control:read-only {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 .tabs .mat-tab-body-content {
-    overflow: inherit !important;
+  overflow: inherit !important;
 }
 
 .toolbar-bottom {
-    border-radius: 6px 6px 6px 6px;
+  border-radius: 6px 6px 6px 6px;
 }
 
 .spacer {
-    margin: 0 10px;
+  margin: 0 10px;
+}
+
+.description {
+  font-weight: 500;
+  font-size: 12px;
+  height: 12px;
+  margin: 5px 0;
+}
+
+.description-small {
+  font-weight: 100;
+  height: 12px;
+  margin: 0;
+  font-size: 9px;
 }

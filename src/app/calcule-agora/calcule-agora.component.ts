@@ -409,6 +409,10 @@ export class CalculeAgoraComponent implements OnInit {
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
   }
 
+  onSelect() {
+    
+  }
+
   get strGastos50(): string {
     return this.STR_GASTOS_50;
   }

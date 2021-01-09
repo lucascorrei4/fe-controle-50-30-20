@@ -1,0 +1,392 @@
+[
+    {
+      "groupId": 1,
+      "categoryId": 1,
+      "type": "FIXAS",
+      "title": "Dízimos e Doações"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 2,
+      "type": "FIXAS",
+      "title": "Aluguel / Prestação Habitacional"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 3,
+      "type": "FIXAS",
+      "title": "Aluguel / Prestação Veículo"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 4,
+      "type": "FIXAS",
+      "title": "Condomínio"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 5,
+      "type": "FIXAS",
+      "title": "IPTU + Taxas Municipais"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 6,
+      "type": "FIXAS",
+      "title": "Conta de energia"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 7,
+      "type": "FIXAS",
+      "title": "Conta de água"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 8,
+      "type": "FIXAS",
+      "title": "Conta de gás"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 9,
+      "type": "FIXAS",
+      "title": "Telefone fixo"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 10,
+      "type": "FIXAS",
+      "title": "Telefones celulares"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 11,
+      "type": "FIXAS",
+      "title": "Internet"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 12,
+      "type": "FIXAS",
+      "title": "TV por assinatura"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 13,
+      "type": "FIXAS",
+      "title": "Supermercado"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 14,
+      "type": "FIXAS",
+      "title": "Feira"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 15,
+      "type": "FIXAS",
+      "title": "Padaria"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 16,
+      "type": "FIXAS",
+      "title": "Empregados"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 17,
+      "type": "FIXAS",
+      "title": "Lavanderia"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 18,
+      "type": "FIXAS",
+      "title": "Plano de Saúde"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 19,
+      "type": "FIXAS",
+      "title": "Médicos e terapeutas"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 20,
+      "type": "FIXAS",
+      "title": "Dentista"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 21,
+      "type": "FIXAS",
+      "title": "IPVA + Seguro Obrigatório"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 22,
+      "type": "FIXAS",
+      "title": "Seguro"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 23,
+      "type": "FIXAS",
+      "title": "Combustível"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 24,
+      "type": "FIXAS",
+      "title": "Estacionamentos"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 25,
+      "type": "FIXAS",
+      "title": "Lavagens"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 26,
+      "type": "FIXAS",
+      "title": "Mecânico"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 27,
+      "type": "FIXAS",
+      "title": "Multas"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 28,
+      "type": "FIXAS",
+      "title": "Ônibus"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 29,
+      "type": "FIXAS",
+      "title": "Metrô"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 30,
+      "type": "FIXAS",
+      "title": "Trem"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 31,
+      "type": "FIXAS",
+      "title": "Táxi/Uber"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 32,
+      "type": "FIXAS",
+      "title": "Cosméticos"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 33,
+      "type": "FIXAS",
+      "title": "Salão de Beleza"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 34,
+      "type": "FIXAS",
+      "title": "Vestuário"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 35,
+      "type": "FIXAS",
+      "title": "Academia"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 36,
+      "type": "FIXAS",
+      "title": "Esportes"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 37,
+      "type": "FIXAS",
+      "title": "Cartões de Crédito (anuidades)"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 38,
+      "type": "FIXAS",
+      "title": "Mesadas"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 39,
+      "type": "FIXAS",
+      "title": "Escola / Faculdade"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 40,
+      "type": "FIXAS",
+      "title": "Cursos"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 41,
+      "type": "FIXAS",
+      "title": "Ensino à Distância"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 42,
+      "type": "FIXAS",
+      "title": "Material escolar"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 43,
+      "type": "FIXAS",
+      "title": "Uniformes"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 44,
+      "type": "FIXAS",
+      "title": "Cartão de Crédito"
+    },
+    {
+      "groupId": 1,
+      "categoryId": 45,
+      "type": "FIXAS",
+      "title": "Saques Bancários"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 46,
+      "type": "VARIAVEIS",
+      "title": "Ida ao Restaurante"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 47,
+      "type": "VARIAVEIS",
+      "title": "Cafés, bares e boates"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 48,
+      "type": "VARIAVEIS",
+      "title": "Livraria, jornais e revistas"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 49,
+      "type": "VARIAVEIS",
+      "title": "Games"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 50,
+      "type": "VARIAVEIS",
+      "title": "Mídias e acessórios"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 51,
+      "type": "VARIAVEIS",
+      "title": "Passagens"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 52,
+      "type": "VARIAVEIS",
+      "title": "Hospedagens"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 53,
+      "type": "VARIAVEIS",
+      "title": "Passeios"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 54,
+      "type": "VARIAVEIS",
+      "title": "Curso de  Idiomas"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 55,
+      "type": "VARIAVEIS",
+      "title": "Manutenção e reparos"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 56,
+      "type": "VARIAVEIS",
+      "title": "Médicos e terapeutas esporádicos"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 57,
+      "type": "VARIAVEIS",
+      "title": "Dedetização"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 58,
+      "type": "VARIAVEIS",
+      "title": "Gastos de férias"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 59,
+      "type": "VARIAVEIS",
+      "title": "Correio"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 60,
+      "type": "VARIAVEIS",
+      "title": "Utilidades domésticas e decoração"
+    },
+    {
+      "groupId": 2,
+      "categoryId": 61,
+      "type": "VARIAVEIS",
+      "title": "Manutenção Veículo"
+    },
+    {
+      "groupId": 3,
+      "categoryId": 62,
+      "type": "INVESTIMENTOS",
+      "title": "Poupança"
+    },
+    {
+      "groupId": 3,
+      "categoryId": 63,
+      "type": "VARIAVEIS",
+      "title": "Fundo de Investimento"
+    },
+    {
+      "groupId": 3,
+      "categoryId": 64,
+      "type": "INVESTIMENTOS",
+      "title": "Reserva Para Viagem"
+    },
+    {
+      "groupId": 3,
+      "categoryId": 65,
+      "type": "INVESTIMENTOS",
+      "title": "Reserva Para Curso / Treinamento"
+    }
+  ]
