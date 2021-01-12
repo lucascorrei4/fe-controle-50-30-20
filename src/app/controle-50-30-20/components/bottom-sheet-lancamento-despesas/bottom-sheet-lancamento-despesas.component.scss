@@ -1,0 +1,45 @@
+.example-card {
+    max-width: 400px;
+    margin: 0 auto;
+}
+ 
+ .numero { 
+  line-height: 2;
+  text-align: center;
+  font-size: 20px;
+}
+
+.valor-despesa {
+  text-align: right;
+  font-size: 23px;
+  border-radius: 20px;
+}
+
+.botao-remover {
+  position: absolute;
+  top: 5%;
+  right: 0%;
+}
+
+.div-fixa {
+  position: sticky;
+  top: 0px;
+  background-color: white;
+  z-index: 1;
+  padding: 10px 0;
+}
+
+.div-scroll {
+  overflow: overlay;
+  width: 100%;
+  padding-top: 10%;
+}
+
+.overflow {
+  overflow: inherit;
+}
+
+.mat-bottom-sheet-container {
+  padding: 0 16px 8px 16px !important;
+}
+

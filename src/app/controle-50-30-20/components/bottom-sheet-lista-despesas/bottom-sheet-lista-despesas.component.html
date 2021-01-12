@@ -1,0 +1,15 @@
+<mat-tab-group>
+    <mat-tab *ngFor="let item of despesas">
+        <ng-template mat-tab-label>
+            <span matBadge="{{item.subItems.length}}" matBadgeOverlap="false">{{item.nome}}</span>
+        </ng-template>
+        <mat-list>
+            <mat-selection-list>
+                <mat-list-option style="margin-left: 15px;" *ngFor="let subItem of item.subItems"
+                    (click)="select($event, item.tipo, item.nome, subItem.title)">
+                    {{ subItem.title }}
+                </mat-list-option>
+            </mat-selection-list>
+        </mat-list>
+    </mat-tab>
+</mat-tab-group>

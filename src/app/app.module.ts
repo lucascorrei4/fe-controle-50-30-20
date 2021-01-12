@@ -42,6 +42,7 @@ import { StorageService } from './services/storage.service';
 import { MatStepperModule } from '@angular/material/stepper';
 import { BottomSheetNovaDespesa } from './calcule-agora/bottom-sheet-nova-despesa/bottom-sheet-nova-despesa.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { Controle503020Module } from './controle-50-30-20/controle-50-30-20.module';
 
 registerLocaleData(localePtBr);
 
@@ -84,7 +85,8 @@ registerLocaleData(localePtBr);
     MatTabsModule,
     MatMenuModule,
     MatToolbarModule,
-    MatStepperModule
+    MatStepperModule,
+    Controle503020Module
   ],
   exports: [
     MatTooltipModule,

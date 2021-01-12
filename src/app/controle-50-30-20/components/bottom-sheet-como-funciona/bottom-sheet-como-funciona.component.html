@@ -1,0 +1,53 @@
+<div class="page-header header-filter" data-parallax="true"
+    style="background-image: url('../assets/img/profile_city.jpg')">
+    <div class="container" style="width: 100%;">
+        <div class="m-auto text-center">
+            <a (click)="dismiss()" class>
+                <i class="material-icons" style="font-size: 50px">maximize</i>
+            </a>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h1 style="font-size: 2rem;" class="title">Controle 50-30-20</h1>
+                <span style="font-weight: 400">Neste controle financeiro, seus ganhos devem ser divididos em 50% para
+                    seus
+                    <button class="p-1 btn-tooltip btn" mat-button #matTooltip="matTooltip" matTooltip={{strGastos50}}
+                        (click)="matTooltip.toggle()">
+                        gastos fixos
+                    </button>, 30% para
+                    <button class="p-1 btn-tooltip btn" mat-button #matTooltip2="matTooltip" matTooltip={{strGastos30}}
+                        (click)="matTooltip2.toggle()">
+                        <i>lifestyle</i>
+                    </button> e
+                    20% para <button class="p-1 btn-tooltip btn" mat-button #matTooltip3="matTooltip"
+                        matTooltip={{strGastos20}} (click)="matTooltip3.toggle()">
+                        investimentos
+                    </button>.</span>
+                <br>
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-md-8 ml-auto mr-auto">
+                        <div class="info text-center" style="padding: 30px 0px 0px 0px;">
+                            <div class="icon icon-info">
+                                <i class="material-icons">sentiment_satisfied_alt</i>
+                            </div>
+                        </div>
+                        <h2 class="title" style="margin: 0px;">Como Funciona?</h2>
+                        <p>Adicione abaixo as receitas e despesas, veja como ficou o seu gráfico e envie o controle para
+                            o seu
+                            e-mail.</p>
+                        <p>Sempre que você enviar as suas despesas do mês ao seu e-mail, o seu código secreto será
+                            informado. Este código é unicamente seu e será usado aqui para que você revise o seu
+                            histórico
+                            de gastos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

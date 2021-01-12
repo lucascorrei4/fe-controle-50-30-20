@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  urlServerNode: "https://apinode.ebarn.com.br",
 };

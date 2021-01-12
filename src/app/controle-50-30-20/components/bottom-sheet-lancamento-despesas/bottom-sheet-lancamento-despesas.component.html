@@ -1,0 +1,46 @@
+<div class="ml-auto mr-auto text-center div-fixa">
+    <p>Lançamentos do Mês {{mesAtual}}</p>
+    <p>Total Gasto R$ {{calcularTotalGeral()}}</p>
+    <mat-chip-list aria-label="Tipo de Despesa" class="m-2 d-inline-flex">
+        <mat-chip *ngFor="let despesa of DespesaEnum | keyvalue" [selectable]="selectable"
+            [selected]="despesa.value !== despesa.value" (click)="selecionarDespesa(despesa.value)"
+            matBadge={{calcularTotalDespesasAdicionadas(despesa.value)}} class="overflow" matBadgePosition="above after"
+            color="accent">
+            {{despesa.key}}
+        </mat-chip>
+    </mat-chip-list>
+</div>
+<div class="div-scroll">
+    <ng-container *ngFor="let despesa of despesasSelecionadas; last as isLast">
+        <ng-container *ngFor="let item of despesa.itensDespesa; let index=index; last as isLast">
+            <mat-card class="example-card m-1" *ngIf="item; else empty">
+                <mat-card-header>
+                    <div mat-card-avatar style="border-radius: 50%; background-color: aqua;">
+                        <p class="numero">{{index + 1}}</p>
+                    </div>
+                    <mat-card-title>{{item.desc}}</mat-card-title>
+                    <mat-card-subtitle>{{despesa.name}}</mat-card-subtitle>
+                    <mat-card-subtitle>{{item.obs}}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <p class="valor-despesa">
+                        R$ {{getFormattedPrice(item.valor)}}
+                    </p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-icon-button color="warn" class="botao-remover" (click)="removerDespesa(item)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+            <ng-template #empty>
+                <mat-chip-list style="display: inline-flex;">
+                    <mat-chip color="accent" selected>Nenhuma despesa {{despesa.name}} adicionada</mat-chip>
+                </mat-chip-list>
+            </ng-template>
+            <p class="valor-despesa font-weight-bold text-center badge-info p-2 m-2" *ngIf="isLast">
+                TOTAL: R$ {{calcularTotal(despesa.itensDespesa)}}
+            </p>
+        </ng-container>
+    </ng-container>
+</div>

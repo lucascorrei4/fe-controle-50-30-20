@@ -1,0 +1,106 @@
+<div fxLayout="column">
+
+  <form [formGroup]="formGroup">
+    <mat-horizontal-stepper class="stepper" linear #stepper (selectionChange)="changeStepper($event)"
+      labelPosition="bottom">
+
+      <mat-step>
+
+        <p class="mat-headline mb-2 text-center">Ref. {{data.mesSelecionado}}</p>
+        <div fxLayout="column" fxLayoutAlign="center center" class="title-section p-2 mb-2 text-center">
+          <p class="secondary-text-color">Quanto você pagou de <strong>{{data.descricaoDespesa}}</strong> em
+            {{data.mesSelecionado}}?</p>
+        </div>
+        <div class="row">
+          <div class="ml-auto mr-auto">
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="material-icons">edit</i>
+                  </span>
+                </div>
+                <input placeholder="Valor da Despesa" formControlName="valorDespesa" currencyMask required
+                  autocomplete="off" [options]="{ prefix: '', thousands: '.', decimal: ',' }" type="text" #valorDespesa
+                  tabindex="2" class="form-control input-size" pattern="[0-9]*" inputmode="numeric" autofocus
+                  oninput="valorDespesa.select()">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="botoes-navegacao">
+          <button mat-stroked-button matStepperPrevious>
+            Voltar
+          </button>
+          <button mat-raised-button color="primary" [disabled]="!(formGroup.get('valorDespesa'))" matStepperNext>
+            Próxima Etapa
+          </button>
+        </div>
+
+      </mat-step>
+
+      <!-- Telefone -->
+      <mat-step>
+
+        <p class="mat-headline mb-2 text-center">Ref. {{data.mesSelecionado}}</p>
+        <div fxLayout="column" fxLayoutAlign="center center" class="title-section p-2 mb-2 text-center">
+          <p class="secondary-text-color">Quer inserir alguma observação sobre
+            <strong>{{data.descricaoDespesa}}</strong>?</p>
+        </div>
+        <div class="row">
+          <div class="ml-auto mr-auto">
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="material-icons">edit</i>
+                  </span>
+                </div>
+                <input type="text" formControlName="obsDespesa" class="form-control input-size"
+                  placeholder="Insira uma observação" tabindex="1">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="botoes-navegacao">
+          <button mat-stroked-button matStepperPrevious>
+            Voltar
+          </button>
+          <button mat-raised-button color="primary" (click)="adicionarDespesa()" [disabled]="formGroup.get('obsDespesa').invalid" matStepperNext>
+            Salvar
+          </button>
+        </div>
+
+      </mat-step>
+
+
+      <mat-step>
+        <ng-template matStepLabel>Feito</ng-template>
+        <link rel="preload" href="assets/img/svg/celebration.svg" as="image" />
+        <section fxLayoutAlign="center center" class="text-center">
+          <div class="m-2" fxLayoutAlign="center center">
+            <img src="assets/img/svg/celebration.svg" class="img-svg" alt="" fxFlex.lt-sm="100" fxFlex="30" />
+          </div>
+
+          <p class="mat-title mb-2 text-center">Gasto adicionado com sucesso</p>
+          <p class="mat-body-2 mb-2 secondary-text-color text-center">
+            Quer adicionar outra despesa?
+          </p>
+
+          <div class="my-4" fxLayoutAlign="center center">
+            <button mat-raised-button color="primary" (click)="novaDespesa()">Adicionar outra despesa</button>
+          </div>
+        </section>
+
+        <ng-template #loading>
+          <section fxLayout="column" fxLayoutAlign="center center" class="m-2">
+            <mat-spinner class="m-2"></mat-spinner>
+            <p class="p-2 secondary-text-color">...</p>
+          </section>
+        </ng-template>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </form>
+</div>
