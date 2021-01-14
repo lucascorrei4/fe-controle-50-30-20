@@ -1,10 +1,20 @@
 .copyright {
-    font-size: 12px;
+  font-size: 12px;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: "Roboto Slab", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Roboto Slab", sans-serif;
+}
 
 .bottom-sheet-style {
-    padding: 0 !important;
+  padding: 0 !important;
+}
+
+.mat-raised-button {
+  border-radius: 30px !important;
 }

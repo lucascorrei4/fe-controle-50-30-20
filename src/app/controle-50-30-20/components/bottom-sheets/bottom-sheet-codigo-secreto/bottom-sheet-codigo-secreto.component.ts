@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { Controle503020Service } from "../../controle-50-30-20.service";
+import { Controle503020Service } from "../../../controle-50-30-20.service";
 
 @Component({
   selector: "bottom-sheet-codigo-secreto",

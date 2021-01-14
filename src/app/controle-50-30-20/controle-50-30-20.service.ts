@@ -1,8 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject, Observable } from "rxjs";
+import { map, tap } from "rxjs/operators";
+import { Category } from "../models/category";
 import { User } from "../models/user";
 import { ConfigService } from "../services/config.service";
+import { StorageService } from "../services/storage.service";
 
 @Injectable({
   providedIn: "root",
@@ -10,10 +13,14 @@ import { ConfigService } from "../services/config.service";
 export class Controle503020Service {
   private url: string = "";
   private token: any;
-
   private atualizarCarrinhoSubject = new Subject<any>();
+  public categoriesGrouped: any[] = [];
 
-  constructor(private http: HttpClient, private configService: ConfigService) {
+  constructor(
+    private http: HttpClient,
+    private configService: ConfigService,
+    private storageService: StorageService
+  ) {
     this.url = configService.getUrlServiceNode();
 
     this.token = new HttpHeaders({
@@ -33,6 +40,29 @@ export class Controle503020Service {
     return this.http.get<User>(`${this.url}/user/findByEmail?email=${email}`, {
       headers: this.token,
     });
+  }
+
+  getCategories(): Observable<Category[]> {
+    return this.http
+      .get<Category[]>(`${this.url}/category`, {
+        headers: this.token,
+      })
+      .pipe(
+        tap((category) => {
+          this.groupCategories(category);
+        })
+      );
+  }
+
+  public groupCategories(categories) {
+    var groups = new Set(categories.map((item) => item.type));
+    groups.forEach((g) =>
+      this.categoriesGrouped.push({
+        name: g,
+        subItems: categories.filter((i) => i.type === g),
+      })
+    );
+    this.storageService.setLocalStorageCategories(this.categoriesGrouped);
   }
 
   // Launchs

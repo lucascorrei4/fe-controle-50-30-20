@@ -33,14 +33,17 @@ import { StorageService } from "../services/storage.service";
 import { UtilService } from "../services/util.service";
 import { Controle503020Component } from "./controle-50-30-20.component";
 import { RouterModule } from "@angular/router";
-import { BottomSheetCodigoSecretoComponent } from "./components/bottom-sheet-codigo-secreto/bottom-sheet-codigo-secreto.component";
-import { BottomSheetGraficoDespesasComponent } from "./components/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component";
-import { BottomSheetLancamentosDespesasComponent } from "./components/bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component";
-import { BottomSheetNovaDespesa } from "./components/bottom-sheet-nova-despesa/bottom-sheet-nova-despesa.component";
-import { BottomSheetListaDespesasComponent } from "./components/bottom-sheet-lista-despesas/bottom-sheet-lista-despesas.component";
-import { BottomSheetComoFuncionaComponent } from "./components/bottom-sheet-como-funciona/bottom-sheet-como-funciona.component";
+import { BottomSheetCodigoSecretoComponent } from "./components/bottom-sheets/bottom-sheet-codigo-secreto/bottom-sheet-codigo-secreto.component";
+import { BottomSheetGraficoDespesasComponent } from "./components/bottom-sheets/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component";
+import { BottomSheetLancamentosDespesasComponent } from "./components/bottom-sheets/bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component";
+import { BottomSheetNovaDespesa } from "./components/bottom-sheets/bottom-sheet-nova-despesa/bottom-sheet-nova-despesa.component";
+import { BottomSheetListaDespesasComponent } from "./components/bottom-sheets/bottom-sheet-lista-despesas/bottom-sheet-lista-despesas.component";
+import { BottomSheetComoFuncionaComponent } from "./components/bottom-sheets/bottom-sheet-como-funciona/bottom-sheet-como-funciona.component";
 import { ConfigService } from "../services/config.service";
 import { Controle503020Service } from "./controle-50-30-20.service";
+import { HeaderModule } from "./components/header/header.module";
+import { FooterMenuComponent } from "./components/footer-menu/footer-menu.component";
+import { FooterMenuModule } from "./components/footer-menu/footer-menu.module";
 
 export const routes = [
   { path: "", component: Controle503020Component, pathMatch: "full" },
@@ -54,7 +57,7 @@ export const routes = [
     BottomSheetGraficoDespesasComponent,
     BottomSheetLancamentosDespesasComponent,
     BottomSheetComoFuncionaComponent,
-    BottomSheetNovaDespesa,
+    BottomSheetNovaDespesa
   ],
   imports: [
     CommonModule,
@@ -88,6 +91,8 @@ export const routes = [
     Controle503020RoutingModule,
     MatTabsModule,
     MatStepperModule,
+    HeaderModule,
+    FooterMenuModule,
   ],
   providers: [
     StorageService,

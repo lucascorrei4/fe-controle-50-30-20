@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
-import { Controle503020Service } from "../../controle-50-30-20.service";
+import { Controle503020Service } from "../../../controle-50-30-20.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({

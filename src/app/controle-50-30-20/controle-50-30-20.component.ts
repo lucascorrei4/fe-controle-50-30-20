@@ -12,10 +12,10 @@ import {
   ChangeDetectionStrategy,
 } from "@angular/core";
 import { MatTooltip } from "@angular/material/tooltip";
-import { BottomSheetListaDespesasComponent } from "./components/bottom-sheet-lista-despesas/bottom-sheet-lista-despesas.component";
+import { BottomSheetListaDespesasComponent } from "./components/bottom-sheets/bottom-sheet-lista-despesas/bottom-sheet-lista-despesas.component";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { formatDate } from "@angular/common";
-import { BottomSheetCodigoSecretoComponent } from "./components/bottom-sheet-codigo-secreto/bottom-sheet-codigo-secreto.component";
+import { BottomSheetCodigoSecretoComponent } from "./components/bottom-sheets/bottom-sheet-codigo-secreto/bottom-sheet-codigo-secreto.component";
 import { User } from "../models/user";
 import { ApiService } from "../services/api.service";
 import {
@@ -26,9 +26,9 @@ import {
 } from "@angular/forms";
 import { Router } from "@angular/router";
 import { UtilService } from "../services/util.service";
-import { BottomSheetGraficoDespesasComponent } from "./components/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component";
-import { BottomSheetLancamentosDespesasComponent } from "./components/bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component";
-import { BottomSheetComoFuncionaComponent } from "./components/bottom-sheet-como-funciona/bottom-sheet-como-funciona.component";
+import { BottomSheetGraficoDespesasComponent } from "./components/bottom-sheets/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component";
+import { BottomSheetLancamentosDespesasComponent } from "./components/bottom-sheets/bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component";
+import { BottomSheetComoFuncionaComponent } from "./components/bottom-sheets/bottom-sheet-como-funciona/bottom-sheet-como-funciona.component";
 import { single } from "../charts.data";
 import { StorageService } from "../services/storage.service";
 import { Despesa } from "../models/despesa";
@@ -37,7 +37,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { Lancamento } from "../models/lancamento";
 import { DespesaEnum } from "../enums/despesas-enum";
 import { MatTabChangeEvent } from "@angular/material/tabs";
-import { BottomSheetNovaDespesa } from "./components/bottom-sheet-nova-despesa/bottom-sheet-nova-despesa.component";
+import { BottomSheetNovaDespesa } from "./components/bottom-sheets/bottom-sheet-nova-despesa/bottom-sheet-nova-despesa.component";
 import * as moment from "moment";
 import { Controle503020Service } from "./controle-50-30-20.service";
 
@@ -263,32 +263,38 @@ export class Controle503020Component implements OnInit {
     );
     bottomSheefRef.afterDismissed().subscribe((response) => {
       if (response) {
-        this.bottomSheet.open(BottomSheetNovaDespesa, {
-          data: {
-            tipoDespesa: response.tipoDespesa,
-            nomeDespesa: response.nomeDespesa,
-            descricaoDespesa: response.despesa,
-            mesSelecionado: this.selectedMonthDesc,
-          },
-        });
+        const bottomSheefNovaDespesaRef = this.bottomSheet.open(
+          BottomSheetNovaDespesa,
+          {
+            data: {
+              tipoDespesa: response.tipoDespesa,
+              nomeDespesa: response.nomeDespesa,
+              descricaoDespesa: response.despesa,
+              mesSelecionado: this.selectedMonthDesc,
+            },
+          }
+        );
+
         this.tipoDespesa.setValue(response.tipoDespesa);
         this.nomeDespesa.setValue(response.nomeDespesa);
         this.descricaoDespesa.setValue(response.despesa);
         this.obsDespesa.reset();
         this.valorDespesa.reset();
+
         setTimeout(() => {
           this.valorDespesaEl.nativeElement.focus();
         }, 100);
+
+        bottomSheefNovaDespesaRef.afterDismissed().subscribe((response) => {
+          if (response) {
+            this.abrirBottomSheetDespesas();
+          }
+        });
       }
     });
   }
 
   adicionarDespesa() {
-    if (!this.descricaoDespesa.value) {
-      this.openSnackBar("Ops...", "Clique em 'Selecionar Despesa'!");
-      return;
-    }
-
     if (this.valorDespesa.value < 1) {
       this.openSnackBar("Ops...", "Preencha o valor da despesa!");
       return;
@@ -371,14 +377,6 @@ export class Controle503020Component implements OnInit {
     if (lancamento.despesas.length > 0) {
       this.atualizarContadorLancamentoDespesas();
 
-      this.openSnackBar(
-        "Sucesso",
-        "Despesa '" + this.descricaoDespesa.value + "' criada!"
-      );
-
-      setTimeout(() => {
-        this.openSnackBar("E agora?", "Selecione nova despesa");
-      }, 3000);
 
       this.descricaoDespesa.reset();
       this.valorDespesa.reset();
