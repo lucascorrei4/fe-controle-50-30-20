@@ -44,6 +44,7 @@ import { Controle503020Service } from "./controle-50-30-20.service";
 import { HeaderModule } from "./components/header/header.module";
 import { FooterMenuComponent } from "./components/footer-menu/footer-menu.component";
 import { FooterMenuModule } from "./components/footer-menu/footer-menu.module";
+import { TabsModule } from "./components/tabs/tabs.module";
 
 export const routes = [
   { path: "", component: Controle503020Component, pathMatch: "full" },
@@ -57,7 +58,7 @@ export const routes = [
     BottomSheetGraficoDespesasComponent,
     BottomSheetLancamentosDespesasComponent,
     BottomSheetComoFuncionaComponent,
-    BottomSheetNovaDespesa
+    BottomSheetNovaDespesa,
   ],
   imports: [
     CommonModule,
@@ -93,6 +94,7 @@ export const routes = [
     MatStepperModule,
     HeaderModule,
     FooterMenuModule,
+    TabsModule,
   ],
   providers: [
     StorageService,

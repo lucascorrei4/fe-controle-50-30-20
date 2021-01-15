@@ -35,6 +35,7 @@ import { StorageService } from "./services/storage.service";
 import { MatStepperModule } from "@angular/material/stepper";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { Controle503020Module } from "./controle-50-30-20/controle-50-30-20.module";
+import { TabsModule } from './controle-50-30-20/components/tabs/tabs.module';
 
 registerLocaleData(localePtBr);
 
@@ -71,6 +72,7 @@ registerLocaleData(localePtBr);
     MatToolbarModule,
     MatStepperModule,
     Controle503020Module,
+    TabsModule,
   ],
   exports: [
     MatTooltipModule,
