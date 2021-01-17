@@ -1,8 +1,14 @@
-import { Lancamento } from './lancamento';
+import { Lancamento } from "./lancamento";
 
 export class User {
-    id: number;
-    codigo: string;
-    email: string;
-    lancamentos: Lancamento[];
+  _id: string;
+  status: string;
+  obs: string;
+  string: string;
+  email: string;
+  telefone: string;
+  ref: string;
+
+  codigo;
+  lancamentos: Lancamento[];
 }

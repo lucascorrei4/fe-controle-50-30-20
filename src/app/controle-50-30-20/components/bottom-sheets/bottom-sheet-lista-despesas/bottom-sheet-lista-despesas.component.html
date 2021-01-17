@@ -10,7 +10,7 @@
         <mat-list-option
           style="margin-left: 15px"
           *ngFor="let subItem of item.subItems"
-          (click)="select($event, item.type, item.title, subItem.title)"
+          (click)="select($event, subItem)"
         >
           {{ subItem.title }}
         </mat-list-option>

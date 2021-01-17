@@ -3,13 +3,15 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Output,
+  EventEmitter,
 } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { StorageService } from "src/app/services/storage.service";
 import { Controle503020Service } from "../../controle-50-30-20.service";
-import { BottomSheetCodigoSecretoComponent } from "../bottom-sheets/bottom-sheet-codigo-secreto/bottom-sheet-codigo-secreto.component";
 import { BottomSheetGraficoDespesasComponent } from "../bottom-sheets/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component";
 import { BottomSheetLancamentosDespesasComponent } from "../bottom-sheets/bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component";
+import { BottomSheetLoginComponent } from "../bottom-sheets/bottom-sheet-login/bottom-sheet-login.component";
 
 @Component({
   selector: "app-footer-menu",
@@ -19,6 +21,8 @@ import { BottomSheetLancamentosDespesasComponent } from "../bottom-sheets/bottom
 })
 export class FooterMenuComponent implements OnInit {
   public contLancamentoDespesas: number = 0;
+  @Output() clickMenuLateral = new EventEmitter<never>();
+
   constructor(
     private bottomSheet: MatBottomSheet,
     private storageService: StorageService,
@@ -59,6 +63,10 @@ export class FooterMenuComponent implements OnInit {
   }
 
   abrirCodigoSecretoBottomSheet(): void {
-    this.bottomSheet.open(BottomSheetCodigoSecretoComponent);
+    this.bottomSheet.open(BottomSheetLoginComponent);
+  }
+
+  abrirMenuLateral(): void {
+    this.clickMenuLateral.next();
   }
 }

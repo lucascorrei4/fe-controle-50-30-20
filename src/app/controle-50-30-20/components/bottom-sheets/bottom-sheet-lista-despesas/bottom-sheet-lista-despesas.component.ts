@@ -20,7 +20,10 @@ export class BottomSheetListaDespesasComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.storageService.getLocalCategories().length === 0) {
+    if (
+      !this.storageService.getLocalCategories() ||
+      this.storageService.getLocalCategories()?.length === 0
+    ) {
       this.getCategories();
     } else {
       this.categoriesGrouped = this.storageService.getLocalCategories();
@@ -32,13 +35,9 @@ export class BottomSheetListaDespesasComponent implements OnInit {
     this.categoriesGrouped = this.storageService.getLocalCategories();
   }
 
-  select(event: MouseEvent, tipo: string, nome: string, subItem: string): void {
-    this.openSnackBar("Você selecionou:", subItem);
-    this.bottomSheetRef.dismiss({
-      tipoDespesa: tipo,
-      nomeDespesa: nome,
-      despesa: subItem,
-    });
+  select(event: MouseEvent, category: Category): void {
+    this.openSnackBar("Você selecionou:", category.title);
+    this.bottomSheetRef.dismiss(category);
     event.preventDefault();
   }
 

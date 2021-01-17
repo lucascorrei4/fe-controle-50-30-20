@@ -20,6 +20,7 @@ import {
   MatBottomSheet,
   MatSnackBar,
   MatTabChangeEvent,
+  MatTooltip,
 } from "@angular/material";
 import { single } from "../../../charts.data";
 import { UtilService } from "src/app/services/util.service";
@@ -30,13 +31,14 @@ import { StorageService } from "src/app/services/storage.service";
 import { BottomSheetComoFuncionaComponent } from "../bottom-sheets/bottom-sheet-como-funciona/bottom-sheet-como-funciona.component";
 import { BottomSheetLancamentosDespesasComponent } from "../bottom-sheets/bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component";
 import { BottomSheetGraficoDespesasComponent } from "../bottom-sheets/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component";
-import { BottomSheetCodigoSecretoComponent } from "../bottom-sheets/bottom-sheet-codigo-secreto/bottom-sheet-codigo-secreto.component";
 import { User } from "src/app/models/user";
 import { Lancamento } from "src/app/models/lancamento";
 import { Despesa } from "src/app/models/despesa";
 import { DespesaItem } from "src/app/models/despesa-item";
 import { ApiService } from "src/app/services/api.service";
 import { Controle503020Service } from "../../controle-50-30-20.service";
+import { DespesaEnum } from "src/app/enums/despesas-enum";
+import { BottomSheetLoginComponent } from "../bottom-sheets/bottom-sheet-login/bottom-sheet-login.component";
 
 @Component({
   selector: "app-tabs",
@@ -74,6 +76,19 @@ export class TabsComponent implements OnInit {
   @ViewChild("calculeAgora", { static: true }) calculeAgoraDiv: ElementRef;
 
   view: any[] = [500, 400];
+
+  colorScheme = {
+    domain: ["#5AA454", "#E44D25", "#CFC0BB", "#7aa3e5", "#a8385d", "#aae3f5"],
+  };
+
+  @ViewChild("tooltip", { static: true }) matTooltip: MatTooltip;
+
+  submitted = false;
+
+  showLegend: boolean = true;
+  showLabels: boolean = true;
+
+  despesaEnum: DespesaEnum = DespesaEnum.Fixas;
 
   constructor(
     private utilService: UtilService,
@@ -173,7 +188,6 @@ export class TabsComponent implements OnInit {
 
   public enviarLancamento() {
     var user = new User();
-    user.id = 0;
     user.codigo = "";
     user.email = "";
     user.lancamentos = [];
@@ -183,100 +197,11 @@ export class TabsComponent implements OnInit {
     this.calculeAgoraDiv.nativeElement.scrollIntoView({ behavior: "smooth" });
   }
 
-  adicionarDespesa() {
-    if (this.valorDespesa.value < 1) {
-      this.openSnackBar("Ops...", "Preencha o valor da despesa!");
-      return;
-    }
-
-    let lancamentos = this.storageService.getLocalStorageLancamentos() as Lancamento[];
-    let despesa = null;
-    let lancamento = null;
-
-    Array.from(lancamentos).forEach((lan) => {
-      if (String(lan.mes) === String(this.selectedMonthDesc)) {
-        lancamento = lan;
-      }
-    });
-
-    console.log("lancamento", lancamento);
-
-    if (lancamento == null) {
-      lancamento = new Lancamento();
-      lancamento.mes = this.selectedMonthDesc;
-      lancamento.despesas = [];
-    }
-
-    despesa = lancamento.despesas
-      ? lancamento.despesas.find(
-          (despesa) => String(despesa.tipo) === String(this.tipoDespesa.value)
-        )
-      : null;
-
-    console.log("tipoDespesa", this.tipoDespesa.value);
-
-    if (despesa == null) {
-      despesa = new Despesa();
-      despesa.tipo = this.tipoDespesa.value;
-      despesa.name = this.nomeDespesa.value;
-    }
-
-    let itemDespesa = new DespesaItem();
-    itemDespesa.desc = this.descricaoDespesa.value;
-    itemDespesa.obs = this.obsDespesa.value;
-    itemDespesa.valor = this.valorDespesa.value;
-
-    despesa.itensDespesa = despesa.itensDespesa ? despesa.itensDespesa : [];
-
-    despesa.itensDespesa.push(itemDespesa);
-
-    let tipoDespesaAtual = false;
-
-    Array.from(lancamento.despesas as Despesa[]).forEach((desp) => {
-      if (desp.tipo === String(this.tipoDespesa.value)) {
-        desp = despesa;
-        tipoDespesaAtual = true;
-      }
-    });
-
-    if (!tipoDespesaAtual || lancamento.despesas.length === 0) {
-      lancamento.despesas.push(despesa);
-    }
-
-    despesa.itensDespesa = despesa.itensDespesa ? despesa.itensDespesa : [];
-
-    let mesAtual = false;
-
-    Array.from(lancamentos as Lancamento[]).forEach((lan) => {
-      if (lan.mes === lancamento.mes) {
-        lan = lancamento;
-        mesAtual = true;
-      }
-    });
-    if (!mesAtual || lancamentos.length === 0) {
-      lancamentos.push(lancamento);
-    }
-
-    this.storageService.setLocalStorageLancamentos(lancamentos);
-
-    console.log(this.storageService.getLocalStorageLancamentos());
-    console.log("lancamentos", lancamentos);
-    this.apiService.salvar(lancamentos);
-
-    if (lancamento.despesas.length > 0) {
-      this.atualizarContadorLancamentoDespesas();
-
-      this.descricaoDespesa.reset();
-      this.valorDespesa.reset();
-      this.obsDespesa.reset();
-    }
-  }
-
   atualizarContadorLancamentoDespesas() {
     var cont = 0;
     var lancamentos = this.storageService.getLocalStorageLancamentos();
 
-    if (lancamentos.length > 0) {
+    if (lancamentos?.length > 0) {
       lancamentos.forEach((lancamento) => {
         lancamento.despesas.forEach((despesa) => {
           cont += despesa.itensDespesa.length;
@@ -289,7 +214,7 @@ export class TabsComponent implements OnInit {
   }
 
   abrirCodigoSecretoBottomSheet(): void {
-    this.bottomSheet.open(BottomSheetCodigoSecretoComponent);
+    this.bottomSheet.open(BottomSheetLoginComponent);
   }
 
   abrirGraficoDespesasBottomSheet() {
@@ -303,12 +228,6 @@ export class TabsComponent implements OnInit {
 
     bottomSheetRef.afterDismissed().subscribe(() => {
       this.atualizarContadorLancamentoDespesas();
-    });
-  }
-
-  abrirComoFuncionaBottomSheet() {
-    this.bottomSheet.open(BottomSheetComoFuncionaComponent, {
-      panelClass: "bottom-sheet-style",
     });
   }
 
@@ -339,6 +258,7 @@ export class TabsComponent implements OnInit {
     this.meses.push(this.lastMonth, this.currentMonth, this.nextMonth);
 
     this.selectedMonthDesc = this.currentMonth;
+    this.controle503020Service.selectedMonth.next(this.selectedMonthDesc);
 
     this.tabIndex = this.meses.findIndex(
       (mes) => String(mes) === String(this.currentMonth)
@@ -347,6 +267,7 @@ export class TabsComponent implements OnInit {
 
   selectedTabChange(mes: string) {
     this.selectedMonthDesc = mes;
+    this.controle503020Service.selectedMonth.next(this.selectedMonthDesc);
   }
 
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {}
@@ -365,29 +286,22 @@ export class TabsComponent implements OnInit {
     const bottomSheefRef = this.bottomSheet.open(
       BottomSheetListaDespesasComponent
     );
-    bottomSheefRef.afterDismissed().subscribe((response) => {
-      if (response) {
+    bottomSheefRef.afterDismissed().subscribe((selectedCategory) => {
+      if (selectedCategory) {
         const bottomSheefNovaDespesaRef = this.bottomSheet.open(
           BottomSheetNovaDespesa,
           {
             data: {
-              tipoDespesa: response.tipoDespesa,
-              nomeDespesa: response.nomeDespesa,
-              descricaoDespesa: response.despesa,
-              mesSelecionado: this.selectedMonthDesc,
+              category: selectedCategory,
             },
           }
         );
 
-        this.tipoDespesa.setValue(response.tipoDespesa);
-        this.nomeDespesa.setValue(response.nomeDespesa);
-        this.descricaoDespesa.setValue(response.despesa);
+        this.tipoDespesa.setValue(selectedCategory.tipoDespesa);
+        this.nomeDespesa.setValue(selectedCategory.nomeDespesa);
+        this.descricaoDespesa.setValue(selectedCategory.despesa);
         this.obsDespesa.reset();
         this.valorDespesa.reset();
-
-        setTimeout(() => {
-          this.valorDespesaEl.nativeElement.focus();
-        }, 100);
 
         bottomSheefNovaDespesaRef.afterDismissed().subscribe((response) => {
           if (response) {

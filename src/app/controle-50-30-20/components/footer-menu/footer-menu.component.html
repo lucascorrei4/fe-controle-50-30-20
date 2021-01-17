@@ -1,25 +1,25 @@
 <mat-toolbar class="toolbar-bottom" color="primary">
-    <mat-toolbar-row class="justify-content-center">
-      <span class="spacer"></span>
-      <button
-        mat-icon-button
-        #matTooltipLancamentosDespesas="matTooltip"
-        matTooltip="Lançamentos de Despesas do Mês"
-        (click)="abrirLancamentosDespesasMesBottomSheet()"
-        matBadge="{{ contLancamentoDespesas }}"
-        matBadgeColor="warn"
-      >
-        <mat-icon>fastfood</mat-icon>
-      </button>
+  <mat-toolbar-row class="justify-content-center">
+    <span class="spacer"></span>
+    <button
+      mat-icon-button
+      #matTooltipLancamentosDespesas="matTooltip"
+      matTooltip="Lançamentos de Despesas do Mês"
+      (click)="abrirLancamentosDespesasMesBottomSheet()"
+      matBadge="{{ contLancamentoDespesas }}"
+      matBadgeColor="warn"
+    >
+      <mat-icon>fastfood</mat-icon>
+    </button>
 
-      <span class="spacer"></span>
-      <button mat-icon-button (click)="abrirGraficoDespesasBottomSheet()">
-        <mat-icon>pie_chart</mat-icon>
-      </button>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="abrirGraficoDespesasBottomSheet()">
+      <mat-icon>pie_chart</mat-icon>
+    </button>
 
-      <span class="spacer"></span>
-      <button mat-icon-button (click)="abrirCodigoSecretoBottomSheet()">
-        <mat-icon>vpn_key</mat-icon>
-      </button>
-    </mat-toolbar-row>
-  </mat-toolbar>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="abrirCodigoSecretoBottomSheet()">
+      <mat-icon>vpn_key</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>

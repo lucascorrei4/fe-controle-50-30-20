@@ -6,7 +6,6 @@ import { CommonModule, registerLocaleData } from "@angular/common";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { NgxChartsModule, PieChartModule } from "@swimlane/ngx-charts";
-import { MenuComponent } from "./menu/menu.component";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
@@ -40,7 +39,7 @@ import { TabsModule } from './controle-50-30-20/components/tabs/tabs.module';
 registerLocaleData(localePtBr);
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent],
+  declarations: [AppComponent],
   imports: [
     CommonModule,
     BrowserModule,

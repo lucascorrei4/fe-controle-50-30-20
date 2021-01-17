@@ -8,17 +8,15 @@
       labelPosition="bottom"
     >
       <mat-step>
-        <p class="mat-headline mb-2 text-center">
-          Ref. {{ data.mesSelecionado }}
-        </p>
+        <p class="mat-headline mb-2 text-center">Ref. {{ selectedMonth }}</p>
         <div
           fxLayout="column"
           fxLayoutAlign="center center"
           class="title-section p-2 mb-2 text-center"
         >
           <p class="secondary-text-color">
-            Quanto você pagou de <strong>{{ data.descricaoDespesa }}</strong> em
-            {{ data.mesSelecionado }}?
+            Quanto você pagou de <strong>{{ category?.title }}</strong> em
+            {{ selectedMonth }}?
           </p>
         </div>
         <div class="row">
@@ -43,7 +41,7 @@
                   class="form-control input-size"
                   pattern="[0-9]*"
                   inputmode="numeric"
-                  autofocus
+                  onfocus="this.value = this.value;"
                 />
               </div>
             </div>
@@ -63,11 +61,8 @@
         </div>
       </mat-step>
 
-      <!-- Telefone -->
       <mat-step>
-        <p class="mat-headline mb-2 text-center">
-          Ref. {{ data.mesSelecionado }}
-        </p>
+        <p class="mat-headline mb-2 text-center">Ref. {{ selectedMonth }}</p>
         <div
           fxLayout="column"
           fxLayoutAlign="center center"
@@ -75,7 +70,7 @@
         >
           <p class="secondary-text-color">
             Quer inserir alguma observação sobre
-            <strong>{{ data.descricaoDespesa }}</strong
+            <strong>{{ category?.title }}</strong
             >?
           </p>
         </div>
@@ -102,10 +97,50 @@
 
         <div class="botoes-navegacao">
           <button mat-stroked-button matStepperPrevious>Voltar</button>
+          <button mat-raised-button color="primary" matStepperNext>
+            Próxima Etapa
+          </button>
+        </div>
+      </mat-step>
+      <mat-step>
+        <p class="mat-headline mb-2 text-center">Ref. {{ selectedMonth }}</p>
+        <div
+          fxLayout="column"
+          fxLayoutAlign="center center"
+          class="title-section p-2 mb-2 text-center"
+        >
+          <p class="secondary-text-color">
+            Deseja repetir esta despesa ({{ category?.title }}) com esse mesmo
+            valor <strong>{{ getValorDespesa() | currency: "BRL" }}</strong> nos
+            próximos meses?
+          </p>
+        </div>
+        <div class="row">
+          <div class="ml-auto mr-auto">
+            <div class="form-group">
+              <div
+                class="input-group"
+                fxLayout="row"
+                fxLayoutAlign="center center"
+              >
+                <mat-label class="mx-2" style="color: #000"> Não </mat-label>
+                <mat-slide-toggle
+                  (change)="repeatLaunch($event)"
+                  formControlName="repeat"
+                >
+                  <mat-label style="color: #000"> Sim, repetir </mat-label>
+                </mat-slide-toggle>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="botoes-navegacao">
+          <button mat-stroked-button matStepperPrevious>Voltar</button>
           <button
             mat-raised-button
             color="primary"
-            (click)="adicionarDespesa()"
+            (click)="saveLaunch()"
             matStepperNext
           >
             Salvar
@@ -134,7 +169,12 @@
 
           <p class="mat-title mb-2 text-center">Despesa adicionada!</p>
 
-          <button mat-raised-button color="primary" class="mb-2" (click)="novaDespesa()">
+          <button
+            mat-raised-button
+            color="primary"
+            class="mb-2"
+            (click)="novaDespesa()"
+          >
             Adicionar outra despesa
           </button>
           <button mat-button (click)="fechar()">Fechar</button>

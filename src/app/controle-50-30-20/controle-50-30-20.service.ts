@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject, Observable } from "rxjs";
-import { map, tap } from "rxjs/operators";
+import { Subject, Observable, BehaviorSubject } from "rxjs";
+import { distinctUntilChanged, map, shareReplay, tap } from "rxjs/operators";
 import { Category } from "../models/category";
+import { Launch } from "../models/launch";
 import { User } from "../models/user";
 import { ConfigService } from "../services/config.service";
 import { StorageService } from "../services/storage.service";
@@ -15,6 +16,7 @@ export class Controle503020Service {
   private token: any;
   private atualizarCarrinhoSubject = new Subject<any>();
   public categoriesGrouped: any[] = [];
+  public selectedMonth: BehaviorSubject<string> = new BehaviorSubject(null);
 
   constructor(
     private http: HttpClient,
@@ -28,6 +30,12 @@ export class Controle503020Service {
     });
   }
 
+  get selectedMonth$(): Observable<string> {
+    return this.selectedMonth
+      .asObservable()
+      .pipe(distinctUntilChanged(), shareReplay());
+  }
+
   // User
 
   newUser(user: User): Observable<User> {
@@ -36,10 +44,22 @@ export class Controle503020Service {
     });
   }
 
-  findUserByEmail(email: string): Observable<User> {
-    return this.http.get<User>(`${this.url}/user/findByEmail?email=${email}`, {
+  newLaunch(launch: Launch): Observable<Launch> {
+    return this.http.post<Launch>(`${this.url}/launch`, launch, {
       headers: this.token,
     });
+  }
+
+  findUserByEmail(email: string): Observable<User> {
+    return this.http
+      .get<User>(`${this.url}/user/findByEmail?email=${email}`, {
+        headers: this.token,
+      })
+      .pipe(
+        tap((user) => {
+          this.storageService.setLocalUser(user);
+        })
+      );
   }
 
   getCategories(): Observable<Category[]> {

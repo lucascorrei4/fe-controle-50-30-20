@@ -2,8 +2,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 import { Controle503020RoutingModule } from "./controle-50-30-20-routing.module";
-import { BrowserModule } from "@angular/platform-browser";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxChartsModule, PieChartModule } from "@swimlane/ngx-charts";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
@@ -33,7 +31,7 @@ import { StorageService } from "../services/storage.service";
 import { UtilService } from "../services/util.service";
 import { Controle503020Component } from "./controle-50-30-20.component";
 import { RouterModule } from "@angular/router";
-import { BottomSheetCodigoSecretoComponent } from "./components/bottom-sheets/bottom-sheet-codigo-secreto/bottom-sheet-codigo-secreto.component";
+import { BottomSheetLoginComponent } from "./components/bottom-sheets/bottom-sheet-login/bottom-sheet-login.component";
 import { BottomSheetGraficoDespesasComponent } from "./components/bottom-sheets/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component";
 import { BottomSheetLancamentosDespesasComponent } from "./components/bottom-sheets/bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component";
 import { BottomSheetNovaDespesa } from "./components/bottom-sheets/bottom-sheet-nova-despesa/bottom-sheet-nova-despesa.component";
@@ -42,9 +40,11 @@ import { BottomSheetComoFuncionaComponent } from "./components/bottom-sheets/bot
 import { ConfigService } from "../services/config.service";
 import { Controle503020Service } from "./controle-50-30-20.service";
 import { HeaderModule } from "./components/header/header.module";
-import { FooterMenuComponent } from "./components/footer-menu/footer-menu.component";
 import { FooterMenuModule } from "./components/footer-menu/footer-menu.module";
 import { TabsModule } from "./components/tabs/tabs.module";
+import { HowItWorksModule } from "./components/how-it-works/how-it-works.module";
+import { MenuModule } from "./components/menu/menu.module";
+import { MatSlideToggleModule } from "@angular/material";
 
 export const routes = [
   { path: "", component: Controle503020Component, pathMatch: "full" },
@@ -54,7 +54,7 @@ export const routes = [
   declarations: [
     Controle503020Component,
     BottomSheetListaDespesasComponent,
-    BottomSheetCodigoSecretoComponent,
+    BottomSheetLoginComponent,
     BottomSheetGraficoDespesasComponent,
     BottomSheetLancamentosDespesasComponent,
     BottomSheetComoFuncionaComponent,
@@ -95,6 +95,9 @@ export const routes = [
     HeaderModule,
     FooterMenuModule,
     TabsModule,
+    HowItWorksModule,
+    MenuModule,
+    MatSlideToggleModule
   ],
   providers: [
     StorageService,

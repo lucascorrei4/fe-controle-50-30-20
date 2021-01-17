@@ -14,10 +14,9 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ApiService } from "src/app/services/api.service";
 import { StorageService } from "src/app/services/storage.service";
-import { Lancamento } from "src/app/models/lancamento";
-import { Despesa } from "src/app/models/despesa";
-import { DespesaItem } from "src/app/models/despesa-item";
 import { Controle503020Service } from "../../../controle-50-30-20.service";
+import { Launch } from "src/app/models/launch";
+import { Category } from "src/app/models/category";
 
 @Component({
   selector: "app-bottom-sheet-nova-despesa",
@@ -26,34 +25,42 @@ import { Controle503020Service } from "../../../controle-50-30-20.service";
 })
 export class BottomSheetNovaDespesa implements OnInit {
   @ViewChild("stepper", { read: true, static: true })
-  stepper: MatHorizontalStepper;
-  formGroup: FormGroup;
+  public stepper: MatHorizontalStepper;
+  public formGroup: FormGroup;
+  public launch: Launch = null;
+  public selectedMonth: string = null;
+  public category: Category = null;
+
   private _isComplete: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
 
   constructor(
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
     public fb: FormBuilder,
     private bottomSheetRef: MatBottomSheetRef<BottomSheetNovaDespesa>,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
     private snackBar: MatSnackBar,
-    private apiService: ApiService,
     private storageService: StorageService,
     private controle503020Service: Controle503020Service
   ) {
-    this.initForm();
-    console.log(this.data);
+    this.category = data.category;
+    this.controle503020Service.selectedMonth$.subscribe(
+      (res) => (this.selectedMonth = res)
+    );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.initForm();
+  }
 
   initForm() {
     this.formGroup = this.fb.group({
-      tipoDespesa: [this.data.tipoDespesa],
-      nomeDespesa: [this.data.nomeDespesa],
-      descricaoDespesa: [this.data.descricaoDespesa, Validators.required],
+      tipoDespesa: [this.category.type],
+      nomeDespesa: [this.category.title],
+      descricaoDespesa: ["", Validators.required],
       obsDespesa: [""],
       valorDespesa: [0, Validators.required],
+      repeat: [false],
     });
   }
 
@@ -65,93 +72,30 @@ export class BottomSheetNovaDespesa implements OnInit {
     console.log(event);
   }
 
-  adicionarDespesa() {
+  saveLaunch() {
     if (this.valorDespesa.value < 1) {
       this.openSnackBar("Ops...", "Preencha o valor da despesa!");
       return;
     }
-
-    let lancamentos = this.storageService.getLocalStorageLancamentos() as Lancamento[];
-    let despesa = null;
-    let lancamento = null;
-
-    Array.from(lancamentos).forEach((lan) => {
-      if (String(lan.mes) === String(this.data.mesSelecionado)) {
-        lancamento = lan;
+    let launch = new Launch();
+    launch.userId = this.storageService.getLocalUser()._id;
+    launch.description = this.category.title;
+    launch.month = this.selectedMonth;
+    launch.type = this.category.type;
+    launch.categoryId = this.category.categoryId;
+    launch.valor = this.valorDespesa.value;
+    this.controle503020Service.newLaunch(launch).subscribe((res) => {
+      if (res) {
+        this.controle503020Service.atualizarCarrinho();
+        this.descricaoDespesa.reset();
+        this.valorDespesa.reset();
+        this.obsDespesa.reset();
       }
     });
+  }
 
-    console.log("lancamento", lancamento);
-
-    if (lancamento == null) {
-      lancamento = new Lancamento();
-      lancamento.mes = this.data.mesSelecionado;
-      lancamento.despesas = [];
-    }
-
-    despesa = lancamento.despesas
-      ? lancamento.despesas.find(
-          (despesa) => String(despesa.tipo) === String(this.tipoDespesa.value)
-        )
-      : null;
-
-    console.log("tipoDespesa", this.tipoDespesa.value);
-
-    if (despesa == null) {
-      despesa = new Despesa();
-      despesa.tipo = this.tipoDespesa.value;
-      despesa.name = this.nomeDespesa.value;
-    }
-
-    let itemDespesa = new DespesaItem();
-    itemDespesa.desc = this.descricaoDespesa.value;
-    itemDespesa.obs = this.obsDespesa.value;
-    itemDespesa.valor = this.valorDespesa.value;
-
-    despesa.itensDespesa = despesa.itensDespesa ? despesa.itensDespesa : [];
-
-    despesa.itensDespesa.push(itemDespesa);
-
-    let tipoDespesaAtual = false;
-
-    Array.from(lancamento.despesas as Despesa[]).forEach((desp) => {
-      if (desp.tipo === String(this.tipoDespesa.value)) {
-        desp = despesa;
-        tipoDespesaAtual = true;
-      }
-    });
-
-    if (!tipoDespesaAtual || lancamento.despesas.length === 0) {
-      lancamento.despesas.push(despesa);
-    }
-
-    despesa.itensDespesa = despesa.itensDespesa ? despesa.itensDespesa : [];
-
-    let mesAtual = false;
-
-    Array.from(lancamentos as Lancamento[]).forEach((lan) => {
-      if (lan.mes === lancamento.mes) {
-        lan = lancamento;
-        mesAtual = true;
-      }
-    });
-    if (!mesAtual || lancamentos.length === 0) {
-      lancamentos.push(lancamento);
-    }
-
-    this.storageService.setLocalStorageLancamentos(lancamentos);
-
-    console.log(this.storageService.getLocalStorageLancamentos());
-    console.log("lancamentos", lancamentos);
-    this.apiService.salvar(lancamentos);
-
-    if (lancamento.despesas.length > 0) {
-      this.controle503020Service.atualizarCarrinho();
-
-      this.descricaoDespesa.reset();
-      this.valorDespesa.reset();
-      this.obsDespesa.reset();
-    }
+  repeatLaunch(event) {
+    this.repeat.setValue(event.checked);
   }
 
   openSnackBar(message: string, action: string) {
@@ -186,6 +130,10 @@ export class BottomSheetNovaDespesa implements OnInit {
 
   get valorDespesa(): FormControl {
     return this.formGroup.get("valorDespesa") as FormControl;
+  }
+
+  get repeat(): FormControl {
+    return this.formGroup.get("repeat") as FormControl;
   }
 
   get isComplete$(): Observable<boolean> {

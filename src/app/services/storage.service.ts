@@ -7,7 +7,7 @@ import { Category } from "../models/category";
 
 @Injectable()
 export class StorageService {
-  getLocalUserLogin(): User {
+  getLocalUser(): User {
     let usr = localStorage.getItem(STORAGE_KEYS.localUser);
     if (usr == null) {
       return new User();

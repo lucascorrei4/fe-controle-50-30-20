@@ -1,10 +1,14 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { User } from '../models/user';
-import { catchError, map } from 'rxjs/operators';
-import { Lancamento } from '../models/lancamento';
-import { StorageService } from './storage.service';
+import { Injectable } from "@angular/core";
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpErrorResponse,
+} from "@angular/common/http";
+import { Observable, throwError } from "rxjs";
+import { User } from "../models/user";
+import { catchError, map } from "rxjs/operators";
+import { Lancamento } from "../models/lancamento";
+import { StorageService } from "./storage.service";
 
 export interface Item {
   name: string;
@@ -15,41 +19,37 @@ export interface Item {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ApiService {
+  baseUri: string = "http://localhost:4000/api";
+  headers = new HttpHeaders().set("Content-Type", "application/json");
 
-  baseUri: string = 'http://localhost:4000/api';
-  headers = new HttpHeaders().set('Content-Type', 'application/json');
-
-  constructor(private http: HttpClient, private storageService: StorageService) { }
+  constructor(
+    private http: HttpClient,
+    private storageService: StorageService
+  ) {}
 
   fetch(): Observable<Item[]> {
-    return <Observable<Item[]>>this.http.get('assets/data/conf.json');
+    return <Observable<Item[]>>this.http.get("assets/data/conf.json");
   }
 
   salvar(lancamentos: Lancamento[]) {
-    let user = this.storageService.getLocalUserLogin();
+    let user = this.storageService.getLocalUser();
     if (user.email) {
-      user = this.storageService.getLocalUserLogin();
-      console.log("user a salvar", user)
+      user = this.storageService.getLocalUser();
     } else {
       user = new User();
-      user.id = 0;
       user.email = "lucascorreiaevangelista@gmail.com";
       user.codigo = "lucascorrei4";
     }
     user.lancamentos = lancamentos;
-    console.log("user a salvar", user)
     this.createUser(user);
   }
 
   createUser(data): Observable<any> {
     let url = `${this.baseUri}/create`;
-    return this.http.post(url, data)
-      .pipe(
-        catchError(this.errorMgmt)
-      )
+    return this.http.post(url, data).pipe(catchError(this.errorMgmt));
   }
 
   // Get all Users
@@ -62,31 +62,31 @@ export class ApiService {
     let url = `${this.baseUri}/read/${id}`;
     return this.http.get(url, { headers: this.headers }).pipe(
       map((res: Response) => {
-        return res || {}
+        return res || {};
       }),
       catchError(this.errorMgmt)
-    )
+    );
   }
 
   // Update User
   updateUser(id, data): Observable<any> {
     let url = `${this.baseUri}/update/${id}`;
-    return this.http.put(url, data, { headers: this.headers }).pipe(
-      catchError(this.errorMgmt)
-    )
+    return this.http
+      .put(url, data, { headers: this.headers })
+      .pipe(catchError(this.errorMgmt));
   }
 
   // Delete User
   deleteUser(id): Observable<any> {
     let url = `${this.baseUri}/delete/${id}`;
-    return this.http.delete(url, { headers: this.headers }).pipe(
-      catchError(this.errorMgmt)
-    )
+    return this.http
+      .delete(url, { headers: this.headers })
+      .pipe(catchError(this.errorMgmt));
   }
 
-  // Error handling 
+  // Error handling
   errorMgmt(error: HttpErrorResponse) {
-    let errorMessage = '';
+    let errorMessage = "";
     if (error.error instanceof ErrorEvent) {
       // Get client-side error
       errorMessage = error.error.message;
@@ -97,5 +97,4 @@ export class ApiService {
     console.log(errorMessage);
     return throwError(errorMessage);
   }
-
 }

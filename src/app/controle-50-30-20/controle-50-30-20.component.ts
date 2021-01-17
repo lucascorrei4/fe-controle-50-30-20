@@ -15,7 +15,6 @@ import { MatTooltip } from "@angular/material/tooltip";
 import { BottomSheetListaDespesasComponent } from "./components/bottom-sheets/bottom-sheet-lista-despesas/bottom-sheet-lista-despesas.component";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { formatDate } from "@angular/common";
-import { BottomSheetCodigoSecretoComponent } from "./components/bottom-sheets/bottom-sheet-codigo-secreto/bottom-sheet-codigo-secreto.component";
 import { User } from "../models/user";
 import { ApiService } from "../services/api.service";
 import {
@@ -40,6 +39,7 @@ import { MatTabChangeEvent } from "@angular/material/tabs";
 import { BottomSheetNovaDespesa } from "./components/bottom-sheets/bottom-sheet-nova-despesa/bottom-sheet-nova-despesa.component";
 
 import { Controle503020Service } from "./controle-50-30-20.service";
+import { BottomSheetLoginComponent } from "./components/bottom-sheets/bottom-sheet-login/bottom-sheet-login.component";
 
 @Component({
   selector: "app-controle-50-30-20",
@@ -48,23 +48,36 @@ import { Controle503020Service } from "./controle-50-30-20.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Controle503020Component implements OnInit {
-  @ViewChild("tooltip", { static: true }) matTooltip: MatTooltip;
-
-  submitted = false;
-
-  showLegend: boolean = true;
-  showLabels: boolean = true;
-
-  despesaEnum: DespesaEnum = DespesaEnum.Fixas;
-
-  colorScheme = {
-    domain: ["#5AA454", "#E44D25", "#CFC0BB", "#7aa3e5", "#a8385d", "#aae3f5"],
-  };
-
   constructor(
-    public fb: FormBuilder,
-    @Inject(LOCALE_ID) private locale: string
+    private storageService: StorageService,
+    private bottomSheet: MatBottomSheet,
+    private utilService: UtilService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.verifyLoggedUser();
+  }
+
+  verifyLoggedUser() {
+    if (
+      this.utilService.objectIsNullUndefinedOrEmpty(
+        this.storageService.getLocalUser()
+      )
+    ) {
+      this.openLogin();
+    }
+  }
+
+  openLogin() {
+    const bottomSheefNovaDespesaRef = this.bottomSheet.open(
+      BottomSheetLoginComponent,
+      {
+        disableClose: true,
+      }
+    );
+    bottomSheefNovaDespesaRef.afterDismissed().subscribe((response) => {
+      if (response) {
+      }
+    });
+  }
 }

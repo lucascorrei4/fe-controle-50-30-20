@@ -34,7 +34,6 @@ export class BottomSheetLancamentosDespesasComponent implements OnInit {
 
     carregarLancamentos() {
         this.lancamentos = this.localStorage.getLocalStorageLancamentos();
-        console.log(this.lancamentos)
         if (this.lancamentos.length > 0) {
             this.carregarDespesas(this.lancamentos);
         }
@@ -65,7 +64,6 @@ export class BottomSheetLancamentosDespesasComponent implements OnInit {
 
     carregarDespesasSelecionadas(despesaSelecionada: string) {
         this.despesasSelecionadas = this.despesas.filter(despesa => String(despesa.tipo) === despesaSelecionada);
-        console.log('carregarDespesasSelecionadas', this.despesasSelecionadas);
     }
 
     getFormattedPrice(price: number) {
