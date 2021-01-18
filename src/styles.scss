@@ -15,10 +15,15 @@ body {
   padding: 0 !important;
 }
 
-.mat-raised-button, .mat-stroked-button {
+.mat-raised-button,
+.mat-stroked-button {
   border-radius: 30px !important;
 }
 
 .mat-tab-body-content {
   overflow: inherit !important;
+}
+
+.main-color {
+  color: #3f51b5;
 }

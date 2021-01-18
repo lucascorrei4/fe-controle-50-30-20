@@ -10,6 +10,7 @@ import {
   MatInputModule,
   MatProgressBarModule,
 } from "@angular/material";
+import { NgxCurrencyModule } from "ngx-currency";
 
 @NgModule({
   declarations: [TabsComponent],
@@ -22,6 +23,8 @@ import {
     MatInputModule,
     MatIconModule,
     MatProgressBarModule,
+    NgxCurrencyModule,
+    NgxChartsModule,
   ],
   exports: [TabsComponent],
 })

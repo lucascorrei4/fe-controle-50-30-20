@@ -33,7 +33,6 @@ import { Controle503020Component } from "./controle-50-30-20.component";
 import { RouterModule } from "@angular/router";
 import { BottomSheetLoginComponent } from "./components/bottom-sheets/bottom-sheet-login/bottom-sheet-login.component";
 import { BottomSheetGraficoDespesasComponent } from "./components/bottom-sheets/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component";
-import { BottomSheetLancamentosDespesasComponent } from "./components/bottom-sheets/bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component";
 import { BottomSheetNovaDespesa } from "./components/bottom-sheets/bottom-sheet-nova-despesa/bottom-sheet-nova-despesa.component";
 import { BottomSheetListaDespesasComponent } from "./components/bottom-sheets/bottom-sheet-lista-despesas/bottom-sheet-lista-despesas.component";
 import { BottomSheetComoFuncionaComponent } from "./components/bottom-sheets/bottom-sheet-como-funciona/bottom-sheet-como-funciona.component";
@@ -44,7 +43,12 @@ import { FooterMenuModule } from "./components/footer-menu/footer-menu.module";
 import { TabsModule } from "./components/tabs/tabs.module";
 import { HowItWorksModule } from "./components/how-it-works/how-it-works.module";
 import { MenuModule } from "./components/menu/menu.module";
-import { MatSlideToggleModule } from "@angular/material";
+import {
+  MatProgressSpinnerModule,
+  MatSlideToggleModule,
+  MatSpinner,
+} from "@angular/material";
+import { BottomSheetLaunchesByMonthComponent } from "./components/bottom-sheets/bottom-sheet-open-launches-by-month/bottom-sheet-open-launches-by-month.component";
 
 export const routes = [
   { path: "", component: Controle503020Component, pathMatch: "full" },
@@ -56,9 +60,9 @@ export const routes = [
     BottomSheetListaDespesasComponent,
     BottomSheetLoginComponent,
     BottomSheetGraficoDespesasComponent,
-    BottomSheetLancamentosDespesasComponent,
     BottomSheetComoFuncionaComponent,
     BottomSheetNovaDespesa,
+    BottomSheetLaunchesByMonthComponent,
   ],
   imports: [
     CommonModule,
@@ -97,7 +101,9 @@ export const routes = [
     TabsModule,
     HowItWorksModule,
     MenuModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
   ],
   providers: [
     StorageService,

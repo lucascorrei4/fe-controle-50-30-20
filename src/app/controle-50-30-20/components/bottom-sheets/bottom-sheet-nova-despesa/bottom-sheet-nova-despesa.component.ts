@@ -17,6 +17,7 @@ import { StorageService } from "src/app/services/storage.service";
 import { Controle503020Service } from "../../../controle-50-30-20.service";
 import { Launch } from "src/app/models/launch";
 import { Category } from "src/app/models/category";
+import { RepeatedLaunch } from "src/app/models/repeated-launch";
 
 @Component({
   selector: "app-bottom-sheet-nova-despesa",
@@ -84,14 +85,39 @@ export class BottomSheetNovaDespesa implements OnInit {
     launch.type = this.category.type;
     launch.categoryId = this.category.categoryId;
     launch.valor = this.valorDespesa.value;
+    launch.obs = this.obsDespesa.value;
     this.controle503020Service.newLaunch(launch).subscribe((res) => {
+      console.log(res);
       if (res) {
+        if (this.repeat.value) {
+          this.saveRepeatedLaunch(res);
+        }
         this.controle503020Service.atualizarCarrinho();
         this.descricaoDespesa.reset();
         this.valorDespesa.reset();
         this.obsDespesa.reset();
       }
     });
+  }
+
+  private saveRepeatedLaunch(launch: Launch) {
+    let repeatedLaunch = new RepeatedLaunch();
+    repeatedLaunch.userId = this.storageService.getLocalUser()._id;
+    repeatedLaunch.description = launch.description;
+    repeatedLaunch.type = launch.type;
+    repeatedLaunch.categoryId = launch.categoryId;
+    repeatedLaunch.valor = launch.valor;
+    repeatedLaunch.obs = "NENHUMA";
+    this.controle503020Service
+      .newRepeatedLaunch(repeatedLaunch)
+      .subscribe((res) => {
+        if (res) {
+          this.controle503020Service.atualizarCarrinho();
+          this.descricaoDespesa.reset();
+          this.valorDespesa.reset();
+          this.obsDespesa.reset();
+        }
+      });
   }
 
   repeatLaunch(event) {

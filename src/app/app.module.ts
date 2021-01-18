@@ -34,7 +34,7 @@ import { StorageService } from "./services/storage.service";
 import { MatStepperModule } from "@angular/material/stepper";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { Controle503020Module } from "./controle-50-30-20/controle-50-30-20.module";
-import { TabsModule } from './controle-50-30-20/components/tabs/tabs.module';
+import { TabsModule } from "./controle-50-30-20/components/tabs/tabs.module";
 
 registerLocaleData(localePtBr);
 
@@ -49,40 +49,10 @@ registerLocaleData(localePtBr);
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    NgxChartsModule,
-    MatTooltipModule,
-    MatButtonModule,
-    MatIconModule,
-    MatButtonToggleModule,
-    MatProgressBarModule,
-    MatBottomSheetModule,
-    MatListModule,
-    MatSnackBarModule,
-    PieChartModule,
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
     }),
-    NgxCurrencyModule,
-    MatBadgeModule,
-    MatChipsModule,
-    MatCardModule,
-    MatTabsModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatStepperModule,
     Controle503020Module,
-    TabsModule,
-  ],
-  exports: [
-    MatTooltipModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatProgressBarModule,
-    MatBottomSheetModule,
-    MatListModule,
-    MatIconModule,
-    MatSnackBarModule,
-    MatTabsModule,
   ],
   providers: [
     StorageService,

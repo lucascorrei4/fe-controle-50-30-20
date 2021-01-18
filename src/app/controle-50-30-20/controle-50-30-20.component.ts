@@ -26,7 +26,6 @@ import {
 import { Router } from "@angular/router";
 import { UtilService } from "../services/util.service";
 import { BottomSheetGraficoDespesasComponent } from "./components/bottom-sheets/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component";
-import { BottomSheetLancamentosDespesasComponent } from "./components/bottom-sheets/bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component";
 import { BottomSheetComoFuncionaComponent } from "./components/bottom-sheets/bottom-sheet-como-funciona/bottom-sheet-como-funciona.component";
 
 import { StorageService } from "../services/storage.service";

@@ -1,6 +1,5 @@
-export class Launch {
+export class RepeatedLaunch {
   userId: string;
-  month: string;
   type: string;
   categoryId: number;
   description: string;

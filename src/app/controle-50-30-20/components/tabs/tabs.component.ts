@@ -28,14 +28,8 @@ import { BottomSheetListaDespesasComponent } from "../bottom-sheets/bottom-sheet
 import { BottomSheetNovaDespesa } from "../bottom-sheets/bottom-sheet-nova-despesa/bottom-sheet-nova-despesa.component";
 import * as moment from "moment";
 import { StorageService } from "src/app/services/storage.service";
-import { BottomSheetComoFuncionaComponent } from "../bottom-sheets/bottom-sheet-como-funciona/bottom-sheet-como-funciona.component";
-import { BottomSheetLancamentosDespesasComponent } from "../bottom-sheets/bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component";
 import { BottomSheetGraficoDespesasComponent } from "../bottom-sheets/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component";
 import { User } from "src/app/models/user";
-import { Lancamento } from "src/app/models/lancamento";
-import { Despesa } from "src/app/models/despesa";
-import { DespesaItem } from "src/app/models/despesa-item";
-import { ApiService } from "src/app/services/api.service";
 import { Controle503020Service } from "../../controle-50-30-20.service";
 import { DespesaEnum } from "src/app/enums/despesas-enum";
 import { BottomSheetLoginComponent } from "../bottom-sheets/bottom-sheet-login/bottom-sheet-login.component";
@@ -96,7 +90,6 @@ export class TabsComponent implements OnInit {
     public fb: FormBuilder,
     @Inject(LOCALE_ID) private locale: string,
     private storageService: StorageService,
-    private apiService: ApiService,
     private controle503020Service: Controle503020Service,
     private changeDetector: ChangeDetectorRef,
     private snackBar: MatSnackBar
@@ -162,6 +155,7 @@ export class TabsComponent implements OnInit {
 
   selecionarMes(mes) {
     this.selectedMonthDesc = mes;
+    this.controle503020Service.selectedMonth.next(this.selectedMonthDesc);
   }
 
   atualizarRendaTotal() {
@@ -219,16 +213,6 @@ export class TabsComponent implements OnInit {
 
   abrirGraficoDespesasBottomSheet() {
     this.bottomSheet.open(BottomSheetGraficoDespesasComponent);
-  }
-
-  abrirLancamentosDespesasMesBottomSheet() {
-    const bottomSheetRef = this.bottomSheet.open(
-      BottomSheetLancamentosDespesasComponent
-    );
-
-    bottomSheetRef.afterDismissed().subscribe(() => {
-      this.atualizarContadorLancamentoDespesas();
-    });
   }
 
   openSnackBar(message: string, action: string) {

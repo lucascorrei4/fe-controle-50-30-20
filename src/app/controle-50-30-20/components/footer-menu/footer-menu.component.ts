@@ -7,11 +7,14 @@ import {
   EventEmitter,
 } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
+import { BehaviorSubject, Observable } from "rxjs";
+import { distinctUntilChanged, shareReplay } from "rxjs/operators";
+import { Launch } from "src/app/models/launch";
 import { StorageService } from "src/app/services/storage.service";
 import { Controle503020Service } from "../../controle-50-30-20.service";
 import { BottomSheetGraficoDespesasComponent } from "../bottom-sheets/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component";
-import { BottomSheetLancamentosDespesasComponent } from "../bottom-sheets/bottom-sheet-lancamento-despesas/bottom-sheet-lancamento-despesas.component";
 import { BottomSheetLoginComponent } from "../bottom-sheets/bottom-sheet-login/bottom-sheet-login.component";
+import { BottomSheetLaunchesByMonthComponent } from "../bottom-sheets/bottom-sheet-open-launches-by-month/bottom-sheet-open-launches-by-month.component";
 
 @Component({
   selector: "app-footer-menu",
@@ -22,6 +25,9 @@ import { BottomSheetLoginComponent } from "../bottom-sheets/bottom-sheet-login/b
 export class FooterMenuComponent implements OnInit {
   public contLancamentoDespesas: number = 0;
   @Output() clickMenuLateral = new EventEmitter<never>();
+  private selectedMontSubject: BehaviorSubject<string> = new BehaviorSubject(
+    null
+  );
 
   constructor(
     private bottomSheet: MatBottomSheet,
@@ -30,15 +36,20 @@ export class FooterMenuComponent implements OnInit {
     private controle503020Service: Controle503020Service
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.controle503020Service.selectedMonth$.subscribe((res) => {
+      this.selectedMontSubject.next(res);
+      this.atualizarContadorLancamentoDespesas();
+    });
+  }
 
   abrirGraficoDespesasBottomSheet() {
     this.bottomSheet.open(BottomSheetGraficoDespesasComponent);
   }
 
-  abrirLancamentosDespesasMesBottomSheet() {
+  openBottomSheetLaunchesByMonthComponent() {
     const bottomSheetRef = this.bottomSheet.open(
-      BottomSheetLancamentosDespesasComponent
+      BottomSheetLaunchesByMonthComponent
     );
 
     bottomSheetRef.afterDismissed().subscribe(() => {
@@ -46,20 +57,21 @@ export class FooterMenuComponent implements OnInit {
     });
   }
 
-  atualizarContadorLancamentoDespesas() {
-    var cont = 0;
-    var lancamentos = this.storageService.getLocalStorageLancamentos();
-
-    if (lancamentos.length > 0) {
-      lancamentos.forEach((lancamento) => {
-        lancamento.despesas.forEach((despesa) => {
-          cont += despesa.itensDespesa.length;
-        });
+  private async atualizarContadorLancamentoDespesas() {
+    let user = this.storageService.getLocalUser();
+    await this.controle503020Service
+      .findLaunchesByUserIdAndMonthAndType(
+        user._id,
+        this.selectedMontSubject.value
+      )
+      .toPromise()
+      .then((launches: Launch[]) => {
+        this.contLancamentoDespesas = launches.length;
+        this.changeDetector.detectChanges();
+      })
+      .catch((error) => {
+        return Promise.reject(error);
       });
-    }
-
-    this.contLancamentoDespesas = lancamentos.length === 0 ? 0 : cont;
-    this.changeDetector.detectChanges();
   }
 
   abrirCodigoSecretoBottomSheet(): void {
@@ -68,5 +80,11 @@ export class FooterMenuComponent implements OnInit {
 
   abrirMenuLateral(): void {
     this.clickMenuLateral.next();
+  }
+
+  get selectedMontSubject$(): Observable<string> {
+    return this.selectedMontSubject
+      .asObservable()
+      .pipe(distinctUntilChanged(), shareReplay());
   }
 }
