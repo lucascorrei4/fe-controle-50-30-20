@@ -8,6 +8,7 @@ export class User {
   email: string;
   telefone: string;
   ref: string;
+  nome: string;
 
   codigo;
   lancamentos: Lancamento[];

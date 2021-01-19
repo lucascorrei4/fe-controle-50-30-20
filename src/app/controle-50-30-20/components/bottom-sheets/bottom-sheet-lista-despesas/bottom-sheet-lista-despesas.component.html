@@ -1,9 +1,17 @@
-<mat-tab-group>
+<div class="ml-auto mr-auto text-center my-3">
+  <h3 class="main-color launch-title">DESPESAS</h3>
+  <h4 class="refer m-0 p-0">Selecione e Siga o Passo a Passo</h4>
+</div>
+
+<mat-tab-group class="tab-list-launches">
   <mat-tab *ngFor="let item of categoriesGrouped">
     <ng-template mat-tab-label>
-      <span matBadge="{{ item.subItems.length }}" matBadgeOverlap="false">{{
-        item.name
-      }}</span>
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <span matBadge="{{ item.subItems.length }}" matBadgeOverlap="false">{{
+          item.name == "VARIAVEIS" ? "VARIÁVEIS" : item.name
+        }}</span>
+        <small>{{ getTypeDescription(item.name) }}</small>
+      </div>
     </ng-template>
     <mat-list>
       <mat-selection-list>

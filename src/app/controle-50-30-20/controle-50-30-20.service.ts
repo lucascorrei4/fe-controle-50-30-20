@@ -143,6 +143,19 @@ export class Controle503020Service {
     );
   }
 
+  findByUserIdCategoryAndValue(
+    userId: string,
+    categoryId?: number,
+    valor?: number
+  ): Observable<Launch[]> {
+    return this.http.get<Launch[]>(
+      `${this.url}/launch/findByCategoryAndValue?userId=${userId}&categoryId=${categoryId}&valor=${valor}`,
+      {
+        headers: this.token,
+      }
+    );
+  }
+
   atualizarCarrinhoObservable(): Observable<any> {
     return this.atualizarCarrinhoSubject.asObservable();
   }

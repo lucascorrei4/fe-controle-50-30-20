@@ -8,6 +8,7 @@ import { StorageService } from "src/app/services/storage.service";
 @Component({
   selector: "bottom-sheet-lista-despesas",
   templateUrl: "bottom-sheet-lista-despesas.component.html",
+  styleUrls: ['bottom-sheet-lista-despesas.component.scss']
 })
 export class BottomSheetListaDespesasComponent implements OnInit {
   public categoriesGrouped: any[] = [];
@@ -45,5 +46,16 @@ export class BottomSheetListaDespesasComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  getTypeDescription(type: string) {
+    switch (type) {
+      case "VARIAVEIS":
+        return "SUPÉRFLUXOS";
+      case "INVESTIMENTOS":
+        return "OBJETIVOS";
+      default:
+        return "ESSENCIAIS";
+    }
   }
 }

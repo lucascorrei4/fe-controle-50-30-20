@@ -1,5 +1,4 @@
 .launch-card {
-  max-width: 400px;
   margin: 10px 0px auto !important;
   border-radius: 20px !important;
 }
@@ -24,6 +23,12 @@
 .botao-remover {
   position: absolute;
   top: 75%;
+  right: 3%;
+}
+
+.botao-repeat {
+  position: absolute;
+  top: 25%;
   right: 3%;
 }
 
@@ -55,13 +60,4 @@
 }
 .mat-card-content {
   margin-bottom: 5px;
-}
-
-.launch-title {
-  margin: 0;
-}
-
-.refer {
-  line-height: 0.8;
-  font-size: 17px;;
 }

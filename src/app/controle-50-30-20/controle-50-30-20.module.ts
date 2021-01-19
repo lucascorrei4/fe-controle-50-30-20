@@ -49,6 +49,7 @@ import {
   MatSpinner,
 } from "@angular/material";
 import { BottomSheetLaunchesByMonthComponent } from "./components/bottom-sheets/bottom-sheet-open-launches-by-month/bottom-sheet-open-launches-by-month.component";
+import { BottomSheetEarningsComponent } from "./components/bottom-sheets/bottom-sheet-earnings/bottom-sheet-earnings.component";
 
 export const routes = [
   { path: "", component: Controle503020Component, pathMatch: "full" },
@@ -63,6 +64,7 @@ export const routes = [
     BottomSheetComoFuncionaComponent,
     BottomSheetNovaDespesa,
     BottomSheetLaunchesByMonthComponent,
+    BottomSheetEarningsComponent,
   ],
   imports: [
     CommonModule,
@@ -104,6 +106,7 @@ export const routes = [
     MatSlideToggleModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
+    MatTooltipModule,
   ],
   providers: [
     StorageService,

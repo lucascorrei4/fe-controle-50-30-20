@@ -63,6 +63,18 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
     this.groupLaunches(this.launches);
   }
 
+  public async findByRepeatedLaunch(item: Launch) {
+    let user = this.storageService.getLocalUser();
+    let launch = [];
+    launch.push(
+      await this.controle503020Service
+        .findByUserIdCategoryAndValue(user._id, item.categoryId, item.valor)
+        .toPromise()
+    );
+
+    return launch;
+  }
+
   public groupLaunches(launches) {
     var groups = new Set(launches.map((item) => item.type));
     groups.forEach((g) =>

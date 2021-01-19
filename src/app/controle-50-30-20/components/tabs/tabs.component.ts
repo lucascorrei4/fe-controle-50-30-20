@@ -33,6 +33,7 @@ import { User } from "src/app/models/user";
 import { Controle503020Service } from "../../controle-50-30-20.service";
 import { DespesaEnum } from "src/app/enums/despesas-enum";
 import { BottomSheetLoginComponent } from "../bottom-sheets/bottom-sheet-login/bottom-sheet-login.component";
+import { BottomSheetEarningsComponent } from "../bottom-sheets/bottom-sheet-earnings/bottom-sheet-earnings.component";
 
 @Component({
   selector: "app-tabs",
@@ -294,6 +295,10 @@ export class TabsComponent implements OnInit {
         });
       }
     });
+  }
+
+  openEarnings() {
+    this.bottomSheet.open(BottomSheetEarningsComponent);
   }
 
   get strGastos50(): string {

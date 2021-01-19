@@ -27,3 +27,22 @@ body {
 .main-color {
   color: #3f51b5;
 }
+
+.launch-title {
+  margin: 0;
+}
+
+.refer {
+  line-height: 0.8;
+  font-size: 17px;
+}
+
+.tab-list-launches {
+  .mat-tab-label {
+    height: 65px !important;
+  }
+}
+
+.input-value {
+  font-size: 30px;
+}
