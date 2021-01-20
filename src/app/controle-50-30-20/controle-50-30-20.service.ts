@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Subject, Observable, BehaviorSubject } from "rxjs";
 import { distinctUntilChanged, map, shareReplay, tap } from "rxjs/operators";
 import { Category } from "../models/category";
+import { Earning } from "../models/earning";
 import { Launch } from "../models/launch";
 import { RepeatedLaunch } from "../models/repeated-launch";
 import { User } from "../models/user";
@@ -18,6 +19,7 @@ export class Controle503020Service {
   private atualizarCarrinhoSubject = new Subject<any>();
   public categoriesGrouped: any[] = [];
   public selectedMonth: BehaviorSubject<string> = new BehaviorSubject(null);
+  public monthEarning: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor(
     private http: HttpClient,
@@ -33,6 +35,12 @@ export class Controle503020Service {
 
   get selectedMonth$(): Observable<string> {
     return this.selectedMonth
+      .asObservable()
+      .pipe(distinctUntilChanged(), shareReplay());
+  }
+
+  get monthEarning$(): Observable<number> {
+    return this.monthEarning
       .asObservable()
       .pipe(distinctUntilChanged(), shareReplay());
   }
@@ -150,6 +158,23 @@ export class Controle503020Service {
   ): Observable<Launch[]> {
     return this.http.get<Launch[]>(
       `${this.url}/launch/findByCategoryAndValue?userId=${userId}&categoryId=${categoryId}&valor=${valor}`,
+      {
+        headers: this.token,
+      }
+    );
+  }
+
+  // Earning
+
+  newEarning(earning: Earning): Observable<Earning> {
+    return this.http.post<Earning>(`${this.url}/earning`, earning, {
+      headers: this.token,
+    });
+  }
+
+  findEarningByUserIdAndRef(userId: string, ref?: string): Observable<Earning> {
+    return this.http.get<Earning>(
+      `${this.url}/earning/findEarningByUserIdAndRef?userId=${userId}&ref=${ref}`,
       {
         headers: this.token,
       }

@@ -12,7 +12,7 @@
     </ng-template>
     <p class="text-center">
       <small
-        >Mês selecionado:
+        >SELECIONADO:
         <span style="font-weight: bold">{{ selectedMonthDesc }}</span></small
       >
     </p>
@@ -26,16 +26,17 @@
             <li class="nav-item">
               <a
                 class="nav-link active"
-                href="#works"
+                href="#studio"
                 role="tab"
                 data-toggle="tab"
+                (click)="openEarnings()"
               >
-                <i class="material-icons">fastfood</i> Despesas
+                <i class="material-icons">money</i> Ganhos
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#studio" role="tab" data-toggle="tab" (click)="openEarnings()">
-                <i class="material-icons">money</i> Ganhos
+              <a class="nav-link" href="#works" role="tab" data-toggle="tab">
+                <i class="material-icons">fastfood</i> Despesas
               </a>
             </li>
           </ul>
@@ -43,18 +44,18 @@
       </div>
     </div>
     <div class="tab-content tab-space">
-      <div class="tab-pane text-center gallery" id="studio">
+      <div class="tab-pane active text-center gallery" id="studio">
         <div class="row">
           <div class="col-md-4 ml-auto mr-auto"></div>
         </div>
         <div class="row">
           <div class="col-md-4 ml-auto mr-auto text-center">
-            <h4 class="description">
-              Renda do mês {{ selectedMonthDesc }}:
-              <span style="font-weight: bold"
-                >R$ {{ getFormattedPrice(rendaTotal) }}</span
-              >
-            </h4>
+            <div fxLayout="row" fxLayoutAlign="center center" class="my-3">
+              <small class="m-0 p-0">RENDA {{ selectedMonthDesc }}</small>
+              <h2 class="month-earning m-0 p-0">
+                {{ monthEarning | currency: "BRL" }}
+              </h2>
+            </div>
             <h4 class="title" style="margin: 0px">Gráfico 50-30-20 Ideal</h4>
             <div
               id="pie-chart-parent"
@@ -73,12 +74,12 @@
             </div>
             <ng-template #empty>
               <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-              <p><small>Aguardando preenchimento...</small></p>
+              <p><small>Aguardando preenchimento dos ganhos...</small></p>
             </ng-template>
           </div>
         </div>
       </div>
-      <div class="tab-pane active text-center gallery" id="works">
+      <div class="tab-pane text-center gallery" id="works">
         <div class="row">
           <p class="text-center w-100">
             <small>Clique abaixo para selecionar despesa</small>

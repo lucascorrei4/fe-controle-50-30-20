@@ -51,7 +51,7 @@ export class BottomSheetListaDespesasComponent implements OnInit {
   getTypeDescription(type: string) {
     switch (type) {
       case "VARIAVEIS":
-        return "SUPÉRFLUXOS";
+        return "SUPÉRFLUOS";
       case "INVESTIMENTOS":
         return "OBJETIVOS";
       default:

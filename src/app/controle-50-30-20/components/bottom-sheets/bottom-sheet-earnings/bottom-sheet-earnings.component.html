@@ -1,101 +1,134 @@
+<div fxLayout="row" fxLayoutAlign="end">
+  <button mat-button (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
 <div class="ml-auto mr-auto text-center my-3">
-  <h3 class="main-color launch-title">RENDAS</h3>
-  <h4 class="refer m-0 p-0">Informe abaixo os seus ganhos</h4>
+  <h3 class="main-color launch-title">GANHOS DO MÊS {{ selectedMonth }}</h3>
+  <h4 class="refer m-0 p-0">Informe abaixo a renda <b>líquida</b></h4>
+  <h5>
+    <small>Obs: Renda líquida é o que - de fato - cai na conta, ok?</small>
+  </h5>
 </div>
 <form [formGroup]="formGroup">
-  <div fxLayout="column" fxLayoutAlign="center center" class="ml-auto mr-auto">
-    <div class="form-group bmd-form-group">
-      <p class="secondary-text-color text-center">Informe a renda 1:</p>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="material-icons">monetization_on</i>
-          </span>
-        </div>
-        <input
-          placeholder="Quanto você recebeu este mês?"
-          formControlName="renda1"
-          currencyMask
-          required
-          autocomplete="off"
-          [options]="{
-            prefix: '',
-            thousands: '.',
-            decimal: ','
-          }"
-          type="text"
-          #inputRenda1
-          tabindex="1"
-          class="form-control input-value"
-          pattern="[0-9]*"
-          inputmode="numeric"
-        />
-      </div>
-    </div>
-    <div class="form-group bmd-form-group">
-      <p class="secondary-text-color text-center">Informe a renda 2:</p>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="material-icons">monetization_on</i>
-          </span>
-        </div>
-        <input
-          placeholder="Renda do(a) parceiro(a)"
-          formControlName="renda2"
-          currencyMask
-          required
-          autocomplete="off"
-          [options]="{
-            prefix: '',
-            thousands: '.',
-            decimal: ','
-          }"
-          type="text"
-          #inputRenda2
-          tabindex="2"
-          class="form-control input-value"
-          pattern="[0-9]*"
-          inputmode="numeric"
-        />
-      </div>
-    </div>
-    <div class="form-group bmd-form-group">
-      <p class="secondary-text-color text-center">Informe a renda extra:</p>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="material-icons">monetization_on</i>
-          </span>
-        </div>
-        <input
-          placeholder="Renda Extra"
-          formControlName="rendaExtra"
-          currencyMask
-          required
-          autocomplete="off"
-          [options]="{
-            prefix: '',
-            thousands: '.',
-            decimal: ','
-          }"
-          type="text"
-          #inputRenda2
-          tabindex="2"
-          class="form-control input-value"
-          pattern="[0-9]*"
-          inputmode="numeric"
-        />
-      </div>
-    </div>
-  </div>
-</form>
-<div class="row my-2">
-  <div
-    fxLayou="column"
-    fxLayoutAlign="center center"
-    class="ml-auto mr-auto text-center"
+  <mat-horizontal-stepper
+    class="stepper"
+    linear
+    #stepper
+    labelPosition="bottom"
   >
-    <a mat-stroked-button (click)="saveEarnings()" class="mx-2">Salvar</a>
-  </div>
-</div>
+    <mat-step>
+      <p class="secondary-text-color text-center">Informe a renda 1:</p>
+      <div class="form-group bmd-form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <i class="material-icons">monetization_on</i>
+            </span>
+          </div>
+          <input
+            placeholder="Quanto você recebeu este mês?"
+            formControlName="renda1"
+            currencyMask
+            required
+            autocomplete="off"
+            [options]="{
+              prefix: '',
+              thousands: '.',
+              decimal: ','
+            }"
+            type="text"
+            #inputRenda1
+            tabindex="1"
+            class="form-control input-value"
+            pattern="[0-9]*"
+            inputmode="numeric"
+          />
+        </div>
+      </div>
+      <div class="botoes-navegacao my-4">
+        <button mat-raised-button color="primary" matStepperNext>
+          Próxima Etapa
+        </button>
+      </div> </mat-step
+    ><mat-step>
+      <p class="secondary-text-color text-center">Informe a renda 2:</p>
+      <div class="form-group bmd-form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <i class="material-icons">monetization_on</i>
+            </span>
+          </div>
+          <input
+            placeholder="Renda do(a) parceiro(a)"
+            formControlName="renda2"
+            currencyMask
+            required
+            autocomplete="off"
+            [options]="{
+              prefix: '',
+              thousands: '.',
+              decimal: ','
+            }"
+            type="text"
+            #inputRenda2
+            tabindex="2"
+            class="form-control input-value"
+            pattern="[0-9]*"
+            inputmode="numeric"
+          />
+        </div>
+      </div>
+      <div class="botoes-navegacao my-4">
+        <button mat-stroked-button matStepperPrevious>Voltar</button>
+        <button mat-raised-button color="primary" matStepperNext>
+          Próxima Etapa
+        </button>
+      </div></mat-step
+    ><mat-step>
+      <p class="secondary-text-color text-center">Informe a renda extra:</p>
+      <div class="form-group bmd-form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <i class="material-icons">monetization_on</i>
+            </span>
+          </div>
+          <input
+            placeholder="Renda Extra"
+            formControlName="rendaExtra"
+            currencyMask
+            required
+            autocomplete="off"
+            [options]="{
+              prefix: '',
+              thousands: '.',
+              decimal: ','
+            }"
+            type="text"
+            #inputRenda2
+            tabindex="2"
+            class="form-control input-value"
+            pattern="[0-9]*"
+            inputmode="numeric"
+          />
+        </div>
+      </div>
+      <div class="botoes-navegacao my-4">
+        <button mat-stroked-button matStepperPrevious>Voltar</button>
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="saveEarnings()"
+          matStepperNext
+        >
+          Salvar
+        </button>
+      </div></mat-step
+    ></mat-horizontal-stepper
+  >
+  <p class="value-bar font-weight-bold text-center badge-info my-3 py-2 w-100">
+    RENDA TOTAL {{ selectedMonth }}: {{ totalEarnings | currency: "BRL" }}
+  </p>
+</form>

@@ -45,4 +45,16 @@ body {
 
 .input-value {
   font-size: 30px;
+  padding-bottom: 10px;
+}
+
+.value-bar {
+  font-size: 15px;
+  border-radius: 20px;
+}
+
+.botoes-navegacao {
+  button:last-child {
+    float: right;
+  }
 }

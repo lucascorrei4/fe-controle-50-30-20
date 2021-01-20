@@ -85,6 +85,8 @@ export class TabsComponent implements OnInit {
 
   despesaEnum: DespesaEnum = DespesaEnum.Fixas;
 
+  public monthEarning: number = 0;
+
   constructor(
     private utilService: UtilService,
     private bottomSheet: MatBottomSheet,
@@ -94,9 +96,7 @@ export class TabsComponent implements OnInit {
     private controle503020Service: Controle503020Service,
     private changeDetector: ChangeDetectorRef,
     private snackBar: MatSnackBar
-  ) {
-    this.mainForm();
-  }
+  ) {}
 
   ngOnInit(): void {
     Object.assign(this, { single });
@@ -115,53 +115,32 @@ export class TabsComponent implements OnInit {
   }
 
   initObservers() {
-    if (this.storageService.getLocalStorageLancamentos().length > 0) {
-      setTimeout(() => {
-        this.atualizarContadorLancamentoDespesas();
-      }, 3000);
-    }
-
-    this.controle503020Service.atualizarCarrinhoObservable().subscribe(() => {
-      this.atualizarContadorLancamentoDespesas();
-    });
-
-    this.renda1.valueChanges.subscribe(() => {
-      this.atualizarRendaTotal();
-    });
-
-    this.renda2.valueChanges.subscribe(() => {
-      this.atualizarRendaTotal();
-    });
+    this.verifyEarningRef();
   }
 
-  mainForm() {
-    this.formGroup = this.fb.group({
-      secretCode: ["123", [Validators.required]],
-      renda1: [null, [Validators.required]],
-      renda2: [null, [Validators.required]],
-      tipoDespesa: [""],
-      nomeDespesa: [""],
-      descricaoDespesa: ["", [Validators.required]],
-      obsDespesa: ["", [Validators.required]],
-      valorDespesa: [null, [Validators.required]],
-      email: [
-        "",
-        [
-          Validators.required,
-          Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$"),
-        ],
-      ],
+  async verifyEarningRef() {
+    let user = this.storageService.getLocalUser();
+    let launch = await this.controle503020Service
+      .findEarningByUserIdAndRef(user._id, this.selectedMonthDesc)
+      .toPromise();
+    if (launch) {
+      this.monthEarning = launch.renda1 + launch.renda2 + launch.rendaExtra;
+      console.log(this.monthEarning);
+
+      this.changeDetector.detectChanges();
+    }
+  }
+
+  loadMonthEarning() {
+    this.controle503020Service.monthEarning$.subscribe((res) => {
+      this.monthEarning = res;
+      this.changeDetector.detectChanges();
     });
   }
 
   selecionarMes(mes) {
     this.selectedMonthDesc = mes;
     this.controle503020Service.selectedMonth.next(this.selectedMonthDesc);
-  }
-
-  atualizarRendaTotal() {
-    this.rendaTotal = Number(this.renda1.value) + Number(this.renda2.value);
-    this.atualizarGraficoIdeal(this.rendaTotal);
   }
 
   private atualizarGraficoIdeal(rendaTotal: number) {
@@ -190,22 +169,6 @@ export class TabsComponent implements OnInit {
 
   scroll() {
     this.calculeAgoraDiv.nativeElement.scrollIntoView({ behavior: "smooth" });
-  }
-
-  atualizarContadorLancamentoDespesas() {
-    var cont = 0;
-    var lancamentos = this.storageService.getLocalStorageLancamentos();
-
-    if (lancamentos?.length > 0) {
-      lancamentos.forEach((lancamento) => {
-        lancamento.despesas.forEach((despesa) => {
-          cont += despesa.itensDespesa.length;
-        });
-      });
-    }
-
-    this.contLancamentoDespesas = lancamentos.length === 0 ? 0 : cont;
-    this.changeDetector.detectChanges();
   }
 
   abrirCodigoSecretoBottomSheet(): void {
@@ -282,12 +245,6 @@ export class TabsComponent implements OnInit {
           }
         );
 
-        this.tipoDespesa.setValue(selectedCategory.tipoDespesa);
-        this.nomeDespesa.setValue(selectedCategory.nomeDespesa);
-        this.descricaoDespesa.setValue(selectedCategory.despesa);
-        this.obsDespesa.reset();
-        this.valorDespesa.reset();
-
         bottomSheefNovaDespesaRef.afterDismissed().subscribe((response) => {
           if (response) {
             this.abrirBottomSheetDespesas();
@@ -298,7 +255,12 @@ export class TabsComponent implements OnInit {
   }
 
   openEarnings() {
-    this.bottomSheet.open(BottomSheetEarningsComponent);
+    const bottomSheefNovaDespesaRef = this.bottomSheet.open(
+      BottomSheetEarningsComponent
+    );
+    bottomSheefNovaDespesaRef.afterDismissed().subscribe(() => {
+      this.loadMonthEarning();
+    });
   }
 
   get strGastos50(): string {
@@ -311,33 +273,5 @@ export class TabsComponent implements OnInit {
 
   get strGastos20(): string {
     return this.STR_GASTOS_20;
-  }
-
-  get renda1(): FormControl {
-    return this.formGroup.get("renda1") as FormControl;
-  }
-
-  get renda2(): FormControl {
-    return this.formGroup.get("renda2") as FormControl;
-  }
-
-  get descricaoDespesa(): FormControl {
-    return this.formGroup.get("descricaoDespesa") as FormControl;
-  }
-
-  get obsDespesa(): FormControl {
-    return this.formGroup.get("obsDespesa") as FormControl;
-  }
-
-  get tipoDespesa(): FormControl {
-    return this.formGroup.get("tipoDespesa") as FormControl;
-  }
-
-  get nomeDespesa(): FormControl {
-    return this.formGroup.get("nomeDespesa") as FormControl;
-  }
-
-  get valorDespesa(): FormControl {
-    return this.formGroup.get("valorDespesa") as FormControl;
   }
 }
