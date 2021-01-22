@@ -81,6 +81,7 @@ export class BottomSheetEarningsComponent {
     let launch = await this.controle503020Service
       .findEarningByUserIdAndRef(this.loggedUser._id, this.selectedMonth)
       .toPromise();
+
     if (launch) {
       this.renda1.setValue(launch.renda1);
       this.renda2.setValue(launch.renda2);
@@ -107,7 +108,6 @@ export class BottomSheetEarningsComponent {
           "Sucesso",
           `Renda do mês ${this.selectedMonth} salva!`
         );
-        console.log(this.totalEarnings);
         this.close();
       }
     });
@@ -115,9 +115,10 @@ export class BottomSheetEarningsComponent {
 
   updateTotalEarnings() {
     this.totalEarnings =
-      Number(this.renda1.value) +
-      Number(this.renda2.value) +
-      Number(this.rendaExtra.value);
+      Number(this.renda1.value ?? 0) +
+      Number(this.renda2.value ?? 0) +
+      Number(this.rendaExtra.value ?? 0);
+    this.controle503020Service.monthEarning.next(this.totalEarnings);
   }
 
   get renda1(): FormControl {

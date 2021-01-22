@@ -6,6 +6,7 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MatChipsModule } from "@angular/material/chips";
 import { NgxChartsModule, PieChartModule } from "@swimlane/ngx-charts";
 import {
+  MatButtonModule,
   MatIconModule,
   MatInputModule,
   MatProgressBarModule,
@@ -25,6 +26,7 @@ import { NgxCurrencyModule } from "ngx-currency";
     MatProgressBarModule,
     NgxCurrencyModule,
     NgxChartsModule,
+    MatButtonModule
   ],
   exports: [TabsComponent],
 })

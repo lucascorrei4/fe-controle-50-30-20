@@ -1,7 +1,14 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject, Observable, BehaviorSubject } from "rxjs";
-import { distinctUntilChanged, map, shareReplay, tap } from "rxjs/operators";
+import {
+  distinctUntilChanged,
+  map,
+  share,
+  shareReplay,
+  take,
+  tap,
+} from "rxjs/operators";
 import { Category } from "../models/category";
 import { Earning } from "../models/earning";
 import { Launch } from "../models/launch";
@@ -29,7 +36,9 @@ export class Controle503020Service {
     this.url = configService.getUrlServiceNode();
 
     this.token = new HttpHeaders({
-      Authorization: localStorage.getItem("localToken"),
+      Authorization:
+        localStorage?.getItem("localToken") ??
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDkyNzA5Njl9.V0CyDBc8DSozN0pbe6rNIY0l8fjFAyifxqm10wd-Fow",
     });
   }
 
@@ -96,6 +105,16 @@ export class Controle503020Service {
     return this.http.post<Launch>(`${this.url}/launch`, launch, {
       headers: this.token,
     });
+  }
+
+  removeLaunch(id) {
+    let httpParams = new HttpParams().set("_id", id);
+
+    let options = { params: httpParams };
+
+    return this.http
+      .delete(`${this.url}/launch`, options)
+      .pipe(take(1), share());
   }
 
   findLaunchesByUserIdAndMonthAndType(
@@ -174,10 +193,7 @@ export class Controle503020Service {
 
   findEarningByUserIdAndRef(userId: string, ref?: string): Observable<Earning> {
     return this.http.get<Earning>(
-      `${this.url}/earning/findEarningByUserIdAndRef?userId=${userId}&ref=${ref}`,
-      {
-        headers: this.token,
-      }
+      `${this.url}/earning/findEarningByUserIdAndRef?userId=${userId}&ref=${ref}`
     );
   }
 

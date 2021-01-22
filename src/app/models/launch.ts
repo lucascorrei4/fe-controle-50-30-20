@@ -1,4 +1,5 @@
 export class Launch {
+  _id: string;
   userId: string;
   month: string;
   type: string;

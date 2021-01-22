@@ -87,7 +87,6 @@ export class BottomSheetNovaDespesa implements OnInit {
     launch.valor = this.valorDespesa.value;
     launch.obs = this.obsDespesa.value;
     this.controle503020Service.newLaunch(launch).subscribe((res) => {
-      console.log(res);
       if (res) {
         if (this.repeat.value) {
           this.saveRepeatedLaunch(res);

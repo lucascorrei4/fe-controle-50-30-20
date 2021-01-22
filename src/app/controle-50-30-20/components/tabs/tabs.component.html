@@ -29,7 +29,6 @@
                 href="#studio"
                 role="tab"
                 data-toggle="tab"
-                (click)="openEarnings()"
               >
                 <i class="material-icons">money</i> Ganhos
               </a>
@@ -49,6 +48,13 @@
           <div class="col-md-4 ml-auto mr-auto"></div>
         </div>
         <div class="row">
+          <div class="col-md-4 ml-auto mr-auto text-center m-2">
+            <mat-chip-list style="display: inline-flex">
+              <mat-chip color="accent" (click)="openEarnings()"
+                >Adicionar Receitas</mat-chip
+              >
+            </mat-chip-list>
+          </div>
           <div class="col-md-4 ml-auto mr-auto text-center">
             <div fxLayout="row" fxLayoutAlign="center center" class="my-3">
               <small class="m-0 p-0">RENDA {{ selectedMonthDesc }}</small>
@@ -81,9 +87,6 @@
       </div>
       <div class="tab-pane text-center gallery" id="works">
         <div class="row">
-          <p class="text-center w-100">
-            <small>Clique abaixo para selecionar despesa</small>
-          </p>
           <div class="col-md-4 ml-auto mr-auto text-center m-2">
             <mat-chip-list style="display: inline-flex">
               <mat-chip color="accent" (click)="abrirBottomSheetDespesas()"
@@ -94,5 +97,14 @@
         </div>
       </div>
     </div>
+    <button
+      mat-fab
+      class="floating-button-add"
+      color="primary"
+      aria-label="Adicionar Despesa"
+      (click)="abrirBottomSheetDespesas()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
   </mat-tab>
 </mat-tab-group>

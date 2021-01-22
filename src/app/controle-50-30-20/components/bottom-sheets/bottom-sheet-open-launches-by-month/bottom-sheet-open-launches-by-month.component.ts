@@ -100,9 +100,15 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
     return this.utilService.getFormattedPrice(price).substring(3);
   }
 
-  removerDespesa(itemLaunch, launches) {
-    launches.forEach((despesa) => {
-      launches = launches.filter((item) => item != itemLaunch);
+  remove(launch: Launch, subItems) {
+    this.controle503020Service.removeLaunch(launch._id).subscribe((s) => {
+      subItems.forEach((item) => {
+        console.log(item);
+        this.launchesGrouped = subItems.filter(
+          (item) => item._id != launch._id
+        );
+      });
+      this.launchesGroupedSubject.next(this.launchesGrouped);
     });
   }
 
@@ -116,7 +122,7 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
 
   calcularTotalGeral(): string {
     let total = 0;
-    if (this.launchesGrouped) {
+    if (this.launchesGrouped.length > 0) {
       this.launchesGrouped.forEach((group) => {
         total += group.subItems.reduce(
           (sum, current) => sum + current.valor,

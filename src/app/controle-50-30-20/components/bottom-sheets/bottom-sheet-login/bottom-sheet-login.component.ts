@@ -43,7 +43,6 @@ export class BottomSheetLoginComponent {
           } else {
             this.openSnackBar("OOPS", "Não autorizado!");
           }
-          console.log(res);
         },
         (err) => {
           console.error(err);
