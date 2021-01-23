@@ -1,0 +1,12 @@
+<h2 mat-dialog-title class="title">{{ dados.title }}</h2>
+<div mat-dialog-content class="dialog-content">
+  <div [innerHTML]="dados.description"></div>
+  <div align="end">
+    <button mat-button [mat-dialog-close]="false" *ngIf="!dados.hideButtonCancel">
+      {{ dados.labelCancel ? dados.labelCancel : 'Cancelar' }}
+    </button>
+    <button mat-flat-button color="accent" [mat-dialog-close]="true" cdkFocusInitial>
+      {{ dados.labelConfirm ? dados.labelConfirm : 'Confirmar' }}
+    </button>
+  </div>
+</div>

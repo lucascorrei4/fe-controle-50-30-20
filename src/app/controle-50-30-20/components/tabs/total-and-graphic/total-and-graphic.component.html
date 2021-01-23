@@ -1,0 +1,24 @@
+<div class="ml-auto mr-auto text-center">
+  <div fxLayout="row" fxLayoutAlign="center center" class="my-3">
+    <small class="m-0 p-0"
+      >{{ type === "IN" ? "ENTRADAS" : "SAÍDAS" }}
+      {{ selectedMonthDesc }}</small
+    >
+    <h2 class="month-earning m-0 p-0">
+      {{ total | currency: "BRL" }}
+    </h2>
+  </div>
+  <h4 class="title" style="margin: 0px">
+    Gráfico 50-30-20 {{ type === "IN" ? "Ideal" : "Real" }}
+  </h4>
+  <div
+    id="pie-chart-parent"
+    style="display: flex; overflow: hidden"
+    *ngIf="total > 0; else empty"
+  ></div>
+
+  <ng-template #empty>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <p><small>Aguardando preenchimento dos ganhos...</small></p>
+  </ng-template>
+</div>

@@ -44,12 +44,14 @@ import { TabsModule } from "./components/tabs/tabs.module";
 import { HowItWorksModule } from "./components/how-it-works/how-it-works.module";
 import { MenuModule } from "./components/menu/menu.module";
 import {
+  MatDialogModule,
   MatProgressSpinnerModule,
   MatSlideToggleModule,
   MatSpinner,
 } from "@angular/material";
 import { BottomSheetLaunchesByMonthComponent } from "./components/bottom-sheets/bottom-sheet-open-launches-by-month/bottom-sheet-open-launches-by-month.component";
 import { BottomSheetEarningsComponent } from "./components/bottom-sheets/bottom-sheet-earnings/bottom-sheet-earnings.component";
+import { ModalConfirmationModule } from "./components/modal-confirmation/modal-confirmation.module";
 
 export const routes = [
   { path: "", component: Controle503020Component, pathMatch: "full" },
@@ -107,6 +109,8 @@ export const routes = [
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatTooltipModule,
+    ModalConfirmationModule,
+    MatDialogModule,
   ],
   providers: [
     StorageService,

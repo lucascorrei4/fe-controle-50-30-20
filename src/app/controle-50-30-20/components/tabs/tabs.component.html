@@ -44,56 +44,35 @@
     </div>
     <div class="tab-content tab-space">
       <div class="tab-pane active text-center gallery" id="studio">
-        <div class="row">
-          <div class="col-md-4 ml-auto mr-auto"></div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 ml-auto mr-auto text-center m-2">
+        <div class="column" fxLayout="column" fxLayoutAling="center center">
+          <div class="ml-auto mr-auto text-center m-2">
             <mat-chip-list style="display: inline-flex">
               <mat-chip color="accent" (click)="openEarnings()"
                 >Adicionar Receitas</mat-chip
               >
             </mat-chip-list>
           </div>
-          <div class="col-md-4 ml-auto mr-auto text-center">
-            <div fxLayout="row" fxLayoutAlign="center center" class="my-3">
-              <small class="m-0 p-0">RENDA {{ selectedMonthDesc }}</small>
-              <h2 class="month-earning m-0 p-0">
-                {{ monthEarning | currency: "BRL" }}
-              </h2>
-            </div>
-            <h4 class="title" style="margin: 0px">Gráfico 50-30-20 Ideal</h4>
-            <div
-              id="pie-chart-parent"
-              style="display: flex; overflow: hidden"
-              *ngIf="rendaTotal > 0; else empty"
-            >
-              <ngx-charts-pie-grid
-                [scheme]="colorScheme"
-                [results]="single"
-                (select)="onSelect($event)"
-                (onWindowResize)="onResize($event)"
-                [view]="view"
-                style="margin: 0 auto !important"
-              >
-              </ngx-charts-pie-grid>
-            </div>
-            <ng-template #empty>
-              <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-              <p><small>Aguardando preenchimento dos ganhos...</small></p>
-            </ng-template>
-          </div>
+          <app-total-and-graphic
+            [type]="'IN'"
+            [selectedMonthDesc]="selectedMonthDesc"
+            [total]="monthEarning"
+          ></app-total-and-graphic>
         </div>
       </div>
       <div class="tab-pane text-center gallery" id="works">
-        <div class="row">
-          <div class="col-md-4 ml-auto mr-auto text-center m-2">
+        <div class="column" fxLayout="column" fxLayoutAling="center center">
+          <div class="ml-auto mr-auto text-center m-2">
             <mat-chip-list style="display: inline-flex">
               <mat-chip color="accent" (click)="abrirBottomSheetDespesas()"
                 >Adicionar Despesa</mat-chip
               >
             </mat-chip-list>
           </div>
+          <app-total-and-graphic
+            [type]="'OUT'"
+            [selectedMonthDesc]="selectedMonthDesc"
+            [total]="monthExpenses"
+          ></app-total-and-graphic>
         </div>
       </div>
     </div>

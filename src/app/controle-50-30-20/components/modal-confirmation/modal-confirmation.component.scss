@@ -1,0 +1,21 @@
+:host {
+  height: 100%;
+  h2.title {
+    color: #48aa4d;
+    font-size: 18px;
+  }
+}
+
+.dialog-content {
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  @media only screen and (max-device-height: 800px) {
+    max-height: 415px !important;
+  }
+
+  @media only screen and (max-device-height: 600px) {
+    max-height: 350px !important;
+  }
+}

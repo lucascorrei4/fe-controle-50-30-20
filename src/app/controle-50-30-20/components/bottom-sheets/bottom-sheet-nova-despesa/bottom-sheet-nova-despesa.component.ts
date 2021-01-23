@@ -69,9 +69,7 @@ export class BottomSheetNovaDespesa implements OnInit {
     this.bottomSheetRef.dismiss();
   }
 
-  changeStepper(event) {
-    console.log(event);
-  }
+  
 
   saveLaunch() {
     if (this.valorDespesa.value < 1) {
@@ -91,7 +89,7 @@ export class BottomSheetNovaDespesa implements OnInit {
         if (this.repeat.value) {
           this.saveRepeatedLaunch(res);
         }
-        this.controle503020Service.atualizarCarrinho();
+        this.controle503020Service.updateBadges();
         this.descricaoDespesa.reset();
         this.valorDespesa.reset();
         this.obsDespesa.reset();
@@ -111,7 +109,7 @@ export class BottomSheetNovaDespesa implements OnInit {
       .newRepeatedLaunch(repeatedLaunch)
       .subscribe((res) => {
         if (res) {
-          this.controle503020Service.atualizarCarrinho();
+          this.controle503020Service.updateBadges();
           this.descricaoDespesa.reset();
           this.valorDespesa.reset();
           this.obsDespesa.reset();

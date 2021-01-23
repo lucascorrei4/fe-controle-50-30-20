@@ -23,10 +23,14 @@ import { StorageService } from "../services/storage.service";
 export class Controle503020Service {
   private url: string = "";
   private token: any;
-  private atualizarCarrinhoSubject = new Subject<any>();
+  private listenUpdateBadgesSubject = new Subject<any>();
   public categoriesGrouped: any[] = [];
   public selectedMonth: BehaviorSubject<string> = new BehaviorSubject(null);
   public monthEarning: BehaviorSubject<number> = new BehaviorSubject(0);
+  public countExpenses: BehaviorSubject<number> = new BehaviorSubject(0);
+  public countExpenses$ = this.countExpenses.asObservable().pipe(share());
+  public totalExpenses: BehaviorSubject<number> = new BehaviorSubject(0);
+  public totalExpenses$ = this.totalExpenses.asObservable().pipe(share());
 
   constructor(
     private http: HttpClient,
@@ -40,6 +44,8 @@ export class Controle503020Service {
         localStorage?.getItem("localToken") ??
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDkyNzA5Njl9.V0CyDBc8DSozN0pbe6rNIY0l8fjFAyifxqm10wd-Fow",
     });
+
+    this.updateLaunchTotals();
   }
 
   get selectedMonth$(): Observable<string> {
@@ -138,6 +144,26 @@ export class Controle503020Service {
     );
   }
 
+  async updateLaunchTotals() {
+    let user = this.storageService.getLocalUser();
+    await this.findLaunchesByUserIdAndMonthAndType(
+      user._id,
+      this.selectedMonth.value
+    )
+      .toPromise()
+      .then((launches: Launch[]) => {
+        let valorTotal = 0;
+        for (let item of launches) {
+          valorTotal += item.valor;
+        }
+        this.totalExpenses.next(valorTotal);
+        this.countExpenses.next(launches.length);
+      })
+      .catch((error) => {
+        return Promise.reject(error);
+      });
+  }
+
   // Repeated Launchs
 
   newRepeatedLaunch(launch: RepeatedLaunch): Observable<RepeatedLaunch> {
@@ -197,11 +223,11 @@ export class Controle503020Service {
     );
   }
 
-  atualizarCarrinhoObservable(): Observable<any> {
-    return this.atualizarCarrinhoSubject.asObservable();
+  listenUpdateBadgesObservable(): Observable<any> {
+    return this.listenUpdateBadgesSubject.asObservable();
   }
 
-  atualizarCarrinho() {
-    this.atualizarCarrinhoSubject.next();
+  updateBadges() {
+    this.listenUpdateBadgesSubject.next();
   }
 }

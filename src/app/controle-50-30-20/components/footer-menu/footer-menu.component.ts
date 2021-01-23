@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { BehaviorSubject, Observable } from "rxjs";
-import { distinctUntilChanged, shareReplay } from "rxjs/operators";
+import { distinctUntilChanged, map, shareReplay } from "rxjs/operators";
 import { Launch } from "src/app/models/launch";
 import { StorageService } from "src/app/services/storage.service";
 import { Controle503020Service } from "../../controle-50-30-20.service";
@@ -34,12 +34,20 @@ export class FooterMenuComponent implements OnInit {
     private storageService: StorageService,
     private changeDetector: ChangeDetectorRef,
     private controle503020Service: Controle503020Service
-  ) {}
+  ) {
+    this.controle503020Service.listenUpdateBadgesObservable().subscribe(() => {
+      this.getSelectedMonthAndUpdateBadges();
+    });
+  }
 
   ngOnInit(): void {
+    this.getSelectedMonthAndUpdateBadges();
+  }
+
+  getSelectedMonthAndUpdateBadges() {
     this.controle503020Service.selectedMonth$.subscribe((res) => {
       this.selectedMontSubject.next(res);
-      this.atualizarContadorLancamentoDespesas();
+      this.updateCountLaunches();
     });
   }
 
@@ -53,11 +61,11 @@ export class FooterMenuComponent implements OnInit {
     );
 
     bottomSheetRef.afterDismissed().subscribe(() => {
-      this.atualizarContadorLancamentoDespesas();
+      this.updateCountLaunches();
     });
   }
 
-  private async atualizarContadorLancamentoDespesas() {
+  private async updateCountLaunches() {
     let user = this.storageService.getLocalUser();
     await this.controle503020Service
       .findLaunchesByUserIdAndMonthAndType(
@@ -66,6 +74,11 @@ export class FooterMenuComponent implements OnInit {
       )
       .toPromise()
       .then((launches: Launch[]) => {
+        let valorTotal = 0;
+        for (let item of launches) {
+          valorTotal += item.valor;
+        }
+        this.controle503020Service.totalExpenses.next(valorTotal);
         this.contLancamentoDespesas = launches.length;
         this.changeDetector.detectChanges();
       })

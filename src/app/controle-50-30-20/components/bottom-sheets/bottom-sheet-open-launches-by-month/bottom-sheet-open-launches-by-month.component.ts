@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { StorageService } from "src/app/services/storage.service";
@@ -9,9 +9,11 @@ import { UtilService } from "src/app/services/util.service";
 import { DespesaItem } from "src/app/models/despesa-item";
 import { Controle503020Service } from "src/app/controle-50-30-20/controle-50-30-20.service";
 import { Launch } from "src/app/models/launch";
-import { MatTabChangeEvent } from "@angular/material";
+import { MatDialog, MatTabChangeEvent } from "@angular/material";
 import { BehaviorSubject, Observable } from "rxjs";
 import { distinctUntilChanged, shareReplay } from "rxjs/operators";
+import { DomSanitizer } from "@angular/platform-browser";
+import { ModalConfirmationComponent } from "../../modal-confirmation/modal-confirmation.component";
 
 @Component({
   selector: "bottom-sheet-open-launches-by-month",
@@ -42,7 +44,10 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
     private snackBar: MatSnackBar,
     private utilService: UtilService,
     private controle503020Service: Controle503020Service,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private changeDetector: ChangeDetectorRef,
+    private dialog: MatDialog,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
@@ -101,14 +106,27 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
   }
 
   remove(launch: Launch, subItems) {
-    this.controle503020Service.removeLaunch(launch._id).subscribe((s) => {
-      subItems.forEach((item) => {
-        console.log(item);
-        this.launchesGrouped = subItems.filter(
-          (item) => item._id != launch._id
-        );
-      });
-      this.launchesGroupedSubject.next(this.launchesGrouped);
+    const dialogRef = this.dialog.open(ModalConfirmationComponent, {
+      data: {
+        title: `Deseja mesmo remover ` + launch.description + "?",
+        description: this.sanitizer.bypassSecurityTrustHtml(
+          `<h4 style="font-weight: normal"><strong>Atenção: </strong>Este item não estará mais listado nas despesas deste mês (${this.selectedMontSubject.value}).</h4>
+          <div class="text-center m-2">
+            <img style="max-width: 70%" src="assets/img/svg/lose-info.svg">
+          </div>`
+        ),
+      },
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.controle503020Service.removeLaunch(launch._id).subscribe((res) => {
+          this.launchesGrouped.find(
+            (group) => group.name === launch.type
+          ).subItems = subItems.filter((item) => item._id !== launch._id);
+          this.launchesGroupedSubject.next(this.launchesGrouped);
+          this.changeDetector.detectChanges();
+        });
+      }
     });
   }
 
@@ -139,6 +157,7 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
       .asObservable()
       .pipe(distinctUntilChanged(), shareReplay());
   }
+
   get selectedMontSubject$(): Observable<string> {
     return this.selectedMontSubject
       .asObservable()

@@ -86,6 +86,7 @@ export class TabsComponent implements OnInit {
   despesaEnum: DespesaEnum = DespesaEnum.Fixas;
 
   public monthEarning: number = 0;
+  public monthExpenses: number = 0;
 
   constructor(
     private utilService: UtilService,
@@ -116,6 +117,10 @@ export class TabsComponent implements OnInit {
 
   initObservers() {
     this.verifyEarningRef();
+    this.controle503020Service.updateBadges();
+    this.controle503020Service.totalExpenses$.subscribe((res) => {
+      this.monthExpenses = res;
+    });
   }
 
   async verifyEarningRef() {
@@ -242,12 +247,15 @@ export class TabsComponent implements OnInit {
             },
           }
         );
-
         bottomSheefNovaDespesaRef.afterDismissed().subscribe((response) => {
           if (response) {
             this.abrirBottomSheetDespesas();
+          } else {
+            this.controle503020Service.updateBadges();
           }
         });
+      } else {
+        this.controle503020Service.updateBadges();
       }
     });
   }

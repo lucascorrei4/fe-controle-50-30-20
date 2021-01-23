@@ -12,6 +12,7 @@ import {
   MatProgressBarModule,
 } from "@angular/material";
 import { NgxCurrencyModule } from "ngx-currency";
+import { TotalAndGraphicModule } from "./total-and-graphic/total-and-graphic.module";
 
 @NgModule({
   declarations: [TabsComponent],
@@ -26,7 +27,8 @@ import { NgxCurrencyModule } from "ngx-currency";
     MatProgressBarModule,
     NgxCurrencyModule,
     NgxChartsModule,
-    MatButtonModule
+    MatButtonModule,
+    TotalAndGraphicModule,
   ],
   exports: [TabsComponent],
 })
