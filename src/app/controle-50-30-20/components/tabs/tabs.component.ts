@@ -130,6 +130,7 @@ export class TabsComponent implements OnInit {
       .toPromise();
     if (launch) {
       this.monthEarning = launch.renda1 + launch.renda2 + launch.rendaExtra;
+      this.controle503020Service.monthEarning.next(this.monthEarning);
       this.changeDetector.detectChanges();
     }
   }

@@ -36,6 +36,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { Controle503020Module } from "./controle-50-30-20/controle-50-30-20.module";
 import { TabsModule } from "./controle-50-30-20/components/tabs/tabs.module";
 
+
 registerLocaleData(localePtBr);
 
 @NgModule({

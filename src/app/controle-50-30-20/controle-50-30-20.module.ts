@@ -53,9 +53,14 @@ import { BottomSheetLaunchesByMonthComponent } from "./components/bottom-sheets/
 import { BottomSheetEarningsComponent } from "./components/bottom-sheets/bottom-sheet-earnings/bottom-sheet-earnings.component";
 import { ModalConfirmationModule } from "./components/modal-confirmation/modal-confirmation.module";
 
+import * as PlotlyJS from "plotly.js/dist/plotly.js";
+import { PlotlyModule } from "angular-plotly.js";
+
 export const routes = [
   { path: "", component: Controle503020Component, pathMatch: "full" },
 ];
+
+
 
 @NgModule({
   declarations: [
@@ -111,6 +116,7 @@ export const routes = [
     MatTooltipModule,
     ModalConfirmationModule,
     MatDialogModule,
+    PlotlyModule,
   ],
   providers: [
     StorageService,
