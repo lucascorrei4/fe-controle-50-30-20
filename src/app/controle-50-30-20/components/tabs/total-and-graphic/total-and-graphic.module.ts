@@ -1,8 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import {
-  TotalAndGraphicComponent,
-} from "./total-and-graphic.component";
+import { TotalAndGraphicComponent } from "./total-and-graphic.component";
 import {
   MatButtonModule,
   MatIconModule,
@@ -12,6 +10,8 @@ import {
 
 import * as PlotlyJS from "plotly.js/dist/plotly.js";
 import { PlotlyModule } from "angular-plotly.js";
+import { UtilService } from "src/app/services/util.service";
+import { LoadingBarModule } from "../../loading-bar/loading-bar.module";
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -24,7 +24,9 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MatIconModule,
     MatProgressBarModule,
     PlotlyModule,
+    LoadingBarModule,
   ],
   exports: [TotalAndGraphicComponent],
+  providers: [UtilService],
 })
 export class TotalAndGraphicModule {}

@@ -8,24 +8,48 @@
       {{ total | currency: "BRL" }}
     </h2>
   </div>
-  <h4 class="title" style="margin: 0px">
-    Gráfico 50-30-20 {{ type === "IN" ? "Ideal" : "Real" }}
-  </h4>
   <div
     id="pie-chart-parent"
-    style="display: flex; overflow: hidden"
-    *ngIf="total > 0; else empty"
-  ></div>
-  <plotly-plot
-    [data]="graph.data"
-    [layout]="graph.layout"
-    [useResizeHandler]="true"
-    [style]="{ position: 'relative', width: '100%', height: '100%' }"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    *ngIf="total > 0 && type === 'IN'; else emptyEarning"
   >
-  </plotly-plot>
-
-  <ng-template #empty>
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    <p><small>Aguardando preenchimento dos ganhos...</small></p>
+    <h4 class="title" style="margin: 0px">
+      Gráfico 50-30-20 {{ type === "IN" ? "Ideal" : "Real" }}
+    </h4>
+    <plotly-plot
+      [data]="graphIn?.data"
+      [layout]="graphIn?.layout"
+      [useResizeHandler]="true"
+      [style]="{ position: 'relative', width: '100%', height: '100%' }"
+    >
+    </plotly-plot>
+  </div>
+  <div
+    id="pie-chart-parent"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    *ngIf="total > 0 && type === 'OUT'; else emptyExpenses"
+  >
+    <h4 class="title" style="margin: 0px">
+      Gráfico 50-30-20 {{ type === "IN" ? "Ideal" : "Real" }}
+    </h4>
+    <plotly-plot
+      [data]="graphOut?.data"
+      [layout]="graphOut?.layout"
+      [useResizeHandler]="true"
+      [style]="{ position: 'relative', width: '100%', height: '100%' }"
+    >
+    </plotly-plot>
+  </div>
+  <ng-template #emptyEarning *ngIf="total === 0">
+    <loading-bar
+      [title]="'Aguardando preenchimento das entradas...'"
+    ></loading-bar>
+  </ng-template>
+  <ng-template #emptyExpenses *ngIf="total === 0">
+    <loading-bar
+      [title]="'Aguardando preenchimento dos gastos...'"
+    ></loading-bar>
   </ng-template>
 </div>

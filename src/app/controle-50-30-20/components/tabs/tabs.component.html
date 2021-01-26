@@ -55,7 +55,7 @@
           <app-total-and-graphic
             [type]="'IN'"
             [selectedMonthDesc]="selectedMonthDesc"
-            [total]="monthEarning"
+            [total]="monthEarning$ | async"
           ></app-total-and-graphic>
         </div>
       </div>
@@ -71,7 +71,7 @@
           <app-total-and-graphic
             [type]="'OUT'"
             [selectedMonthDesc]="selectedMonthDesc"
-            [total]="monthExpenses"
+            [total]="monthExpenses$ | async"
           ></app-total-and-graphic>
         </div>
       </div>

@@ -34,6 +34,8 @@ import { Controle503020Service } from "../../controle-50-30-20.service";
 import { DespesaEnum } from "src/app/enums/despesas-enum";
 import { BottomSheetLoginComponent } from "../bottom-sheets/bottom-sheet-login/bottom-sheet-login.component";
 import { BottomSheetEarningsComponent } from "../bottom-sheets/bottom-sheet-earnings/bottom-sheet-earnings.component";
+import { BehaviorSubject, Observable } from "rxjs";
+import { distinctUntilChanged, shareReplay } from "rxjs/operators";
 
 @Component({
   selector: "app-tabs",
@@ -88,6 +90,11 @@ export class TabsComponent implements OnInit {
   public monthEarning: number = 0;
   public monthExpenses: number = 0;
 
+  private monthEarningSubject: BehaviorSubject<number> = new BehaviorSubject(0);
+  private monthExpensesSubject: BehaviorSubject<number> = new BehaviorSubject(
+    0
+  );
+
   constructor(
     private utilService: UtilService,
     private bottomSheet: MatBottomSheet,
@@ -120,6 +127,7 @@ export class TabsComponent implements OnInit {
     this.controle503020Service.updateBadges();
     this.controle503020Service.totalExpenses$.subscribe((res) => {
       this.monthExpenses = res;
+      this.monthExpensesSubject.next(this.monthExpenses);
     });
   }
 
@@ -131,6 +139,7 @@ export class TabsComponent implements OnInit {
     if (launch) {
       this.monthEarning = launch.renda1 + launch.renda2 + launch.rendaExtra;
       this.controle503020Service.monthEarning.next(this.monthEarning);
+      this.monthEarningSubject.next(this.monthEarning);
       this.changeDetector.detectChanges();
     }
   }
@@ -280,5 +289,17 @@ export class TabsComponent implements OnInit {
 
   get strGastos20(): string {
     return this.STR_GASTOS_20;
+  }
+
+  get monthEarning$(): Observable<number> {
+    return this.monthEarningSubject
+      .asObservable()
+      .pipe(distinctUntilChanged(), shareReplay());
+  }
+
+  get monthExpenses$(): Observable<number> {
+    return this.monthExpensesSubject
+      .asObservable()
+      .pipe(distinctUntilChanged(), shareReplay());
   }
 }
