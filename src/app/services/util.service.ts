@@ -9,7 +9,7 @@ export class UtilService {
     }).format(price);
   }
 
-  objectIsNullUndefinedOrEmpty(obj) {
+  isEmpty(obj) {
     return (
       obj === "" ||
       obj === undefined ||

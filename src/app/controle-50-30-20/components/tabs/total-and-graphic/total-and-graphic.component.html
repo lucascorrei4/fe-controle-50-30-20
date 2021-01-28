@@ -5,14 +5,14 @@
       {{ selectedMonthDesc }}</small
     >
     <h2 class="month-earning m-0 p-0">
-      {{ total | currency: "BRL" }}
+      {{ (type === "IN" ? totalEarning : totalExpenses) | currency: "BRL" }}
     </h2>
   </div>
   <div
     id="pie-chart-parent"
     fxLayout="column"
     fxLayoutAlign="center center"
-    *ngIf="total > 0 && type === 'IN'; else emptyEarning"
+    *ngIf="totalEarning > 0 && type === 'IN'; else emptyin"
   >
     <h4 class="title" style="margin: 0px">
       Gráfico 50-30-20 {{ type === "IN" ? "Ideal" : "Real" }}
@@ -24,12 +24,17 @@
       [style]="{ position: 'relative', width: '100%', height: '100%' }"
     >
     </plotly-plot>
+    <ng-template #emptyin>
+      <loading-bar
+        [title]="'Aguardando preenchimento das entradas...'"
+      ></loading-bar>
+    </ng-template>
   </div>
   <div
     id="pie-chart-parent"
     fxLayout="column"
     fxLayoutAlign="center center"
-    *ngIf="total > 0 && type === 'OUT'; else emptyExpenses"
+    *ngIf="totalExpenses > 0 && type === 'OUT'; else emptyout"
   >
     <h4 class="title" style="margin: 0px">
       Gráfico 50-30-20 {{ type === "IN" ? "Ideal" : "Real" }}
@@ -41,15 +46,10 @@
       [style]="{ position: 'relative', width: '100%', height: '100%' }"
     >
     </plotly-plot>
+    <ng-template #emptyout>
+      <loading-bar
+        [title]="'Aguardando preenchimento das despesas...'"
+      ></loading-bar>
+    </ng-template>
   </div>
-  <ng-template #emptyEarning *ngIf="total === 0">
-    <loading-bar
-      [title]="'Aguardando preenchimento das entradas...'"
-    ></loading-bar>
-  </ng-template>
-  <ng-template #emptyExpenses *ngIf="total === 0">
-    <loading-bar
-      [title]="'Aguardando preenchimento dos gastos...'"
-    ></loading-bar>
-  </ng-template>
 </div>

@@ -24,6 +24,8 @@ export class TotalAndGraphicComponent implements OnInit {
 
   private totalSubject: BehaviorSubject<number> = new BehaviorSubject(0);
 
+  public totalExpenses: number = 0;
+  public totalEarning: number = 0;
   public totalEarningFixas: number = 0;
   public totalEarningVariaveis: number = 0;
   public totalEarningInvestimentos: number = 0;
@@ -39,36 +41,33 @@ export class TotalAndGraphicComponent implements OnInit {
   ngOnInit(): void {
     this.totalSubject.next(this.total);
 
-    if (this.type === "IN") {
-      this.controle503020Service.monthEarning$.subscribe((total) => {
-        this.total = total;
-        this.totalEarningFixas = total * 0.5;
-        this.totalEarningVariaveis = total * 0.3;
-        this.totalEarningInvestimentos = total * 0.2;
-        let dataIndicators = this.loadGraph(total);
-        this.graphIn = {
-          data: dataIndicators,
-          layout: {
-            width: 350,
-            height: 250,
-            margin: { t: 10, r: 25, l: 25, b: 10 },
-          },
-        };
-      });
-    } else {
-      this.controle503020Service.totalExpenses$.subscribe((total) => {
-        this.total = total;
-        let dataIndicators = this.loadGraph(total);
-        this.graphOut = {
-          data: dataIndicators,
-          layout: {
-            width: 350,
-            height: 250,
-            margin: { t: 10, r: 25, l: 25, b: 10 },
-          },
-        };
-      });
-    }
+    this.controle503020Service.monthEarning$.subscribe((total) => {
+      this.totalEarning = total;
+      this.totalEarningFixas = total * 0.5;
+      this.totalEarningVariaveis = total * 0.3;
+      this.totalEarningInvestimentos = total * 0.2;
+      let dataIndicators = this.loadGraph(this.totalEarning);
+      this.graphIn = {
+        data: dataIndicators,
+        layout: {
+          width: 350,
+          height: 250,
+          margin: { t: 10, r: 25, l: 25, b: 10 },
+        },
+      };
+    });
+    this.controle503020Service.totalExpenses$.subscribe((total) => {
+      this.totalExpenses = total;
+      let dataIndicators = this.loadGraph(this.totalExpenses);
+      this.graphOut = {
+        data: dataIndicators,
+        layout: {
+          width: 350,
+          height: 250,
+          margin: { t: 10, r: 25, l: 25, b: 10 },
+        },
+      };
+    });
   }
 
   private loadGraph(total): any[] {
@@ -85,14 +84,18 @@ export class TotalAndGraphicComponent implements OnInit {
             graph.type
           }</b><br><span style='color: gray; font-size:0.7em'> ${this.utilService.getFormattedPrice(
             graph.totalType
-          )}</span>`,
+          )}</span>${
+            this.type === "OUT"
+              ? "<br><span style='color: gray; font-size:0.7em'> Ref.: " +
+                this.utilService.getFormattedPrice(this.getRef(graph.type)) +
+                "</span>"
+              : ""
+          }`,
           font: { size: 11 },
         },
         delta: {
           reference:
-            this.type === "IN"
-              ? graph.totalType
-              : this.getRef(graph.type, graph.totalType),
+            this.type === "IN" ? graph.totalType : this.getRef(graph.type),
         },
         gauge: {
           shape: "bullet",
@@ -100,13 +103,21 @@ export class TotalAndGraphicComponent implements OnInit {
           threshold: {
             line: { color: "black", width: 2 },
             thickness: 0.75,
-            value: graph.totalType,
+            value:
+              this.type === "IN" ? graph.totalType : this.getRef(graph.type),
           },
           steps: [
             { range: [0, graph.totalType], color: "gray" },
             {
               range: [0, graph.totalType],
               color: "lightgray",
+            },
+            {
+              range: [
+                graph.totalType,
+                this.type === "IN" ? graph.totalType : this.getRef(graph.type),
+              ],
+              color: "skyblue",
             },
           ],
           bar: { color: "black" },
@@ -116,13 +127,17 @@ export class TotalAndGraphicComponent implements OnInit {
     return dataIndicators;
   }
 
-  private getRef(type: string, totalType: number) {
+  private getRef(type: string) {
     switch (type) {
       case "FIXAS":
+        console.log(type, this.totalEarningFixas);
+
         return this.totalEarningFixas;
       case "VARIÁVEIS":
+        console.log(type, this.totalEarningVariaveis);
         return this.totalEarningVariaveis;
       case "INVESTIM.":
+        console.log(type, this.totalEarningInvestimentos);
         return this.totalEarningInvestimentos;
     }
   }

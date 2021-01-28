@@ -1,8 +1,8 @@
 <ng-template #logged>
   <div class="container">
     <div class="row" fxLayout="column" fxLayoutAlign="space-between center">
-      <h2 style="font-size: 1.5rem" class="title m-0">
-        Oi, {{ loggedUser.nome }}! Sua conta está OK!
+      <h2 style="font-size: 1.5rem" class="title mt-3">
+        Oi, {{ (loggedUser$ | async).nome }}! Sua conta está OK!
       </h2>
       <p class="description-small text-center">
         Quanto mais você usa, mais dinheiro sobra! <br />
@@ -24,49 +24,53 @@
     Depois cê me conta, beleza?
   </p>
 </ng-template>
-<div *ngIf="!loggedUser; else logged">
-  <div class="container">
-    <div class="row" fxLayout="column" fxLayoutAlign="space-between center">
-      <h2 style="font-size: 1.5rem" class="title m-0">Controle 50-30-20</h2>
-      <p class="description-small"><i>Informe seu e-mail de cadastro</i></p>
+<form [formGroup]="formGroup">
+  <div *ngIf="!(loggedUser$ | async) as loggedUsed; else logged">
+    <div class="container">
+      <div class="row" fxLayout="column" fxLayoutAlign="space-between center">
+        <h2 style="font-size: 1.5rem" class="title mt-3">Controle 50-30-20</h2>
+        <p class="description-small"><i>Informe seu e-mail de cadastro</i></p>
+      </div>
     </div>
-  </div>
-  <div class="m-2" fxLayoutAlign="center center">
-    <img
-      src="./../../../../../assets/img/svg/login.svg"
-      class="img-svg"
-      alt=""
-      fxFlex.lt-sm="50"
-      fxFlex="30"
-    />
-  </div>
-  <div class="row">
-    <div class="col-md-12 ml-auto mr-auto text-center">
-      <div class="form-group bmd-form-group">
-        <div class="input-group">
+    <div class="m-2" fxLayoutAlign="center center">
+      <img
+        src="./../../../../../assets/img/svg/login.svg"
+        class="img-svg"
+        alt=""
+        fxFlex.lt-sm="50"
+        fxFlex="30"
+      />
+    </div>
+    <div class="row">
+      <div class="form-group w-100">
+        <div class="input-group" fxLayout="row" fxLayoutAlign="center center">
           <div class="input-group-prepend">
             <span class="input-group-text">
               <i class="material-icons">vpn_key</i>
             </span>
           </div>
-          <input
-            type="text"
-            [formControl]="email"
-            class="form-control"
-            placeholder="Insira o seu e-mail"
-          />
+          <div>
+            <input
+              type="text"
+              [formControl]="email"
+              class="form-control input-mail"
+              placeholder="Insira o seu e-mail"
+              required
+            />
+            <mat-error [innerHTML]="getErrorEmail(email, 'email')"> </mat-error>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<div class="row my-2" *ngIf="!loggedUser">
-  <div
-    fxLayou="column"
-    fxLayoutAlign="center center"
-    class="ml-auto mr-auto text-center"
-  >
-    <a mat-stroked-button (click)="login()" class="mx-2">Entrar</a>
-    <a mat-stroked-button (click)="newUser()" class="mx-2">Novo Usuário</a>
+  <div class="row my-2" *ngIf="!(loggedUser$ | async)">
+    <div
+      fxLayou="column"
+      fxLayoutAlign="center center"
+      class="ml-auto mr-auto text-center"
+    >
+      <a mat-stroked-button (click)="login()" class="mx-2">Entrar</a>
+      <a mat-stroked-button (click)="newUser()" class="mx-2">Novo Usuário</a>
+    </div>
   </div>
-</div>
+</form>

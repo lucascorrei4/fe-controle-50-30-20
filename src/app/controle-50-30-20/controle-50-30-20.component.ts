@@ -1,44 +1,19 @@
 import {
   Component,
   OnInit,
-  ElementRef,
-  ViewChild,
-  LOCALE_ID,
-  Inject,
-  NgZone,
-  ViewEncapsulation,
-  HostListener,
-  ChangeDetectorRef,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Inject,
+  LOCALE_ID,
 } from "@angular/core";
-import { MatTooltip } from "@angular/material/tooltip";
-import { BottomSheetListaDespesasComponent } from "./components/bottom-sheets/bottom-sheet-lista-despesas/bottom-sheet-lista-despesas.component";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
-import { formatDate } from "@angular/common";
-import { User } from "../models/user";
-import { ApiService } from "../services/api.service";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl,
-} from "@angular/forms";
-import { Router } from "@angular/router";
+import {} from "@angular/forms";
 import { UtilService } from "../services/util.service";
-import { BottomSheetGraficoDespesasComponent } from "./components/bottom-sheets/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component";
-import { BottomSheetComoFuncionaComponent } from "./components/bottom-sheets/bottom-sheet-como-funciona/bottom-sheet-como-funciona.component";
 
 import { StorageService } from "../services/storage.service";
-import { Despesa } from "../models/despesa";
-import { DespesaItem } from "../models/despesa-item";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { Lancamento } from "../models/lancamento";
-import { DespesaEnum } from "../enums/despesas-enum";
-import { MatTabChangeEvent } from "@angular/material/tabs";
-import { BottomSheetNovaDespesa } from "./components/bottom-sheets/bottom-sheet-nova-despesa/bottom-sheet-nova-despesa.component";
-
-import { Controle503020Service } from "./controle-50-30-20.service";
 import { BottomSheetLoginComponent } from "./components/bottom-sheets/bottom-sheet-login/bottom-sheet-login.component";
+import { Controle503020Service } from "./controle-50-30-20.service";
+import { formatDate } from "@angular/common";
 
 @Component({
   selector: "app-controle-50-30-20",
@@ -47,23 +22,29 @@ import { BottomSheetLoginComponent } from "./components/bottom-sheets/bottom-she
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Controle503020Component implements OnInit {
+  public currentMonth: string;
+
   constructor(
     private storageService: StorageService,
     private bottomSheet: MatBottomSheet,
-    private utilService: UtilService
-  ) {}
+    private utilService: UtilService,
+    private controle503020Service: Controle503020Service,
+    private changeDetector: ChangeDetectorRef,
+    @Inject(LOCALE_ID) private locale: string
+  ) {
+    this.getCurrentMonth();
+  }
 
   ngOnInit() {
     this.verifyLoggedUser();
   }
 
   verifyLoggedUser() {
-    if (
-      this.utilService.objectIsNullUndefinedOrEmpty(
-        this.storageService.getLocalUser()
-      )
-    ) {
+    if (this.utilService.isEmpty(this.storageService.getLocalUser())) {
       this.openLogin();
+    } else {
+      this.controle503020Service.updateEarningTotals();
+      this.controle503020Service.updateLaunchTotals();
     }
   }
 
@@ -75,8 +56,14 @@ export class Controle503020Component implements OnInit {
       }
     );
     bottomSheefNovaDespesaRef.afterDismissed().subscribe((response) => {
-      if (response) {
-      }
+      this.controle503020Service.updateEarningTotals();
+      this.controle503020Service.updateLaunchTotals();
+      this.changeDetector.detectChanges();
     });
+  }
+
+  getCurrentMonth() {
+    this.currentMonth = formatDate(new Date(), "MM/yyyy", this.locale);
+    this.controle503020Service.selectedMonth.next(this.currentMonth);
   }
 }

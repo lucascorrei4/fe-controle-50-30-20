@@ -10,12 +10,7 @@ import {
   Inject,
   ChangeDetectorRef,
 } from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import {
   MatBottomSheet,
   MatSnackBar,
@@ -29,7 +24,6 @@ import { BottomSheetNovaDespesa } from "../bottom-sheets/bottom-sheet-nova-despe
 import * as moment from "moment";
 import { StorageService } from "src/app/services/storage.service";
 import { BottomSheetGraficoDespesasComponent } from "../bottom-sheets/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component";
-import { User } from "src/app/models/user";
 import { Controle503020Service } from "../../controle-50-30-20.service";
 import { DespesaEnum } from "src/app/enums/despesas-enum";
 import { BottomSheetLoginComponent } from "../bottom-sheets/bottom-sheet-login/bottom-sheet-login.component";
@@ -44,17 +38,10 @@ import { distinctUntilChanged, shareReplay } from "rxjs/operators";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsComponent implements OnInit {
-  public STR_GASTOS_50 =
-    "Tudo o que você gasta de forma rotineira: moradia, aluguél, contas de energia, água e internet, alimentação, transporte, saúde, mercado, educação, seguros e doações.";
-  public STR_GASTOS_30 =
-    "Tudo o que você gasta de forma variável sem prioridade: despesas pessoais para entretenimento como idas ao cinema, salão de beleza, bares e restaurantes, viagens, academias, compras e cuidados pessoais...";
-  public STR_GASTOS_20 =
-    "Valor que você precisa poupar todo mês pensando no futuro: fundo para emergências, contratar um plano de previdência privada, fazer investimentos de longo prazo, poupança e etc...";
-
   public selectedMonthDesc: string;
+  public currentMonth: string;
   public formGroup: FormGroup;
 
-  public currentMonth: any;
   public lastMonth: any;
   public nextMonth: any;
 
@@ -87,7 +74,6 @@ export class TabsComponent implements OnInit {
 
   despesaEnum: DespesaEnum = DespesaEnum.Fixas;
 
-  public monthEarning: number = 0;
   public monthExpenses: number = 0;
 
   private monthEarningSubject: BehaviorSubject<number> = new BehaviorSubject(0);
@@ -100,7 +86,6 @@ export class TabsComponent implements OnInit {
     private bottomSheet: MatBottomSheet,
     public fb: FormBuilder,
     @Inject(LOCALE_ID) private locale: string,
-    private storageService: StorageService,
     private controle503020Service: Controle503020Service,
     private changeDetector: ChangeDetectorRef,
     private snackBar: MatSnackBar
@@ -123,7 +108,6 @@ export class TabsComponent implements OnInit {
   }
 
   initObservers() {
-    this.verifyEarningRef();
     this.controle503020Service.updateBadges();
     this.controle503020Service.totalExpenses$.subscribe((res) => {
       this.monthExpenses = res;
@@ -131,22 +115,8 @@ export class TabsComponent implements OnInit {
     });
   }
 
-  async verifyEarningRef() {
-    let user = this.storageService.getLocalUser();
-    let launch = await this.controle503020Service
-      .findEarningByUserIdAndRef(user._id, this.selectedMonthDesc)
-      .toPromise();
-    if (launch) {
-      this.monthEarning = launch.renda1 + launch.renda2 + launch.rendaExtra;
-      this.controle503020Service.monthEarning.next(this.monthEarning);
-      this.monthEarningSubject.next(this.monthEarning);
-      this.changeDetector.detectChanges();
-    }
-  }
-
   loadMonthEarning() {
     this.controle503020Service.monthEarning$.subscribe((res) => {
-      this.monthEarning = res;
       this.changeDetector.detectChanges();
     });
   }
@@ -154,30 +124,6 @@ export class TabsComponent implements OnInit {
   selecionarMes(mes) {
     this.selectedMonthDesc = mes;
     this.controle503020Service.selectedMonth.next(this.selectedMonthDesc);
-  }
-
-  private atualizarGraficoIdeal(rendaTotal: number) {
-    this.single = [
-      {
-        name: "Fixo Ideal",
-        value: rendaTotal * 0.5,
-      },
-      {
-        name: "Variáveis Ideal",
-        value: rendaTotal * 0.3,
-      },
-      {
-        name: "Invest. Ideal",
-        value: rendaTotal * 0.2,
-      },
-    ];
-  }
-
-  public enviarLancamento() {
-    var user = new User();
-    user.codigo = "";
-    user.email = "";
-    user.lancamentos = [];
   }
 
   scroll() {
@@ -204,12 +150,15 @@ export class TabsComponent implements OnInit {
   }
 
   carregarMeses() {
+    this.controle503020Service.selectedMonth$.subscribe((res) => {
+      this.currentMonth = res;
+    });
     this.lastMonth = formatDate(
       this.today.setMonth(this.today.getMonth() - 1),
       "MM/yyyy",
       this.locale
     );
-    this.currentMonth = formatDate(new Date(), "MM/yyyy", this.locale);
+
     this.nextMonth = formatDate(
       new Date().setMonth(new Date().getMonth() + 1),
       "MM/yyyy",
@@ -277,18 +226,6 @@ export class TabsComponent implements OnInit {
     bottomSheefNovaDespesaRef.afterDismissed().subscribe(() => {
       this.loadMonthEarning();
     });
-  }
-
-  get strGastos50(): string {
-    return this.STR_GASTOS_50;
-  }
-
-  get strGastos30(): string {
-    return this.STR_GASTOS_30;
-  }
-
-  get strGastos20(): string {
-    return this.STR_GASTOS_20;
   }
 
   get monthEarning$(): Observable<number> {

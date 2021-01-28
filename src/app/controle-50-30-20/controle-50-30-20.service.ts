@@ -46,6 +46,7 @@ export class Controle503020Service {
     });
 
     this.updateLaunchTotals();
+    this.updateEarningTotals();
   }
 
   get selectedMonth$(): Observable<string> {
@@ -162,6 +163,17 @@ export class Controle503020Service {
       .catch((error) => {
         return Promise.reject(error);
       });
+  }
+
+  async updateEarningTotals() {
+    let user = this.storageService.getLocalUser();
+    let launch = await this.findEarningByUserIdAndRef(
+      user._id,
+      this.selectedMonth.value
+    ).toPromise();
+    if (launch) {
+      this.monthEarning.next(launch.renda1 + launch.renda2 + launch.rendaExtra);
+    }
   }
 
   // Repeated Launchs

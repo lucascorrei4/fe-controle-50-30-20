@@ -13,6 +13,7 @@ import {
 } from "@angular/material";
 import { NgxCurrencyModule } from "ngx-currency";
 import { TotalAndGraphicModule } from "./total-and-graphic/total-and-graphic.module";
+import { LoadingBarModule } from "../loading-bar/loading-bar.module";
 
 @NgModule({
   declarations: [TabsComponent],
@@ -29,6 +30,7 @@ import { TotalAndGraphicModule } from "./total-and-graphic/total-and-graphic.mod
     NgxChartsModule,
     MatButtonModule,
     TotalAndGraphicModule,
+    LoadingBarModule,
   ],
   exports: [TabsComponent],
 })
