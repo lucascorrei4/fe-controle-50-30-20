@@ -4,7 +4,7 @@
   (selectedTabChange)="tabChanged($event)"
   [(selectedIndex)]="tabIndex"
 >
-  <mat-tab *ngFor="let mes of meses" (click)="selectedTabChange($event, mes)">
+  <mat-tab *ngFor="let mes of meses"  (click)="selectedTabChange($event, mes)">
     <ng-template mat-tab-label>
       <div (mousedown)="selectedTabChange(mes)">
         <span> {{ mes }}</span>

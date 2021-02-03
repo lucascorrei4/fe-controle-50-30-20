@@ -27,6 +27,7 @@ export class Controle503020Service {
   public categoriesGrouped: any[] = [];
   public selectedMonth: BehaviorSubject<string> = new BehaviorSubject(null);
   public monthEarning: BehaviorSubject<number> = new BehaviorSubject(0);
+  public monthEarning$ = this.monthEarning.asObservable().pipe(share());
   public countExpenses: BehaviorSubject<number> = new BehaviorSubject(0);
   public countExpenses$ = this.countExpenses.asObservable().pipe(share());
   public totalExpenses: BehaviorSubject<number> = new BehaviorSubject(0);
@@ -51,12 +52,6 @@ export class Controle503020Service {
 
   get selectedMonth$(): Observable<string> {
     return this.selectedMonth
-      .asObservable()
-      .pipe(distinctUntilChanged(), shareReplay());
-  }
-
-  get monthEarning$(): Observable<number> {
-    return this.monthEarning
       .asObservable()
       .pipe(distinctUntilChanged(), shareReplay());
   }
@@ -146,6 +141,8 @@ export class Controle503020Service {
   }
 
   async updateLaunchTotals() {
+    console.log("update launch", this.selectedMonth.value);
+
     let user = this.storageService.getLocalUser();
     await this.findLaunchesByUserIdAndMonthAndType(
       user._id,
@@ -166,14 +163,20 @@ export class Controle503020Service {
   }
 
   async updateEarningTotals() {
+    console.log("update earning", this.selectedMonth.value);
     let user = this.storageService.getLocalUser();
-    let launch = await this.findEarningByUserIdAndRef(
-      user._id,
-      this.selectedMonth.value
-    ).toPromise();
-    if (launch) {
-      this.monthEarning.next(launch.renda1 + launch.renda2 + launch.rendaExtra);
-    }
+    await this.findEarningByUserIdAndRef(user._id, this.selectedMonth.value)
+      .toPromise()
+      .then((launch) => {
+        if (launch) {
+          this.monthEarning.next(
+            launch.renda1 + launch.renda2 + launch.rendaExtra
+          );
+        }
+      })
+      .catch((error) => {
+        return Promise.reject(error);
+      });
   }
 
   // Repeated Launchs

@@ -30,14 +30,14 @@ export class BottomSheetEarningsComponent {
 
   constructor(
     private bottomSheetRef: MatBottomSheetRef<BottomSheetEarningsComponent>,
-    private controle503020Service: Controle503020Service,
+    private controleService: Controle503020Service,
     private snackBar: MatSnackBar,
     private storageService: StorageService,
     public fb: FormBuilder,
     private changeDetection: ChangeDetectorRef
   ) {
     this.loggedUser = this.storageService.getLocalUser();
-    this.controle503020Service.selectedMonth$.subscribe(
+    this.controleService.selectedMonth$.subscribe(
       (res) => (this.selectedMonth = res)
     );
     this.initForm();
@@ -78,7 +78,7 @@ export class BottomSheetEarningsComponent {
   }
 
   async verifyEarningRef() {
-    let launch = await this.controle503020Service
+    let launch = await this.controleService
       .findEarningByUserIdAndRef(this.loggedUser._id, this.selectedMonth)
       .toPromise();
 
@@ -102,7 +102,7 @@ export class BottomSheetEarningsComponent {
     earning.renda1 = this.renda1.value;
     earning.renda2 = this.renda2.value;
     earning.rendaExtra = this.rendaExtra.value;
-    this.controle503020Service.newEarning(earning).subscribe((res) => {
+    this.controleService.newEarning(earning).subscribe((res) => {
       if (res) {
         this.openSnackBar(
           "Sucesso",
@@ -118,7 +118,7 @@ export class BottomSheetEarningsComponent {
       Number(this.renda1.value ?? 0) +
       Number(this.renda2.value ?? 0) +
       Number(this.rendaExtra.value ?? 0);
-    this.controle503020Service.monthEarning.next(this.totalEarnings);
+    this.controleService.monthEarning.next(this.totalEarnings);
   }
 
   get renda1(): FormControl {

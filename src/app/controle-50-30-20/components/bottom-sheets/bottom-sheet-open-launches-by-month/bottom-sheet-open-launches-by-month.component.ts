@@ -43,7 +43,7 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
     private bottomSheetRef: MatBottomSheetRef<BottomSheetLaunchesByMonthComponent>,
     private snackBar: MatSnackBar,
     private utilService: UtilService,
-    private controle503020Service: Controle503020Service,
+    private controleService: Controle503020Service,
     private storageService: StorageService,
     private changeDetector: ChangeDetectorRef,
     private dialog: MatDialog,
@@ -51,7 +51,7 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.controle503020Service.selectedMonth$.subscribe((res) => {
+    this.controleService.selectedMonth$.subscribe((res) => {
       this.selectedMontSubject.next(res);
       this.loadLaunchesBySelectedMonth();
     });
@@ -59,7 +59,7 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
 
   private async loadLaunchesBySelectedMonth() {
     let user = this.storageService.getLocalUser();
-    this.launches = await this.controle503020Service
+    this.launches = await this.controleService
       .findLaunchesByUserIdAndMonthAndType(
         user._id,
         this.selectedMontSubject.value
@@ -72,7 +72,7 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
     let user = this.storageService.getLocalUser();
     let launch = [];
     launch.push(
-      await this.controle503020Service
+      await this.controleService
         .findByUserIdCategoryAndValue(user._id, item.categoryId, item.valor)
         .toPromise()
     );
@@ -119,7 +119,7 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        this.controle503020Service.removeLaunch(launch._id).subscribe((res) => {
+        this.controleService.removeLaunch(launch._id).subscribe((res) => {
           this.launchesGrouped.find(
             (group) => group.name === launch.type
           ).subItems = subItems.filter((item) => item._id !== launch._id);

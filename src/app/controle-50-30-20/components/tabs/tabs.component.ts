@@ -74,8 +74,6 @@ export class TabsComponent implements OnInit {
 
   despesaEnum: DespesaEnum = DespesaEnum.Fixas;
 
-  public monthExpenses: number = 0;
-
   private monthEarningSubject: BehaviorSubject<number> = new BehaviorSubject(0);
   private monthExpensesSubject: BehaviorSubject<number> = new BehaviorSubject(
     0
@@ -86,7 +84,7 @@ export class TabsComponent implements OnInit {
     private bottomSheet: MatBottomSheet,
     public fb: FormBuilder,
     @Inject(LOCALE_ID) private locale: string,
-    private controle503020Service: Controle503020Service,
+    private controleService: Controle503020Service,
     private changeDetector: ChangeDetectorRef,
     private snackBar: MatSnackBar
   ) {}
@@ -108,22 +106,45 @@ export class TabsComponent implements OnInit {
   }
 
   initObservers() {
-    this.controle503020Service.updateBadges();
-    this.controle503020Service.totalExpenses$.subscribe((res) => {
-      this.monthExpenses = res;
-      this.monthExpensesSubject.next(this.monthExpenses);
-    });
+    this.controleService.updateBadges();
+    this.loadMonthEarning();
+    this.loadTotalExpenses();
+    console.log("initObservers");
+  }
+
+  selectedTabChange(mes: string) {
+    this.selectedMonthDesc = mes;
+  }
+  
+  tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+    console.log(tabChangeEvent);
+    
+    this.openSnackBar("Carregando " + this.selectedMonthDesc, "Aguarde...");
+    this.monthEarningSubject.next(0);
+    this.monthExpensesSubject.next(0);
+    this.controleService.monthEarning.next(0);
+    this.controleService.totalExpenses.next(0);
+    this.controleService.selectedMonth.next(this.selectedMonthDesc);
+    this.changeDetector.detectChanges();
+    this.controleService.updateEarningTotals();
+    this.controleService.updateLaunchTotals();
+    this.loadMonthEarning();
+    this.loadTotalExpenses();
+    this.changeDetector.detectChanges();
   }
 
   loadMonthEarning() {
-    this.controle503020Service.monthEarning$.subscribe((res) => {
+    this.controleService.monthEarning$.subscribe((res) => {
+      this.monthEarningSubject.next(res);
       this.changeDetector.detectChanges();
     });
   }
 
-  selecionarMes(mes) {
-    this.selectedMonthDesc = mes;
-    this.controle503020Service.selectedMonth.next(this.selectedMonthDesc);
+  loadTotalExpenses() {
+    this.controleService.totalExpenses$.subscribe((res) => {
+      this.monthExpensesSubject.next(res);
+      this.changeDetector.detectChanges();
+    });
   }
 
   scroll() {
@@ -140,7 +161,7 @@ export class TabsComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 2000,
+      duration: 3000,
     });
   }
 
@@ -150,7 +171,7 @@ export class TabsComponent implements OnInit {
   }
 
   carregarMeses() {
-    this.controle503020Service.selectedMonth$.subscribe((res) => {
+    this.controleService.selectedMonth$.subscribe((res) => {
       this.currentMonth = res;
     });
     this.lastMonth = formatDate(
@@ -168,19 +189,12 @@ export class TabsComponent implements OnInit {
     this.meses.push(this.lastMonth, this.currentMonth, this.nextMonth);
 
     this.selectedMonthDesc = this.currentMonth;
-    this.controle503020Service.selectedMonth.next(this.selectedMonthDesc);
+    this.controleService.selectedMonth.next(this.selectedMonthDesc);
 
     this.tabIndex = this.meses.findIndex(
       (mes) => String(mes) === String(this.currentMonth)
     );
   }
-
-  selectedTabChange(mes: string) {
-    this.selectedMonthDesc = mes;
-    this.controle503020Service.selectedMonth.next(this.selectedMonthDesc);
-  }
-
-  tabChanged(tabChangeEvent: MatTabChangeEvent): void {}
 
   getFormattedPrice(price: number) {
     return this.utilService.getFormattedPrice(price).substring(3);
@@ -210,11 +224,11 @@ export class TabsComponent implements OnInit {
           if (response) {
             this.abrirBottomSheetDespesas();
           } else {
-            this.controle503020Service.updateBadges();
+            this.controleService.updateBadges();
           }
         });
       } else {
-        this.controle503020Service.updateBadges();
+        this.controleService.updateBadges();
       }
     });
   }

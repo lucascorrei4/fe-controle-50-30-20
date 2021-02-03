@@ -28,7 +28,7 @@ export class Controle503020Component implements OnInit {
     private storageService: StorageService,
     private bottomSheet: MatBottomSheet,
     private utilService: UtilService,
-    private controle503020Service: Controle503020Service,
+    private controleService: Controle503020Service,
     private changeDetector: ChangeDetectorRef,
     @Inject(LOCALE_ID) private locale: string
   ) {
@@ -43,8 +43,8 @@ export class Controle503020Component implements OnInit {
     if (this.utilService.isEmpty(this.storageService.getLocalUser())) {
       this.openLogin();
     } else {
-      this.controle503020Service.updateEarningTotals();
-      this.controle503020Service.updateLaunchTotals();
+      this.controleService.updateEarningTotals();
+      this.controleService.updateLaunchTotals();
     }
   }
 
@@ -56,14 +56,14 @@ export class Controle503020Component implements OnInit {
       }
     );
     bottomSheefNovaDespesaRef.afterDismissed().subscribe((response) => {
-      this.controle503020Service.updateEarningTotals();
-      this.controle503020Service.updateLaunchTotals();
+      this.controleService.updateEarningTotals();
+      this.controleService.updateLaunchTotals();
       this.changeDetector.detectChanges();
     });
   }
 
   getCurrentMonth() {
     this.currentMonth = formatDate(new Date(), "MM/yyyy", this.locale);
-    this.controle503020Service.selectedMonth.next(this.currentMonth);
+    this.controleService.selectedMonth.next(this.currentMonth);
   }
 }

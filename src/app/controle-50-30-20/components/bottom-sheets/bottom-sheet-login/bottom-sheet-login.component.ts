@@ -30,7 +30,7 @@ export class BottomSheetLoginComponent implements OnInit {
 
   constructor(
     private bottomSheetRef: MatBottomSheetRef<BottomSheetLoginComponent>,
-    private controle503020Service: Controle503020Service,
+    private controleService: Controle503020Service,
     private snackBar: MatSnackBar,
     private storageService: StorageService,
     private utilService: UtilService,
@@ -64,7 +64,7 @@ export class BottomSheetLoginComponent implements OnInit {
 
   login() {
     if (this.email.value) {
-      this.controle503020Service.findUserByEmail(this.email.value).subscribe(
+      this.controleService.findUserByEmail(this.email.value).subscribe(
         (res) => {
           if (res) {
             this.fechar();

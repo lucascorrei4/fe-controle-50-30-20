@@ -33,9 +33,9 @@ export class FooterMenuComponent implements OnInit {
     private bottomSheet: MatBottomSheet,
     private storageService: StorageService,
     private changeDetector: ChangeDetectorRef,
-    private controle503020Service: Controle503020Service
+    private controleService: Controle503020Service
   ) {
-    this.controle503020Service.listenUpdateBadgesObservable().subscribe(() => {
+    this.controleService.listenUpdateBadgesObservable().subscribe(() => {
       this.getSelectedMonthAndUpdateBadges();
     });
   }
@@ -45,7 +45,7 @@ export class FooterMenuComponent implements OnInit {
   }
 
   getSelectedMonthAndUpdateBadges() {
-    this.controle503020Service.selectedMonth$.subscribe((res) => {
+    this.controleService.selectedMonth$.subscribe((res) => {
       this.selectedMontSubject.next(res);
       this.updateCountLaunches();
     });
@@ -67,7 +67,7 @@ export class FooterMenuComponent implements OnInit {
 
   private async updateCountLaunches() {
     let user = this.storageService.getLocalUser();
-    await this.controle503020Service
+    await this.controleService
       .findLaunchesByUserIdAndMonthAndType(
         user._id,
         this.selectedMontSubject.value
@@ -78,7 +78,7 @@ export class FooterMenuComponent implements OnInit {
         for (let item of launches) {
           valorTotal += item.valor;
         }
-        this.controle503020Service.totalExpenses.next(valorTotal);
+        this.controleService.totalExpenses.next(valorTotal);
         this.contLancamentoDespesas = launches.length;
         this.changeDetector.detectChanges();
       })

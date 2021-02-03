@@ -12,7 +12,7 @@
     id="pie-chart-parent"
     fxLayout="column"
     fxLayoutAlign="center center"
-    *ngIf="totalEarning > 0 && type === 'IN'; else emptyin"
+    *ngIf="totalEarning > 0 && type === 'IN'; else empty"
   >
     <h4 class="title" style="margin: 0px">
       Gráfico 50-30-20 {{ type === "IN" ? "Ideal" : "Real" }}
@@ -24,17 +24,12 @@
       [style]="{ position: 'relative', width: '100%', height: '100%' }"
     >
     </plotly-plot>
-    <ng-template #emptyin>
-      <loading-bar
-        [title]="'Aguardando preenchimento das entradas...'"
-      ></loading-bar>
-    </ng-template>
   </div>
   <div
     id="pie-chart-parent"
     fxLayout="column"
     fxLayoutAlign="center center"
-    *ngIf="totalExpenses > 0 && type === 'OUT'; else emptyout"
+    *ngIf="totalExpenses > 0 && type === 'OUT'; else empty"
   >
     <h4 class="title" style="margin: 0px">
       Gráfico 50-30-20 {{ type === "IN" ? "Ideal" : "Real" }}
@@ -46,10 +41,8 @@
       [style]="{ position: 'relative', width: '100%', height: '100%' }"
     >
     </plotly-plot>
-    <ng-template #emptyout>
-      <loading-bar
-        [title]="'Aguardando preenchimento das despesas...'"
-      ></loading-bar>
-    </ng-template>
   </div>
+  <ng-template #empty>
+    <loading-bar [title]="'Aguardando preenchimento...'"></loading-bar>
+  </ng-template>
 </div>

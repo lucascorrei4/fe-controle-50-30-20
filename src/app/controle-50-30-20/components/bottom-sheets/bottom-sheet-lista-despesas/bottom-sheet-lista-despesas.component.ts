@@ -15,7 +15,7 @@ export class BottomSheetListaDespesasComponent implements OnInit {
 
   constructor(
     private bottomSheetRef: MatBottomSheetRef<BottomSheetListaDespesasComponent>,
-    private controle503020Service: Controle503020Service,
+    private controleService: Controle503020Service,
     private snackBar: MatSnackBar,
     private storageService: StorageService
   ) {}
@@ -32,7 +32,7 @@ export class BottomSheetListaDespesasComponent implements OnInit {
   }
 
   private async getCategories() {
-    await this.controle503020Service.getCategories().toPromise();
+    await this.controleService.getCategories().toPromise();
     this.categoriesGrouped = this.storageService.getLocalCategories();
   }
 

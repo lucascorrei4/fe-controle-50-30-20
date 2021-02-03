@@ -34,14 +34,14 @@ export class TotalAndGraphicComponent implements OnInit {
   public graphOut;
 
   constructor(
-    private controle503020Service: Controle503020Service,
+    private controleService: Controle503020Service,
     public utilService: UtilService
   ) {}
 
   ngOnInit(): void {
     this.totalSubject.next(this.total);
 
-    this.controle503020Service.monthEarning$.subscribe((total) => {
+    this.controleService.monthEarning$.subscribe((total) => {
       this.totalEarning = total;
       this.totalEarningFixas = total * 0.5;
       this.totalEarningVariaveis = total * 0.3;
@@ -56,7 +56,7 @@ export class TotalAndGraphicComponent implements OnInit {
         },
       };
     });
-    this.controle503020Service.totalExpenses$.subscribe((total) => {
+    this.controleService.totalExpenses$.subscribe((total) => {
       this.totalExpenses = total;
       let dataIndicators = this.loadGraph(this.totalExpenses);
       this.graphOut = {
@@ -130,14 +130,10 @@ export class TotalAndGraphicComponent implements OnInit {
   private getRef(type: string) {
     switch (type) {
       case "FIXAS":
-        console.log(type, this.totalEarningFixas);
-
         return this.totalEarningFixas;
       case "VARIÁVEIS":
-        console.log(type, this.totalEarningVariaveis);
         return this.totalEarningVariaveis;
       case "INVESTIM.":
-        console.log(type, this.totalEarningInvestimentos);
         return this.totalEarningInvestimentos;
     }
   }

@@ -42,10 +42,10 @@ export class BottomSheetNovaDespesa implements OnInit {
     private bottomSheetRef: MatBottomSheetRef<BottomSheetNovaDespesa>,
     private snackBar: MatSnackBar,
     private storageService: StorageService,
-    private controle503020Service: Controle503020Service
+    private controleService: Controle503020Service
   ) {
     this.category = data.category;
-    this.controle503020Service.selectedMonth$.subscribe(
+    this.controleService.selectedMonth$.subscribe(
       (res) => (this.selectedMonth = res)
     );
   }
@@ -84,12 +84,12 @@ export class BottomSheetNovaDespesa implements OnInit {
     launch.categoryId = this.category.categoryId;
     launch.valor = this.valorDespesa.value;
     launch.obs = this.obsDespesa.value;
-    this.controle503020Service.newLaunch(launch).subscribe((res) => {
+    this.controleService.newLaunch(launch).subscribe((res) => {
       if (res) {
         if (this.repeat.value) {
           this.saveRepeatedLaunch(res);
         }
-        this.controle503020Service.updateBadges();
+        this.controleService.updateBadges();
         this.descricaoDespesa.reset();
         this.valorDespesa.reset();
         this.obsDespesa.reset();
@@ -105,11 +105,11 @@ export class BottomSheetNovaDespesa implements OnInit {
     repeatedLaunch.categoryId = launch.categoryId;
     repeatedLaunch.valor = launch.valor;
     repeatedLaunch.obs = "NENHUMA";
-    this.controle503020Service
+    this.controleService
       .newRepeatedLaunch(repeatedLaunch)
       .subscribe((res) => {
         if (res) {
-          this.controle503020Service.updateBadges();
+          this.controleService.updateBadges();
           this.descricaoDespesa.reset();
           this.valorDespesa.reset();
           this.obsDespesa.reset();

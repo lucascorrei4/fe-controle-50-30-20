@@ -12,7 +12,7 @@ export class BottomSheetGraficoDespesasComponent {
   constructor(
     private bottomSheetRef: MatBottomSheetRef<BottomSheetGraficoDespesasComponent>,
     private snackBar: MatSnackBar,
-    private controle503020Service: Controle503020Service
+    private controleService: Controle503020Service
   ) {}
 
   enviarCodigoSecreto(): void {
