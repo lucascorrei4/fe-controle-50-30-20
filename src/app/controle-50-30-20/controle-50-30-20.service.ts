@@ -141,8 +141,6 @@ export class Controle503020Service {
   }
 
   async updateLaunchTotals() {
-    console.log("update launch", this.selectedMonth.value);
-
     let user = this.storageService.getLocalUser();
     await this.findLaunchesByUserIdAndMonthAndType(
       user._id,
@@ -163,7 +161,6 @@ export class Controle503020Service {
   }
 
   async updateEarningTotals() {
-    console.log("update earning", this.selectedMonth.value);
     let user = this.storageService.getLocalUser();
     await this.findEarningByUserIdAndRef(user._id, this.selectedMonth.value)
       .toPromise()

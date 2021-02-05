@@ -109,7 +109,6 @@ export class TabsComponent implements OnInit {
     this.controleService.updateBadges();
     this.loadMonthEarning();
     this.loadTotalExpenses();
-    console.log("initObservers");
   }
 
   selectedTabChange(mes: string) {
@@ -117,8 +116,6 @@ export class TabsComponent implements OnInit {
   }
   
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
-    console.log(tabChangeEvent);
-    
     this.openSnackBar("Carregando " + this.selectedMonthDesc, "Aguarde...");
     this.monthEarningSubject.next(0);
     this.monthExpensesSubject.next(0);
