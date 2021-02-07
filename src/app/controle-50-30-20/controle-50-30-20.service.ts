@@ -32,6 +32,8 @@ export class Controle503020Service {
   public countExpenses$ = this.countExpenses.asObservable().pipe(share());
   public totalExpenses: BehaviorSubject<number> = new BehaviorSubject(0);
   public totalExpenses$ = this.totalExpenses.asObservable().pipe(share());
+  public monthLaunches: BehaviorSubject<Launch[]> = new BehaviorSubject([]);
+  public monthLaunches$ = this.monthLaunches.asObservable().pipe(share());
 
   constructor(
     private http: HttpClient,
@@ -148,6 +150,7 @@ export class Controle503020Service {
     )
       .toPromise()
       .then((launches: Launch[]) => {
+        this.monthLaunches.next(launches);
         let valorTotal = 0;
         for (let item of launches) {
           valorTotal += item.valor;

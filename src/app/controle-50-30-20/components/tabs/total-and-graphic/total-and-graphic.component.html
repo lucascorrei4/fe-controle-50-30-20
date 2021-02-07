@@ -14,7 +14,7 @@
     fxLayoutAlign="center center"
     *ngIf="totalEarning > 0 && type === 'IN'"
   >
-    <h4 class="title" style="margin: 0px">
+    <h4 class="title-section m-0">
       Gráfico 50-30-20 {{ type === "IN" ? "Ideal" : "Real" }}
     </h4>
     <plotly-plot
@@ -31,7 +31,7 @@
     fxLayoutAlign="center center"
     *ngIf="totalExpenses > 0 && type === 'OUT'"
   >
-    <h4 class="title" style="margin: 0px">
+    <h4 class="title-section m-0">
       Gráfico 50-30-20 {{ type === "IN" ? "Ideal" : "Real" }}
     </h4>
     <plotly-plot

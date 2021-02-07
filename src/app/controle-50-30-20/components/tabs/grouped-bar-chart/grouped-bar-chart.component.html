@@ -1,0 +1,20 @@
+<div class="ml-auto mr-auto text-center my-3">
+  <div
+    id="pie-chart-parent"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    *ngIf="showGraph$ | async; else loading"
+  >
+    <h4 class="title-section m-0" >Ideal/Real</h4>
+    <plotly-plot
+      [data]="graph?.data"
+      [layout]="graph?.layout"
+      [useResizeHandler]="true"
+      [style]="{ position: 'relative', width: '100%', height: '100%' }"
+    >
+    </plotly-plot>
+  </div>
+  <ng-template #loading>
+    <loading-bar [title]="'Aguardando preenchimento...'"></loading-bar>
+  </ng-template>
+</div>

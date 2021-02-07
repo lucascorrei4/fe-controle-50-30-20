@@ -14,6 +14,7 @@ import {
 import { NgxCurrencyModule } from "ngx-currency";
 import { TotalAndGraphicModule } from "./total-and-graphic/total-and-graphic.module";
 import { LoadingBarModule } from "../loading-bar/loading-bar.module";
+import { GroupedBarChartModule } from "./grouped-bar-chart/grouped-bar-chart.module";
 
 @NgModule({
   declarations: [TabsComponent],
@@ -31,6 +32,7 @@ import { LoadingBarModule } from "../loading-bar/loading-bar.module";
     MatButtonModule,
     TotalAndGraphicModule,
     LoadingBarModule,
+    GroupedBarChartModule,
   ],
   exports: [TabsComponent],
 })
