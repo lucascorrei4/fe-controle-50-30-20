@@ -28,46 +28,28 @@ export class GroupedBarChartComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("iniciou graph");
-
     this.loadGraph();
-  }
-
-  private getTotalLaunchesByType(launches: Launch[], type: string): number {
-    return launches
-      .filter((launch) => launch.type === type)
-      .reduce((acc, val) => (acc += val.valor), 0);
   }
 
   private loadGraph() {
     this.controleService.monthEarning$.subscribe((total) => {
-      console.log("monthearning", total);
-
       this.totalEarningFixas = total * 0.5;
       this.totalEarningVariaveis = total * 0.3;
       this.totalEarningInvestimentos = total * 0.2;
-
-      console.log("totalEarningFixas", this.totalEarningFixas);
-      console.log("totalEarningVariaveis", this.totalEarningVariaveis);
-      console.log("totalEarningInvestimentos", this.totalEarningInvestimentos);
     });
     this.controleService.monthLaunches$.subscribe((launches: Launch[]) => {
       this.showGraph.next(true);
-      console.log("monthLaunches", launches);
-      this.totalExpensesFixas = this.getTotalLaunchesByType(launches, "FIXAS");
-      this.totalExpensesVariaveis = this.getTotalLaunchesByType(
+      this.totalExpensesFixas = this.controleService.getTotalLaunchesByType(
+        launches,
+        "FIXAS"
+      );
+      this.totalExpensesVariaveis = this.controleService.getTotalLaunchesByType(
         launches,
         "VARIAVEIS"
       );
-      this.totalExpensesInvestimentos = this.getTotalLaunchesByType(
+      this.totalExpensesInvestimentos = this.controleService.getTotalLaunchesByType(
         launches,
         "INVESTIMENTOS"
-      );
-      console.log("totalExpensesFixas", this.totalExpensesFixas);
-      console.log("totalExpensesVariaveis", this.totalExpensesVariaveis);
-      console.log(
-        "totalExpensesInvestimentos",
-        this.totalExpensesInvestimentos
       );
       this.renderGraph();
     });
@@ -85,7 +67,7 @@ export class GroupedBarChartComponent implements OnInit {
       marker: { color: "rgb(98, 76, 87)" },
       type: "bar",
     };
-    
+
     var trace2 = {
       x: ["FIXAS", "VARIÁVEIS", "INVESTIMENTOS"],
       y: [
@@ -102,6 +84,5 @@ export class GroupedBarChartComponent implements OnInit {
       data: [trace1, trace2],
       layout: { barmode: "group" },
     };
-    console.log("finalizou graph");
   }
 }

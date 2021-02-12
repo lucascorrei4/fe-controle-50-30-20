@@ -245,4 +245,10 @@ export class Controle503020Service {
   updateBadges() {
     this.listenUpdateBadgesSubject.next();
   }
+
+  getTotalLaunchesByType(launches: Launch[], type: string): number {
+    return launches
+      .filter((launch) => launch.type === type)
+      .reduce((acc, val) => (acc += val.valor), 0);
+  }
 }

@@ -122,7 +122,6 @@ export class TabsComponent implements OnInit {
     this.controleService.monthEarning.next(0);
     this.controleService.totalExpenses.next(0);
     this.controleService.selectedMonth.next(this.selectedMonthDesc);
-    this.changeDetector.detectChanges();
     this.controleService.updateEarningTotals();
     this.controleService.updateLaunchTotals();
     this.loadMonthEarning();
