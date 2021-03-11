@@ -73,7 +73,6 @@ export class TotalAndGraphicComponent implements OnInit {
         launches,
         "INVESTIMENTOS"
       );
-      console.log("entrou aqui");
       this.controleService.totalExpenses$.subscribe((total) => {
         this.totalExpenses = total;
         let dataIndicators = this.loadGraph(this.totalExpenses);
@@ -85,7 +84,6 @@ export class TotalAndGraphicComponent implements OnInit {
             margin: { t: 10, r: 25, l: 25, b: 10 },
           },
         };
-        console.log("saiu aqui");
       });
     });
   }

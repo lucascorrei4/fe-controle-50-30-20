@@ -1,6 +1,6 @@
 <div class="ml-auto mr-auto text-center my-3">
   <h3 class="main-color launch-title">DESPESAS</h3>
-  <h4 class="refer m-0 p-0">Selecione e Siga o Passo a Passo</h4>
+  <h4 class="refer m-0 p-0">Selecione e siga o passo a passo</h4>
 </div>
 
 <mat-tab-group class="tab-list-launches">
@@ -11,8 +11,22 @@
           item.name == "VARIAVEIS" ? "VARIÁVEIS" : item.name
         }}</span>
         <small>{{ getTypeDescription(item.name) }}</small>
-      </div>
-    </ng-template>
+      </div> </ng-template
+    ><mat-form-field class="example-full-width">
+      <input
+        type="text"
+        placeholder="Pick one"
+        aria-label="Number"
+        matInput
+        [formControl]="autoCompleteControl"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let subItem of item.subItems" [value]="subItem">
+          {{ subItem.title }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
     <mat-list>
       <mat-selection-list>
         <mat-list-option

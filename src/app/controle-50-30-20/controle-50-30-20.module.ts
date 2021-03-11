@@ -44,6 +44,7 @@ import { TabsModule } from "./components/tabs/tabs.module";
 import { HowItWorksModule } from "./components/how-it-works/how-it-works.module";
 import { MenuModule } from "./components/menu/menu.module";
 import {
+  MatAutocompleteModule,
   MatDialogModule,
   MatProgressSpinnerModule,
   MatSlideToggleModule,
@@ -59,8 +60,6 @@ import { PlotlyModule } from "angular-plotly.js";
 export const routes = [
   { path: "", component: Controle503020Component, pathMatch: "full" },
 ];
-
-
 
 @NgModule({
   declarations: [
@@ -116,6 +115,7 @@ export const routes = [
     MatTooltipModule,
     ModalConfirmationModule,
     MatDialogModule,
+    MatAutocompleteModule,
     PlotlyModule,
   ],
   providers: [
