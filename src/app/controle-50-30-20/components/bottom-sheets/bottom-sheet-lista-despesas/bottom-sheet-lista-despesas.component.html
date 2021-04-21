@@ -11,23 +11,19 @@
           item.name == "VARIAVEIS" ? "VARIÁVEIS" : item.name
         }}</span>
         <small>{{ getTypeDescription(item.name) }}</small>
-      </div> </ng-template
-    ><mat-form-field class="example-full-width">
-      <input
-        type="text"
-        placeholder="Pick one"
-        aria-label="Number"
-        matInput
-        [formControl]="autoCompleteControl"
-        [matAutocomplete]="auto"
-      />
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let subItem of item.subItems" [value]="subItem">
-          {{ subItem.title }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+      </div>
+    </ng-template>
     <mat-list>
+      <mat-form-field class="w-100">
+        <input
+          type="text"
+          placeholder="Clique para pesquisar"
+          matInput
+          [formControl]="autoCompleteControl"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete #auto="matAutocomplete"> </mat-autocomplete>
+      </mat-form-field>
       <mat-selection-list>
         <mat-list-option
           style="margin-left: 15px"

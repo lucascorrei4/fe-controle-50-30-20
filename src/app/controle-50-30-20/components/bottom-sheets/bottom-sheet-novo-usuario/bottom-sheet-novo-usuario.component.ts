@@ -16,14 +16,13 @@ import { User } from "src/app/models/user";
 import { StorageService } from "src/app/services/storage.service";
 import { UtilService } from "src/app/services/util.service";
 import { Controle503020Service } from "../../../controle-50-30-20.service";
-import { BottomSheetNovoUsuarioComponent } from "../bottom-sheet-novo-usuario/bottom-sheet-novo-usuario.component";
 
 @Component({
-  selector: "bottom-sheet-login",
-  templateUrl: "bottom-sheet-login.component.html",
-  styleUrls: ["./bottom-sheet-login.component.scss"],
+  selector: "bottom-sheet-novo-usuario",
+  templateUrl: "bottom-sheet-novo-usuario.component.html",
+  styleUrls: ["./bottom-sheet-novo-usuario.component.scss"],
 })
-export class BottomSheetLoginComponent implements OnInit {
+export class BottomSheetNovoUsuarioComponent implements OnInit {
   public despesas: any;
   public formGroup: FormGroup;
 
@@ -33,14 +32,12 @@ export class BottomSheetLoginComponent implements OnInit {
     .pipe(distinctUntilChanged(), shareReplay());
 
   constructor(
-    private bottomSheetRef: MatBottomSheetRef<BottomSheetLoginComponent>,
+    private bottomSheetRef: MatBottomSheetRef<BottomSheetNovoUsuarioComponent>,
     private controleService: Controle503020Service,
     private snackBar: MatSnackBar,
     private storageService: StorageService,
     private utilService: UtilService,
-    public fb: FormBuilder,
-    private changeDetection: ChangeDetectorRef,
-    private bottomSheet: MatBottomSheet
+    public fb: FormBuilder
   ) {
     let loggedUser = this.storageService.getLocalUser();
     this.loggedUserSubject.next(
@@ -69,7 +66,7 @@ export class BottomSheetLoginComponent implements OnInit {
     });
   }
 
-  login() {
+  newUser() {
     if (this.email.value) {
       this.controleService
         .findUserByEmailAndPassword(this.email.value, this.password.value)
@@ -104,19 +101,6 @@ export class BottomSheetLoginComponent implements OnInit {
     if (control.hasError("notEqual")) {
       return " Os emails informados não são <strong>iguais</strong>";
     }
-  }
-
-  newUser() {
-    this.fechar();
-    const bottomSheefNewUser = this.bottomSheet.open(
-      BottomSheetNovoUsuarioComponent,
-      {
-        disableClose: true,
-      }
-    );
-    bottomSheefNewUser.afterDismissed().subscribe((response) => {
-      this.changeDetection.detectChanges();
-    });
   }
 
   get email(): FormControl {

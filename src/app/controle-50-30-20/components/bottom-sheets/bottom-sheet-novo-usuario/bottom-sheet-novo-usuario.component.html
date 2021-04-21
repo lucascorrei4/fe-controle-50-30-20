@@ -1,48 +1,17 @@
-<ng-template #logged>
-  <div class="container">
-    <div class="row" fxLayout="column" fxLayoutAlign="space-between center">
-      <h2 style="font-size: 1.5rem" class="title mt-3">
-        Oi, {{ (loggedUser$ | async).nome }}! Sua conta está OK!
-      </h2>
-      <p class="description-small text-center">
-        Quanto mais você usa, mais dinheiro sobra! <br />
-        Aproveite o app. Ele é seu.<br />
-      </p>
-    </div>
-  </div>
-  <div fxLayout="row" fxLayoutAlign="center center">
-    <img
-      src="./../../../../../assets/img/svg/statistics.svg"
-      class="img-svg"
-      alt=""
-      fxFlex.lt-sm="50"
-      fxFlex="40"
-    />
-  </div>
-  <p class="description-small text-center my-3">
-    E não se esqueça de analisar os gráficos!<br />
-    Depois cê me conta, beleza?
-  </p>
-</ng-template>
 <form [formGroup]="formGroup">
-  <div *ngIf="!(loggedUser$ | async) as loggedUsed; else logged">
+  <div>
     <div class="container">
       <div class="row" fxLayout="column" fxLayoutAlign="space-between center">
         <h2 style="font-size: 1.5rem" class="title mt-3">Controle 50-30-20</h2>
-        <p class="description-small">
-          <i>Informe seu e-mail e senha de cadastro</i>
+        <p class="description-small text-center px-4">
+          <i
+            >Informe o seu e-mail, senha e um e-mail de convite para o seu
+            conjugê ou parceiro(a)</i
+          >
         </p>
       </div>
     </div>
-    <div class="m-2" fxLayoutAlign="center center">
-      <img
-        src="./../../../../../assets/img/svg/login.svg"
-        class="img-svg"
-        alt=""
-        fxFlex.lt-sm="50"
-        fxFlex="30"
-      />
-    </div>
+   
     <div class="row">
       <div class="form-group w-100">
         <div
@@ -61,6 +30,7 @@
               [formControl]="email"
               class="form-control input-mail"
               placeholder="Insira o seu e-mail"
+              autocomplete="off"
               required
             />
             <mat-error [innerHTML]="getErrorEmail(email, 'email')"> </mat-error>
@@ -82,21 +52,59 @@
               [formControl]="password"
               class="form-control input-mail"
               placeholder="Insira sua senha"
+              autocomplete="off"
               required
             />
+          </div>
+        </div>
+        <div class="m-2" fxLayoutAlign="center center">
+          <img
+            src="./../../../../../assets/img/svg/login.svg"
+            class="img-svg"
+            alt=""
+            fxFlex.lt-sm="50"
+            fxFlex="30"
+          />
+        </div>
+        <p class="description-small px-5 text-center pt-3">
+          <i>E-mail de convite dele(a):</i>
+        </p>
+        <div
+          class="input-group px-2"
+          fxLayout="row"
+          fxLayoutAlign="center center"
+        >
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <i class="material-icons">mail</i>
+            </span>
+          </div>
+          <div>
+            <input
+              type="text"
+              [formControl]="email"
+              class="form-control input-mail"
+              placeholder="Insira o e-mail dele(a)"
+            />
+            <mat-error [innerHTML]="getErrorEmail(email, 'email')"> </mat-error>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="row my-2" *ngIf="!(loggedUser$ | async)">
+  <div class="row my-2">
     <div
       fxLayou="column"
       fxLayoutAlign="center center"
       class="ml-auto mr-auto text-center"
     >
-      <a mat-stroked-button (click)="login()" class="mx-2">Entrar</a>
-      <a mat-stroked-button (click)="newUser()" class="mx-2">Novo Usuário</a>
+      <a mat-stroked-button (click)="newUser()" class="mx-2">Salvar</a>
     </div>
+    <p class="description-small px-5 text-center pt-3">
+      <i
+        >Ao salvar, sua conta será criada e um convite será enviado para
+        ele(a).</i
+      >
+    </p>
   </div>
 </form>

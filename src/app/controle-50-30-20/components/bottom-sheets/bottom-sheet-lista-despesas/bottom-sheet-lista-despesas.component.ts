@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, OnInit } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { Controle503020Service } from "../../../controle-50-30-20.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -13,7 +13,8 @@ import { Observable } from "rxjs";
   templateUrl: "bottom-sheet-lista-despesas.component.html",
   styleUrls: ["bottom-sheet-lista-despesas.component.scss"],
 })
-export class BottomSheetListaDespesasComponent implements OnInit {
+export class BottomSheetListaDespesasComponent
+  implements OnInit, AfterViewInit {
   public categoriesGrouped: any[] = [];
   public autoCompleteControl = new FormControl();
   filteredOptions: Observable<string[]>;
@@ -23,12 +24,7 @@ export class BottomSheetListaDespesasComponent implements OnInit {
     private controleService: Controle503020Service,
     private snackBar: MatSnackBar,
     private storageService: StorageService
-  ) {
-    this.filteredOptions = this.autoCompleteControl.valueChanges.pipe(
-      startWith(""),
-      map((value) => this._filter(value))
-    );
-  }
+  ) {}
 
   ngOnInit() {
     if (
@@ -41,11 +37,24 @@ export class BottomSheetListaDespesasComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit() {
+    this.autoCompleteControl.valueChanges.pipe(
+      map((name) => {
+        console.log("fired", name);
+        return name;
+      })
+    );
+  }
+
   private _filter(value: string): string[] {
+    console.log(value);
+
     const filterValue = value.toLowerCase();
 
-    return this.categoriesGrouped.filter((option) =>
-      option.toLowerCase().includes(filterValue)
+    return this.categoriesGrouped.map((option) =>
+      option.subItems.filter((item) =>
+        item.title.toLowerCase().includes(filterValue)
+      )
     );
   }
 
@@ -56,6 +65,7 @@ export class BottomSheetListaDespesasComponent implements OnInit {
 
   select(event: MouseEvent, category: Category): void {
     this.openSnackBar("Você selecionou:", category.title);
+    this.autoCompleteControl.setValue(category.title);
     this.bottomSheetRef.dismiss(category);
     event.preventDefault();
   }

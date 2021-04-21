@@ -46,6 +46,8 @@ import { MenuModule } from "./components/menu/menu.module";
 import {
   MatAutocompleteModule,
   MatDialogModule,
+  MatFormFieldModule,
+  MatInputModule,
   MatProgressSpinnerModule,
   MatSlideToggleModule,
   MatSpinner,
@@ -56,6 +58,7 @@ import { ModalConfirmationModule } from "./components/modal-confirmation/modal-c
 
 import * as PlotlyJS from "plotly.js/dist/plotly.js";
 import { PlotlyModule } from "angular-plotly.js";
+import { BottomSheetNovoUsuarioComponent } from "./components/bottom-sheets/bottom-sheet-novo-usuario/bottom-sheet-novo-usuario.component";
 
 export const routes = [
   { path: "", component: Controle503020Component, pathMatch: "full" },
@@ -71,6 +74,7 @@ export const routes = [
     BottomSheetNovaDespesa,
     BottomSheetLaunchesByMonthComponent,
     BottomSheetEarningsComponent,
+    BottomSheetNovoUsuarioComponent
   ],
   imports: [
     CommonModule,
@@ -117,6 +121,8 @@ export const routes = [
     MatDialogModule,
     MatAutocompleteModule,
     PlotlyModule,
+    MatInputModule,
+    MatFormFieldModule,
   ],
   providers: [
     StorageService,

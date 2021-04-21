@@ -59,6 +59,9 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
 
   private async loadLaunchesBySelectedMonth() {
     let user = this.storageService.getLocalUser();
+    if (!user) {
+      return;
+    }
     this.launches = await this.controleService
       .findLaunchesByUserIdAndMonthAndType(
         user._id,

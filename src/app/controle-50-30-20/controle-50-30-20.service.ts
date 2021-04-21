@@ -78,6 +78,24 @@ export class Controle503020Service {
       );
   }
 
+  findUserByEmailAndPassword(
+    email: string,
+    password: string
+  ): Observable<User> {
+    return this.http
+      .get<User>(
+        `${this.url}/user/findByEmailAndPassword?email=${email}&password=${password}`,
+        {
+          headers: this.token,
+        }
+      )
+      .pipe(
+        tap((user) => {
+          this.storageService.setLocalUser(user);
+        })
+      );
+  }
+
   // Categories
 
   getCategories(): Observable<Category[]> {

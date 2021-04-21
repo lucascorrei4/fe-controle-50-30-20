@@ -67,6 +67,9 @@ export class FooterMenuComponent implements OnInit {
 
   private async updateCountLaunches() {
     let user = this.storageService.getLocalUser();
+    if (!user) {
+      return;
+    }
     await this.controleService
       .findLaunchesByUserIdAndMonthAndType(
         user._id,
