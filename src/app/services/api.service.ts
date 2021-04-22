@@ -34,19 +34,6 @@ export class ApiService {
     return <Observable<Item[]>>this.http.get("assets/data/conf.json");
   }
 
-  salvar(lancamentos: Lancamento[]) {
-    let user = this.storageService.getLocalUser();
-    if (user.email) {
-      user = this.storageService.getLocalUser();
-    } else {
-      user = new User();
-      user.email = "lucascorreiaevangelista@gmail.com";
-      user.codigo = "lucascorrei4";
-    }
-    user.lancamentos = lancamentos;
-    this.createUser(user);
-  }
-
   createUser(data): Observable<any> {
     let url = `${this.baseUri}/create`;
     return this.http.post(url, data).pipe(catchError(this.errorMgmt));

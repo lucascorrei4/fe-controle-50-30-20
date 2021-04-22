@@ -54,7 +54,7 @@ export class BottomSheetLoginComponent implements OnInit {
 
   initForm() {
     this.formGroup = this.fb.group({
-      email: ["", [Validators.required, Validators.email]],
+      mail: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required]],
     });
   }
@@ -70,16 +70,16 @@ export class BottomSheetLoginComponent implements OnInit {
   }
 
   login() {
-    if (this.email.value) {
+    if (this.mail.value) {
       this.controleService
-        .findUserByEmailAndPassword(this.email.value, this.password.value)
+        .findUserByEmailAndPassword(this.mail.value, this.password.value)
         .subscribe(
           (res) => {
             if (res) {
               this.fechar();
             } else {
               this.openSnackBar("OOPS", "Não autorizado!");
-              this.email.setValue(null);
+              this.mail.setValue(null);
             }
           },
           (err) => {
@@ -93,7 +93,7 @@ export class BottomSheetLoginComponent implements OnInit {
   }
 
   getErrorEmail(control: FormControl, label: string): string {
-    if (control.hasError("email")) {
+    if (control.hasError("mail")) {
       return "Um e-mail válido tem o formato <strong>nome@provedor.com</strong>";
     }
 
@@ -115,12 +115,15 @@ export class BottomSheetLoginComponent implements OnInit {
       }
     );
     bottomSheefNewUser.afterDismissed().subscribe((response) => {
+      if (response.openLogin) {
+        this.bottomSheet.open(BottomSheetLoginComponent);
+      }
       this.changeDetection.detectChanges();
     });
   }
 
-  get email(): FormControl {
-    return this.formGroup.get("email") as FormControl;
+  get mail(): FormControl {
+    return this.formGroup.get("mail") as FormControl;
   }
 
   get password(): FormControl {

@@ -28,21 +28,14 @@
   <div *ngIf="!(loggedUser$ | async) as loggedUsed; else logged">
     <div class="container">
       <div class="row" fxLayout="column" fxLayoutAlign="space-between center">
-        <h2 style="font-size: 1.5rem" class="title mt-3">Controle 50-30-20</h2>
-        <p class="description-small">
-          <i>Informe seu e-mail e senha de cadastro</i>
-        </p>
+        <h5 class="mt-3 mb-6 logo">CONTROLE 50-30-20</h5>
       </div>
     </div>
-    <div class="m-2" fxLayoutAlign="center center">
-      <img
-        src="./../../../../../assets/img/svg/login.svg"
-        class="img-svg"
-        alt=""
-        fxFlex.lt-sm="50"
-        fxFlex="30"
-      />
+    <div class="mt-5" fxLayoutAlign="center center">
+      <img src="./../../../../../assets/img/svg/login.svg" class="img-svg" />
     </div>
+    <h3 class="mx-5 text-center">Entre e faça o dinheiro sobrar</h3>
+    <p class="description-small text-center">E viva a vida com qualidade</p>
     <div class="row">
       <div class="form-group w-100">
         <div
@@ -58,12 +51,12 @@
           <div>
             <input
               type="text"
-              [formControl]="email"
+              [formControl]="mail"
               class="form-control input-mail"
               placeholder="Insira o seu e-mail"
               required
             />
-            <mat-error [innerHTML]="getErrorEmail(email, 'email')"> </mat-error>
+            <mat-error [innerHTML]="getErrorEmail(mail, 'mail')"> </mat-error>
           </div>
         </div>
         <div
@@ -96,7 +89,7 @@
       class="ml-auto mr-auto text-center"
     >
       <a mat-stroked-button (click)="login()" class="mx-2">Entrar</a>
-      <a mat-stroked-button (click)="newUser()" class="mx-2">Novo Usuário</a>
+      <a mat-stroked-button (click)="newUser()" class="mx-2">Nova Conta</a>
     </div>
   </div>
 </form>

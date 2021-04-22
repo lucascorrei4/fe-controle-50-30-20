@@ -2,14 +2,11 @@ import { Lancamento } from "./lancamento";
 
 export class User {
   _id: string;
+  mail: string;
+  inviteMail: string;
+  password: string;
+  phone: string;
   status: string;
-  obs: string;
-  string: string;
-  email: string;
-  telefone: string;
   ref: string;
-  nome: string;
-
-  codigo;
-  lancamentos: Lancamento[];
+  obs: string;
 }

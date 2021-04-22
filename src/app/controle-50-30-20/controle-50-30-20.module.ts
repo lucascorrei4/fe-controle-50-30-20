@@ -50,13 +50,10 @@ import {
   MatInputModule,
   MatProgressSpinnerModule,
   MatSlideToggleModule,
-  MatSpinner,
 } from "@angular/material";
 import { BottomSheetLaunchesByMonthComponent } from "./components/bottom-sheets/bottom-sheet-open-launches-by-month/bottom-sheet-open-launches-by-month.component";
 import { BottomSheetEarningsComponent } from "./components/bottom-sheets/bottom-sheet-earnings/bottom-sheet-earnings.component";
 import { ModalConfirmationModule } from "./components/modal-confirmation/modal-confirmation.module";
-
-import * as PlotlyJS from "plotly.js/dist/plotly.js";
 import { PlotlyModule } from "angular-plotly.js";
 import { BottomSheetNovoUsuarioComponent } from "./components/bottom-sheets/bottom-sheet-novo-usuario/bottom-sheet-novo-usuario.component";
 
@@ -74,7 +71,7 @@ export const routes = [
     BottomSheetNovaDespesa,
     BottomSheetLaunchesByMonthComponent,
     BottomSheetEarningsComponent,
-    BottomSheetNovoUsuarioComponent
+    BottomSheetNovoUsuarioComponent,
   ],
   imports: [
     CommonModule,
@@ -133,5 +130,6 @@ export const routes = [
     { provide: LOCALE_ID, useValue: "pt-BR" },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  exports: [BottomSheetLoginComponent, BottomSheetNovoUsuarioComponent],
 })
 export class Controle503020Module {}

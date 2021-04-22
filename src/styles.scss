@@ -71,3 +71,23 @@ body {
   color: #f18a73;
   font-weight: 600;
 }
+
+.rounded-box-shadow {
+  border-radius: 30px !important;
+  box-shadow: rgb(0 0 0 / 10%) 0px 10px 36px 0px,
+    rgb(0 0 0 / 3%) 0px 0px 0px 1px !important;
+  background-color: #f6f8fb;
+}
+
+.mat-bottom-sheet-container {
+  min-height: 100vh !important;
+  min-width: 100vw !important;
+}
+
+.img-svg {
+  max-width: 20vh;
+}
+
+.logo {
+  font-size: 12px;
+}

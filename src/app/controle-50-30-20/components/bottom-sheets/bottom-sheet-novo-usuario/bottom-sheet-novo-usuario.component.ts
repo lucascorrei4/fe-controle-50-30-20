@@ -16,6 +16,7 @@ import { User } from "src/app/models/user";
 import { StorageService } from "src/app/services/storage.service";
 import { UtilService } from "src/app/services/util.service";
 import { Controle503020Service } from "../../../controle-50-30-20.service";
+import { BottomSheetLoginComponent } from "../bottom-sheet-login/bottom-sheet-login.component";
 
 @Component({
   selector: "bottom-sheet-novo-usuario",
@@ -51,13 +52,13 @@ export class BottomSheetNovoUsuarioComponent implements OnInit {
 
   initForm() {
     this.formGroup = this.fb.group({
-      email: ["", [Validators.required, Validators.email]],
-      password: ["", [Validators.required]],
+      mail: ["", [Validators.required, Validators.email]],
+      inviteMail: [""],
     });
   }
 
-  fechar(): void {
-    this.bottomSheetRef.dismiss();
+  fechar(openLogin: boolean): void {
+    this.bottomSheetRef.dismiss({ openLogin: openLogin });
   }
 
   openSnackBar(message: string, action: string) {
@@ -67,23 +68,25 @@ export class BottomSheetNovoUsuarioComponent implements OnInit {
   }
 
   newUser() {
-    if (this.email.value) {
-      this.controleService
-        .findUserByEmailAndPassword(this.email.value, this.password.value)
-        .subscribe(
-          (res) => {
-            if (res) {
-              this.fechar();
-            } else {
-              this.openSnackBar("OOPS", "Não autorizado!");
-              this.email.setValue(null);
-            }
-          },
-          (err) => {
-            console.error(err);
+    if (this.mail.value && this.formGroup.valid) {
+      let user = new User();
+      user.mail = this.mail.value;
+      user.inviteMail = this.inviteMail.value;
+      this.controleService.newUser(user).subscribe(
+        (res) => {
+          if (res) {
+            this.fechar(true);
+            this.openSnackBar("Olá!", "Faça login para entrar!");
+          } else {
             this.openSnackBar("OOPS", "Não autorizado!");
+            this.mail.setValue(null);
           }
-        );
+        },
+        (err) => {
+          console.error(err);
+          this.openSnackBar("OOPS", "Não autorizado!");
+        }
+      );
     } else {
       this.openSnackBar("Oops", "Informe o seu e-mail");
     }
@@ -103,8 +106,12 @@ export class BottomSheetNovoUsuarioComponent implements OnInit {
     }
   }
 
-  get email(): FormControl {
-    return this.formGroup.get("email") as FormControl;
+  get mail(): FormControl {
+    return this.formGroup.get("mail") as FormControl;
+  }
+
+  get inviteMail(): FormControl {
+    return this.formGroup.get("inviteMail") as FormControl;
   }
 
   get password(): FormControl {
