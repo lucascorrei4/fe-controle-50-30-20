@@ -1,9 +1,14 @@
 <div class="ml-auto mr-auto text-center my-3">
   <h3 class="main-color launch-title">DESPESAS</h3>
   <h4 class="refer m-0 p-0">Selecione e siga o passo a passo</h4>
+  <div class="btn-close">
+    <button mat-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 </div>
 
-<mat-tab-group class="tab-list-launches">
+<mat-tab-group class="tab-list-launches" mat-stretch-tabs>
   <mat-tab *ngFor="let item of categoriesGrouped">
     <ng-template mat-tab-label>
       <div fxLayout="column" fxLayoutAlign="center center">
@@ -14,7 +19,7 @@
       </div>
     </ng-template>
     <mat-list>
-      <mat-form-field class="w-100">
+      <mat-form-field class="w-100" style="display: none;">
         <input
           type="text"
           placeholder="Clique para pesquisar"

@@ -1,15 +1,9 @@
-<div class="profile-content">
-  <div class="row text-center">
-    <div class="col-md-8 ml-auto mr-auto">
-      <button
-        class="p-2 btn-tooltip m-1"
-        mat-button
-        #matTooltipSaibaMais="matTooltip"
-        matTooltip="Sempre que você enviar as suas despesas do mês ao seu e-mail, o seu código secreto será informado. Este código é unicamente seu e será usado aqui para que você revise o seu histórico de gastos."
-        (click)="abrirComoFuncionaBottomSheet()"
-      >
-        <mat-icon>info</mat-icon>
-      </button>
-    </div>
-  </div>
-</div>
+<button
+  class="p-2 btn-tooltip m-1"
+  mat-button
+  #matTooltipSaibaMais="matTooltip"
+  matTooltip="Sempre que você enviar as suas despesas do mês ao seu e-mail, o seu código secreto será informado. Este código é unicamente seu e será usado aqui para que você revise o seu histórico de gastos."
+  (click)="abrirComoFuncionaBottomSheet()"
+>
+  <mat-icon>info</mat-icon>
+</button>

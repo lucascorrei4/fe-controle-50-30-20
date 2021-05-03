@@ -7,6 +7,7 @@
   font-size: 12px;
   height: 13px;
   margin: 5px 0;
+  color: #e5fff6;
 }
 
 .description-small {
@@ -14,4 +15,39 @@
   font-size: 9px;
   height: 12px;
   margin: 0;
+  color: #ecb9a6;
+}
+
+.logo {
+  margin-left: 20%;
+  img {
+    max-width: 150px;
+  }
+}
+
+.logo-avatar {
+  position: fixed;
+  top: 3%;
+  right: 3%;
+  text-align: center;
+  img {
+    max-width: 40px;
+  }
+}
+
+.slogan {
+  position: fixed;
+  top: 3%;
+  left: 3%;
+}
+
+.inner-div,
+.slogan {
+  z-index: 1;
+}
+
+.how-it-works {
+  position: relative;
+  top: 10%;
+  z-index: 2;
 }

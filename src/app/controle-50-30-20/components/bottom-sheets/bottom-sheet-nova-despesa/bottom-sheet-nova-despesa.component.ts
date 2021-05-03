@@ -69,8 +69,6 @@ export class BottomSheetNovaDespesa implements OnInit {
     this.bottomSheetRef.dismiss();
   }
 
-  
-
   saveLaunch() {
     if (this.valorDespesa.value < 1) {
       this.openSnackBar("Ops...", "Preencha o valor da despesa!");
@@ -78,6 +76,7 @@ export class BottomSheetNovaDespesa implements OnInit {
     }
     let launch = new Launch();
     launch.userId = this.storageService.getLocalUser()._id;
+    launch.accountId = this.storageService.getLocalUser().accountId;
     launch.description = this.category.title;
     launch.month = this.selectedMonth;
     launch.type = this.category.type;
@@ -100,21 +99,20 @@ export class BottomSheetNovaDespesa implements OnInit {
   private saveRepeatedLaunch(launch: Launch) {
     let repeatedLaunch = new RepeatedLaunch();
     repeatedLaunch.userId = this.storageService.getLocalUser()._id;
+    repeatedLaunch.accountId = this.storageService.getLocalUser().accountId;
     repeatedLaunch.description = launch.description;
     repeatedLaunch.type = launch.type;
     repeatedLaunch.categoryId = launch.categoryId;
     repeatedLaunch.valor = launch.valor;
     repeatedLaunch.obs = "NENHUMA";
-    this.controleService
-      .newRepeatedLaunch(repeatedLaunch)
-      .subscribe((res) => {
-        if (res) {
-          this.controleService.updateBadges();
-          this.descricaoDespesa.reset();
-          this.valorDespesa.reset();
-          this.obsDespesa.reset();
-        }
-      });
+    this.controleService.newRepeatedLaunch(repeatedLaunch).subscribe((res) => {
+      if (res) {
+        this.controleService.updateBadges();
+        this.descricaoDespesa.reset();
+        this.valorDespesa.reset();
+        this.obsDespesa.reset();
+      }
+    });
   }
 
   repeatLaunch(event) {

@@ -18,7 +18,9 @@ export class GroupedBarChartComponent implements OnInit {
   public totalEarningVariaveis: number = 0;
   public totalEarningInvestimentos: number = 0;
   public showGraph: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  public showGraph$ = this.showGraph.asObservable().pipe(share());
+  public showGraph$ = this.showGraph
+    .asObservable()
+    .pipe(distinctUntilChanged(), shareReplay());
 
   public graph;
 
@@ -28,6 +30,7 @@ export class GroupedBarChartComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.showGraph.next(false);
     this.loadGraph();
   }
 
@@ -84,5 +87,10 @@ export class GroupedBarChartComponent implements OnInit {
       data: [trace1, trace2],
       layout: { barmode: "group" },
     };
+    let totalEarning =
+      this.totalEarningFixas +
+      this.totalEarningVariaveis +
+      this.totalEarningInvestimentos;
+    this.showGraph.next(totalEarning > 0);
   }
 }

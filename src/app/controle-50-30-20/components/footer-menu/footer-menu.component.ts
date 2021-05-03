@@ -71,8 +71,8 @@ export class FooterMenuComponent implements OnInit {
       return;
     }
     await this.controleService
-      .findLaunchesByUserIdAndMonthAndType(
-        user._id,
+      .findLaunchesByAccountIdAndMonthAndType(
+        user.accountId,
         this.selectedMontSubject.value
       )
       .toPromise()

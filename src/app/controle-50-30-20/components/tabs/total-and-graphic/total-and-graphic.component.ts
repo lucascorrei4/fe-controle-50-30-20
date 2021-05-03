@@ -23,7 +23,18 @@ export class TotalAndGraphicComponent implements OnInit {
   @Input() selectedMonthDesc: string;
   @Input() total: number;
 
-  private totalSubject: BehaviorSubject<number> = new BehaviorSubject(0);
+  private showGraphTotalEarningSubject: BehaviorSubject<boolean> = new BehaviorSubject(
+    false
+  );
+  public showGraphTotalEarning$ = this.showGraphTotalEarningSubject
+    .asObservable()
+    .pipe(distinctUntilChanged(), shareReplay());
+  private showGraphTotalExpensesSubject: BehaviorSubject<boolean> = new BehaviorSubject(
+    false
+  );
+  public showGraphTotalExpenses$ = this.showGraphTotalExpensesSubject
+    .asObservable()
+    .pipe(distinctUntilChanged(), shareReplay());
 
   public totalExpenses: number = 0;
   public totalEarning: number = 0;
@@ -43,8 +54,6 @@ export class TotalAndGraphicComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.totalSubject.next(this.total);
-
     this.controleService.monthEarning$.subscribe((total) => {
       this.totalEarning = total;
       this.totalEarningFixas = total * 0.5;
@@ -59,6 +68,7 @@ export class TotalAndGraphicComponent implements OnInit {
           margin: { t: 10, r: 25, l: 25, b: 10 },
         },
       };
+      this.showGraphTotalEarningSubject.next(total > 0);
     });
     this.controleService.monthLaunches$.subscribe((launches: Launch[]) => {
       this.totalExpensesFixas = this.controleService.getTotalLaunchesByType(
@@ -84,6 +94,7 @@ export class TotalAndGraphicComponent implements OnInit {
             margin: { t: 10, r: 25, l: 25, b: 10 },
           },
         };
+        this.showGraphTotalExpensesSubject.next(total > 0);
       });
     });
   }
@@ -95,7 +106,8 @@ export class TotalAndGraphicComponent implements OnInit {
       dataIndicators.push({
         type: "indicator",
         mode: "number+gauge+delta",
-        value: this.type === "IN" ? graph.totalType : this.getRefOut(graph.type),
+        value:
+          this.type === "IN" ? graph.totalType : this.getRefOut(graph.type),
         domain: { x: [0.25, 1], y: graph.position },
         title: {
           text: `<b>${
@@ -132,14 +144,29 @@ export class TotalAndGraphicComponent implements OnInit {
               this.type === "IN" ? graph.totalType : this.getRefOut(graph.type),
           },
           steps: [
-            { range: [0, this.type === "IN" ? graph.totalType : this.getRefOut(graph.type)], color: "gray" },
             {
-              range: [0,  this.type === "IN" ? graph.totalType : this.getRefOut(graph.type)],
+              range: [
+                0,
+                this.type === "IN"
+                  ? graph.totalType
+                  : this.getRefOut(graph.type),
+              ],
+              color: "gray",
+            },
+            {
+              range: [
+                0,
+                this.type === "IN"
+                  ? graph.totalType
+                  : this.getRefOut(graph.type),
+              ],
               color: "lightgray",
             },
             {
               range: [
-                this.type === "IN" ? graph.totalType : this.getRefOut(graph.type),
+                this.type === "IN"
+                  ? graph.totalType
+                  : this.getRefOut(graph.type),
                 this.type === "IN" ? graph.totalType : this.getRef(graph.type),
               ],
               color: "yellow",
@@ -298,10 +325,4 @@ export class TotalAndGraphicComponent implements OnInit {
     ],
     layout: { width: 350, height: 250, margin: { t: 10, r: 25, l: 25, b: 10 } },
   };
-
-  get total$(): Observable<number> {
-    return this.totalSubject
-      .asObservable()
-      .pipe(distinctUntilChanged(), shareReplay());
-  }
 }

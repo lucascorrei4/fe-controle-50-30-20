@@ -75,16 +75,23 @@ export class BottomSheetLoginComponent implements OnInit {
         .findUserByEmailAndPassword(this.mail.value, this.password.value)
         .subscribe(
           (res) => {
-            if (res) {
-              this.fechar();
+            if (!res) {
+              this.openSnackBar(
+                "OOPS",
+                "Por favor, verifique e-mail ou senha!"
+              );
+              return;
             } else {
-              this.openSnackBar("OOPS", "Não autorizado!");
-              this.mail.setValue(null);
+              
+              this.fechar();
             }
           },
           (err) => {
             console.error(err);
             this.openSnackBar("OOPS", "Não autorizado!");
+          },
+          () => {
+            this.mail.setValue(null);
           }
         );
     } else {

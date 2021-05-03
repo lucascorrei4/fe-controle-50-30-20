@@ -47,10 +47,7 @@ export class BottomSheetListaDespesasComponent
   }
 
   private _filter(value: string): string[] {
-    console.log(value);
-
     const filterValue = value.toLowerCase();
-
     return this.categoriesGrouped.map((option) =>
       option.subItems.filter((item) =>
         item.title.toLowerCase().includes(filterValue)
@@ -85,5 +82,9 @@ export class BottomSheetListaDespesasComponent
       default:
         return "ESSENCIAIS";
     }
+  }
+
+  close(): void {
+    this.bottomSheetRef.dismiss();
   }
 }

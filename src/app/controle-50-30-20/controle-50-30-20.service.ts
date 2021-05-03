@@ -78,19 +78,19 @@ export class Controle503020Service {
       );
   }
 
-  findUserByEmailAndPassword(
-    email: string,
-    password: string
-  ): Observable<User> {
+  findUserByEmailAndPassword(email: string, password: string): Observable<any> {
     return this.http
       .get<User>(
-        `${this.url}/user/findByEmailAndPassword?email=${email}&password=${password}`,
+        `${this.url}/user/findByEmailAndPassword?mail=${email}&password=${password}`,
         {
           headers: this.token,
         }
       )
       .pipe(
-        tap((user) => {
+        tap((u) => {
+          let user: User;
+          user = u?.user;
+          user.accountId = u?.account?._id;
           this.storageService.setLocalUser(user);
         })
       );
@@ -160,10 +160,31 @@ export class Controle503020Service {
     );
   }
 
+  findLaunchesByAccountIdAndMonthAndType(
+    accountId: string,
+    month?: string,
+    type?: string
+  ): Observable<Launch[]> {
+    if (type) {
+      return this.http.get<Launch[]>(
+        `${this.url}/launch/findByAccountIdAndMonthAndType?accountId=${accountId}&month=${month}&type=${type}`,
+        {
+          headers: this.token,
+        }
+      );
+    }
+    return this.http.get<Launch[]>(
+      `${this.url}/launch/findByAccountIdAndMonthAndType?accountId=${accountId}&month=${month}`,
+      {
+        headers: this.token,
+      }
+    );
+  }
+
   async updateLaunchTotals() {
     let user = this.storageService.getLocalUser();
-    await this.findLaunchesByUserIdAndMonthAndType(
-      user._id,
+    await this.findLaunchesByAccountIdAndMonthAndType(
+      user.accountId,
       this.selectedMonth.value
     )
       .toPromise()
@@ -229,13 +250,26 @@ export class Controle503020Service {
     );
   }
 
-  findByUserIdCategoryAndValue(
+  findLaunchByUserIdCategoryAndValue(
     userId: string,
     categoryId?: number,
     valor?: number
   ): Observable<Launch[]> {
     return this.http.get<Launch[]>(
       `${this.url}/launch/findByCategoryAndValue?userId=${userId}&categoryId=${categoryId}&valor=${valor}`,
+      {
+        headers: this.token,
+      }
+    );
+  }
+
+  findLaunchByAccountIdAndMonthAndType(
+    accountId: string,
+    categoryId?: number,
+    valor?: number
+  ): Observable<Launch[]> {
+    return this.http.get<Launch[]>(
+      `${this.url}/launch/findByAccountIdAndMonthAndType?accountId=${accountId}&categoryId=${categoryId}&valor=${valor}`,
       {
         headers: this.token,
       }
@@ -253,6 +287,15 @@ export class Controle503020Service {
   findEarningByUserIdAndRef(userId: string, ref?: string): Observable<Earning> {
     return this.http.get<Earning>(
       `${this.url}/earning/findEarningByUserIdAndRef?userId=${userId}&ref=${ref}`
+    );
+  }
+
+  findEarningByAccountIdAndRef(
+    accountId: string,
+    ref?: string
+  ): Observable<Earning> {
+    return this.http.get<Earning>(
+      `${this.url}/earning/findEarningByAccountIdAndRef?accountId=${accountId}&ref=${ref}`
     );
   }
 

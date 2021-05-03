@@ -63,8 +63,8 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
       return;
     }
     this.launches = await this.controleService
-      .findLaunchesByUserIdAndMonthAndType(
-        user._id,
+      .findLaunchesByAccountIdAndMonthAndType(
+        user.accountId,
         this.selectedMontSubject.value
       )
       .toPromise();
@@ -76,7 +76,11 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
     let launch = [];
     launch.push(
       await this.controleService
-        .findByUserIdCategoryAndValue(user._id, item.categoryId, item.valor)
+        .findLaunchByAccountIdAndMonthAndType(
+          user.accountId,
+          item.categoryId,
+          item.valor
+        )
         .toPromise()
     );
 

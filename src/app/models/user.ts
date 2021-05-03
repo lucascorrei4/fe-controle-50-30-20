@@ -9,4 +9,5 @@ export class User {
   status: string;
   ref: string;
   obs: string;
+  accountId?: string;
 }

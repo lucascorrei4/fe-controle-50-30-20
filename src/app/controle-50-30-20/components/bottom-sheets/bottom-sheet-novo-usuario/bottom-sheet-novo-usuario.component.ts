@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -6,7 +6,6 @@ import {
   Validators,
 } from "@angular/forms";
 import {
-  MatBottomSheet,
   MatBottomSheetRef,
 } from "@angular/material/bottom-sheet";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -16,7 +15,6 @@ import { User } from "src/app/models/user";
 import { StorageService } from "src/app/services/storage.service";
 import { UtilService } from "src/app/services/util.service";
 import { Controle503020Service } from "../../../controle-50-30-20.service";
-import { BottomSheetLoginComponent } from "../bottom-sheet-login/bottom-sheet-login.component";
 
 @Component({
   selector: "bottom-sheet-novo-usuario",

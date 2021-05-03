@@ -79,7 +79,10 @@ export class BottomSheetEarningsComponent {
 
   async verifyEarningRef() {
     let launch = await this.controleService
-      .findEarningByUserIdAndRef(this.loggedUser._id, this.selectedMonth)
+      .findEarningByAccountIdAndRef(
+        this.loggedUser.accountId,
+        this.selectedMonth
+      )
       .toPromise();
 
     if (launch) {
@@ -98,17 +101,18 @@ export class BottomSheetEarningsComponent {
     }
     let earning = new Earning();
     earning.userId = this.loggedUser._id;
+    earning.accountId = this.loggedUser.accountId;
     earning.ref = this.selectedMonth;
     earning.renda1 = this.renda1.value;
     earning.renda2 = this.renda2.value;
     earning.rendaExtra = this.rendaExtra.value;
     this.controleService.newEarning(earning).subscribe((res) => {
       if (res) {
+        this.close();
         this.openSnackBar(
           "Sucesso",
           `Renda do mês ${this.selectedMonth} salva!`
         );
-        this.close();
       }
     });
   }

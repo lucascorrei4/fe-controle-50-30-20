@@ -8,42 +8,32 @@
       {{ (type === "IN" ? totalEarning : totalExpenses) | currency: "BRL" }}
     </h2>
   </div>
-  <div
-    id="pie-chart-parent"
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    *ngIf="totalEarning > 0 && type === 'IN'"
-  >
-    <h4 class="title-section m-0">
-      Gráfico 50-30-20 {{ type === "IN" ? "Ideal" : "Real" }}
-    </h4>
-    <plotly-plot
-      [data]="graphIn?.data"
-      [layout]="graphIn?.layout"
-      [useResizeHandler]="true"
-      [style]="{ position: 'relative', width: '100%', height: '100%' }"
-    >
-    </plotly-plot>
-  </div>
-  <div
-    id="pie-chart-parent"
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    *ngIf="totalExpenses > 0 && type === 'OUT'"
-  >
-    <h4 class="title-section m-0">
-      Gráfico 50-30-20 {{ type === "IN" ? "Ideal" : "Real" }}
-    </h4>
-    <plotly-plot
-      [data]="graphOut?.data"
-      [layout]="graphOut?.layout"
-      [useResizeHandler]="true"
-      [style]="{ position: 'relative', width: '100%', height: '100%' }"
-    >
-    </plotly-plot>
-  </div>
-  <loading-bar
-    [title]="'Aguardando preenchimento...'"
-    *ngIf="totalEarning === 0 || totalExpenses === 0"
-  ></loading-bar>
+  <ng-container *ngIf="showGraphTotalEarning$ | async">
+    <div id="pie-chart-parent" fxLayout="column" fxLayoutAlign="center center">
+      <h4 class="title-section m-0">
+        Gráfico 50-30-20 {{ type === "IN" ? "Ideal" : "Real" }}
+      </h4>
+      <plotly-plot
+        [data]="graphIn?.data"
+        [layout]="graphIn?.layout"
+        [useResizeHandler]="true"
+        [style]="{ position: 'relative', width: '100%', height: '100%' }"
+      >
+      </plotly-plot>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="showGraphTotalExpenses$ | async">
+    <div id="pie-chart-parent" fxLayout="column" fxLayoutAlign="center center">
+      <h4 class="title-section m-0">
+        Gráfico 50-30-20 {{ type === "IN" ? "Ideal" : "Real" }}
+      </h4>
+      <plotly-plot
+        [data]="graphOut?.data"
+        [layout]="graphOut?.layout"
+        [useResizeHandler]="true"
+        [style]="{ position: 'relative', width: '100%', height: '100%' }"
+      >
+      </plotly-plot>
+    </div>
+  </ng-container>
 </div>

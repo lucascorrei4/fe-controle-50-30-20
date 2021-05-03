@@ -130,6 +130,10 @@ export const routes = [
     { provide: LOCALE_ID, useValue: "pt-BR" },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  exports: [BottomSheetLoginComponent, BottomSheetNovoUsuarioComponent],
+  exports: [
+    MatSnackBarModule,
+    BottomSheetLoginComponent,
+    BottomSheetNovoUsuarioComponent,
+  ],
 })
 export class Controle503020Module {}

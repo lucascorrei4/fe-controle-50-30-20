@@ -9,3 +9,7 @@
 .input-group .input-group-text {
   padding: 0;
 }
+
+:host ::ng-deep .mat-horizontal-stepper-header-container {
+  display: none !important;
+}
