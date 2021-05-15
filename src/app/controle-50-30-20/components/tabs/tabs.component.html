@@ -1,18 +1,12 @@
-<mat-tab-group
-  class="tabs mt-2"
-  mat-align-tabs="center"
-  (selectedTabChange)="tabChanged($event)"
-  [(selectedIndex)]="tabIndex"
->
-  <mat-tab *ngFor="let mes of meses"  (click)="selectedTabChange($event, mes)">
-    <ng-template mat-tab-label>
-      <div (mousedown)="selectedTabChange(mes)">
-        <span> {{ mes }}</span>
-      </div>
-    </ng-template>
-    <p class="text-center">
-      <small
-        >SELECIONADO:
+<mat-tab-group class="tabs mt-2" mat-align-tabs="center" (selectedTabChange)="tabChanged($event)" [(selectedIndex)]="tabIndex">
+    <mat-tab *ngFor="let mes of meses" (click)="selectedTabChange($event, mes)">
+        <ng-template mat-tab-label>
+            <div (mousedown)="selectedTabChange(mes)">
+                <span> {{ mes }}</span>
+            </div>
+        </ng-template>
+        <p class="text-center">
+            <small>SELECIONADO:
         <span style="font-weight: bold">{{ selectedMonthDesc }}</span></small
       >
     </p>
@@ -68,12 +62,13 @@
               >
             </mat-chip-list>
           </div>
-          <app-total-and-graphic
+          <app-total 
             [type]="'OUT'"
             [selectedMonthDesc]="selectedMonthDesc"
             [total]="monthExpenses$ | async"
-          ></app-total-and-graphic>
+          ></app-total>
         </div>
+        <launches-by-month [reloadLaunches]="reloadLaunchesSubject.asObservable()"></launches-by-month>
       </div>
       <app-grouped-bar-chart></app-grouped-bar-chart>
       <ng-template #loading1>

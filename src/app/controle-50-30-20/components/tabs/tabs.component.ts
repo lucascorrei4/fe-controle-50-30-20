@@ -9,6 +9,8 @@ import {
   LOCALE_ID,
   Inject,
   ChangeDetectorRef,
+  ViewContainerRef,
+  ComponentFactoryResolver,
 } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import {
@@ -28,14 +30,14 @@ import { Controle503020Service } from "../../controle-50-30-20.service";
 import { DespesaEnum } from "src/app/enums/despesas-enum";
 import { BottomSheetLoginComponent } from "../bottom-sheets/bottom-sheet-login/bottom-sheet-login.component";
 import { BottomSheetEarningsComponent } from "../bottom-sheets/bottom-sheet-earnings/bottom-sheet-earnings.component";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { distinctUntilChanged, shareReplay } from "rxjs/operators";
 
 @Component({
   selector: "app-tabs",
   templateUrl: "./tabs.component.html",
   styleUrls: ["./tabs.component.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class TabsComponent implements OnInit {
   public selectedMonthDesc: string;
@@ -58,6 +60,8 @@ export class TabsComponent implements OnInit {
 
   @ViewChild("valorDespesa", { static: true }) valorDespesaEl: ElementRef;
   @ViewChild("calculeAgora", { static: true }) calculeAgoraDiv: ElementRef;
+  @ViewChild("appTotal", { read: ViewContainerRef })
+  viewContainerRef: ViewContainerRef;
 
   view: any[] = [500, 400];
 
@@ -78,6 +82,8 @@ export class TabsComponent implements OnInit {
   private monthExpensesSubject: BehaviorSubject<number> = new BehaviorSubject(
     0
   );
+
+  public reloadLaunchesSubject: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private utilService: UtilService,
@@ -114,7 +120,7 @@ export class TabsComponent implements OnInit {
   selectedTabChange(mes: string) {
     this.selectedMonthDesc = mes;
   }
-  
+
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     this.openSnackBar("Carregando " + this.selectedMonthDesc, "Aguarde...");
     this.monthEarningSubject.next(0);
@@ -221,12 +227,18 @@ export class TabsComponent implements OnInit {
             this.abrirBottomSheetDespesas();
           } else {
             this.controleService.updateBadges();
+            this.reloadLaunches();
           }
         });
       } else {
         this.controleService.updateBadges();
+        this.reloadLaunches();
       }
     });
+  }
+
+  reloadLaunches() {
+    this.reloadLaunchesSubject.next(true);
   }
 
   openEarnings() {

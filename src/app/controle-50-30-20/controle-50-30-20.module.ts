@@ -119,7 +119,7 @@ export const routes = [
     MatAutocompleteModule,
     PlotlyModule,
     MatInputModule,
-    MatFormFieldModule,
+    MatFormFieldModule
   ],
   providers: [
     StorageService,

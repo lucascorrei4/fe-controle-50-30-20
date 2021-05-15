@@ -15,8 +15,6 @@
   border-radius: 20px;
 }
 
-
-
 .botao-remover {
   position: absolute;
   top: 75%;
@@ -55,6 +53,19 @@
   align-items: center;
   justify-content: center;
 }
+
 .mat-card-content {
   margin-bottom: 5px;
+}
+
+.btn-close {
+  position: fixed;
+  top: 2%;
+  right: 2%;
+  border-radius: 30%;
+  button {
+    border-radius: 30px;
+    width: 60px;
+    height: 60px;
+  }
 }

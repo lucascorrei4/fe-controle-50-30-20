@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { StorageService } from "src/app/services/storage.service";
@@ -6,21 +6,22 @@ import { Lancamento } from "src/app/models/lancamento";
 import { Despesa } from "src/app/models/despesa";
 import { DespesaEnum } from "src/app/enums/despesas-enum";
 import { UtilService } from "src/app/services/util.service";
-import { DespesaItem } from "src/app/models/despesa-item";
 import { Controle503020Service } from "src/app/controle-50-30-20/controle-50-30-20.service";
 import { Launch } from "src/app/models/launch";
 import { MatDialog, MatTabChangeEvent } from "@angular/material";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { distinctUntilChanged, shareReplay } from "rxjs/operators";
 import { DomSanitizer } from "@angular/platform-browser";
-import { ModalConfirmationComponent } from "../../modal-confirmation/modal-confirmation.component";
+import { ModalConfirmationComponent } from "../modal-confirmation/modal-confirmation.component";
 
 @Component({
-  selector: "bottom-sheet-open-launches-by-month",
-  templateUrl: "bottom-sheet-open-launches-by-month.component.html",
-  styleUrls: ["bottom-sheet-open-launches-by-month.component.scss"],
+  selector: "launches-by-month",
+  templateUrl: "launches-by-month.component.html",
+  styleUrls: ["launches-by-month.component.scss"],
 })
-export class BottomSheetLaunchesByMonthComponent implements OnInit {
+export class LaunchesByMonthComponent implements OnInit {
+  @Input() reloadLaunches: Subject<boolean> = new Subject<boolean>();
+
   public lancamentos: Lancamento[];
   public despesas: Despesa[] = [];
   public despesasSelecionadas: Despesa[] = [];
@@ -40,7 +41,6 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
   );
 
   constructor(
-    private bottomSheetRef: MatBottomSheetRef<BottomSheetLaunchesByMonthComponent>,
     private snackBar: MatSnackBar,
     private utilService: UtilService,
     private controleService: Controle503020Service,
@@ -54,6 +54,11 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
     this.controleService.selectedMonth$.subscribe((res) => {
       this.selectedMontSubject.next(res);
       this.loadLaunchesBySelectedMonth();
+    });
+    this.reloadLaunches.subscribe((response) => {
+      if (response) {
+        this.loadLaunchesBySelectedMonth();
+      }
     });
   }
 
@@ -88,14 +93,41 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
   }
 
   public groupLaunches(launches) {
+    this.launchesGrouped = [];
     var groups = new Set(launches.map((item) => item.type));
     groups.forEach((g) =>
       this.launchesGrouped.push({
+        index: g == "FIXAS" ? 0 : g == "VARIAVEIS" ? 1 : 2,
         name: g,
         subItems: launches.filter((i) => i.type === g),
       })
     );
+    this.initializeArrayEmptyLaunches();
+    this.launchesGrouped = this.launchesGrouped.sort(
+      (a, b) => a.index - b.index
+    );
     this.launchesGroupedSubject.next(this.launchesGrouped);
+  }
+
+  private initializeArrayEmptyLaunches() {
+    let fixa,
+      variavel,
+      investimentos = false;
+    this.launchesGrouped.forEach((launch) => {
+      if (launch.name == "FIXAS") fixa = true;
+      if (launch.name == "VARIAVEIS") variavel = true;
+      if (launch.name == "INVESTIMENTOS") investimentos = true;
+    });
+    if (!fixa)
+      this.launchesGrouped.push({ index: 0, name: "FIXAS", subItems: [] });
+    if (!variavel)
+      this.launchesGrouped.push({ index: 1, name: "VARIAVEIS", subItems: [] });
+    if (!investimentos)
+      this.launchesGrouped.push({
+        index: 2,
+        name: "INVESTIMENTOS",
+        subItems: [],
+      });
   }
 
   selectedTabChange(mes: string) {}
@@ -169,9 +201,5 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
     return this.selectedMontSubject
       .asObservable()
       .pipe(distinctUntilChanged(), shareReplay());
-  }
-
-  close() {
-    this.bottomSheetRef.dismiss();
   }
 }

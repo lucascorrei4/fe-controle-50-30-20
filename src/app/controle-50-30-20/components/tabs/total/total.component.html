@@ -1,0 +1,11 @@
+<div class="ml-auto mr-auto text-center">
+  <div fxLayout="row" fxLayoutAlign="center center" class="my-3">
+    <small class="m-0 p-0"
+      >{{ type === "IN" ? "ENTRADAS" : "SAÍDAS" }}
+      {{ selectedMonthDesc }}</small
+    >
+    <h2 class="month-earning m-0 p-0">
+      {{ (type === "IN" ? totalEarning : totalExpenses) | currency: "BRL" }}
+    </h2>
+  </div>
+</div>
