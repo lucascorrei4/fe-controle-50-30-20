@@ -56,6 +56,7 @@ import { BottomSheetEarningsComponent } from "./components/bottom-sheets/bottom-
 import { ModalConfirmationModule } from "./components/modal-confirmation/modal-confirmation.module";
 import { PlotlyModule } from "angular-plotly.js";
 import { BottomSheetNovoUsuarioComponent } from "./components/bottom-sheets/bottom-sheet-novo-usuario/bottom-sheet-novo-usuario.component";
+import { GroupedBarChartModule } from "./components/tabs/grouped-bar-chart/grouped-bar-chart.module";
 
 export const routes = [
   { path: "", component: Controle503020Component, pathMatch: "full" },
@@ -119,7 +120,8 @@ export const routes = [
     MatAutocompleteModule,
     PlotlyModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    GroupedBarChartModule,
   ],
   providers: [
     StorageService,

@@ -6,6 +6,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 @Component({
   selector: "bottom-sheet-grafico-despesas",
   templateUrl: "bottom-sheet-grafico-despesas.component.html",
+  styleUrls: ["bottom-sheet-grafico-despesas.component.scss"],
 })
 export class BottomSheetGraficoDespesasComponent {
   public despesas: any;
@@ -23,5 +24,9 @@ export class BottomSheetGraficoDespesasComponent {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  close() {
+    this.bottomSheetRef.dismiss();
   }
 }

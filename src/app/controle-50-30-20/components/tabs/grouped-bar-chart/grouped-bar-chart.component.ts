@@ -27,7 +27,10 @@ export class GroupedBarChartComponent implements OnInit {
   constructor(
     private controleService: Controle503020Service,
     public utilService: UtilService
-  ) {}
+  ) {
+    this.controleService.updateEarningTotals();
+    this.controleService.updateLaunchTotals();
+  }
 
   ngOnInit(): void {
     this.showGraph.next(false);
@@ -36,11 +39,13 @@ export class GroupedBarChartComponent implements OnInit {
 
   private loadGraph() {
     this.controleService.monthEarning$.subscribe((total) => {
+      console.log("passou aqui2");
       this.totalEarningFixas = total * 0.5;
       this.totalEarningVariaveis = total * 0.3;
       this.totalEarningInvestimentos = total * 0.2;
     });
     this.controleService.monthLaunches$.subscribe((launches: Launch[]) => {
+      console.log("passou aqui3");
       this.showGraph.next(true);
       this.totalExpensesFixas = this.controleService.getTotalLaunchesByType(
         launches,
@@ -50,10 +55,8 @@ export class GroupedBarChartComponent implements OnInit {
         launches,
         "VARIAVEIS"
       );
-      this.totalExpensesInvestimentos = this.controleService.getTotalLaunchesByType(
-        launches,
-        "INVESTIMENTOS"
-      );
+      this.totalExpensesInvestimentos =
+        this.controleService.getTotalLaunchesByType(launches, "INVESTIMENTOS");
       this.renderGraph();
     });
   }

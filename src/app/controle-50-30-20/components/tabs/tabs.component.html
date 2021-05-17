@@ -46,6 +46,11 @@
               >
             </mat-chip-list>
           </div>
+          <app-total
+            [type]="'IN'"
+            [selectedMonthDesc]="selectedMonthDesc"
+            [total]="monthEarning$ | async"
+          ></app-total>
           <app-total-and-graphic
             [type]="'IN'"
             [selectedMonthDesc]="selectedMonthDesc"
@@ -62,15 +67,16 @@
               >
             </mat-chip-list>
           </div>
-          <app-total 
+          <app-total
             [type]="'OUT'"
             [selectedMonthDesc]="selectedMonthDesc"
             [total]="monthExpenses$ | async"
           ></app-total>
         </div>
-        <launches-by-month [reloadLaunches]="reloadLaunchesSubject.asObservable()"></launches-by-month>
+        <launches-by-month
+          [reloadLaunches]="reloadLaunchesSubject.asObservable()"
+        ></launches-by-month>
       </div>
-      <app-grouped-bar-chart></app-grouped-bar-chart>
       <ng-template #loading1>
         <loading-bar [title]="'Carregando...'"></loading-bar>
       </ng-template>

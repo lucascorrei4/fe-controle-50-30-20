@@ -14,7 +14,6 @@ import {
 import { NgxCurrencyModule } from "ngx-currency";
 import { TotalAndGraphicModule } from "./total-and-graphic/total-and-graphic.module";
 import { LoadingBarModule } from "../loading-bar/loading-bar.module";
-import { GroupedBarChartModule } from "./grouped-bar-chart/grouped-bar-chart.module";
 import { LaunchesByMonthModule } from "../launches-by-month/launches-by-month.module";
 import { TotalModule } from "./total/total.module";
 
@@ -34,7 +33,6 @@ import { TotalModule } from "./total/total.module";
     MatButtonModule,
     TotalAndGraphicModule,
     LoadingBarModule,
-    GroupedBarChartModule,
     LaunchesByMonthModule,
     TotalModule,
   ],

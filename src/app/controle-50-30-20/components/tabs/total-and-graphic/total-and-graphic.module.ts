@@ -5,6 +5,7 @@ import {
   MatButtonModule,
   MatIconModule,
   MatProgressBarModule,
+  MatTabsModule,
   MatTooltipModule,
 } from "@angular/material";
 
@@ -25,6 +26,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MatProgressBarModule,
     PlotlyModule,
     LoadingBarModule,
+    MatTabsModule,
   ],
   exports: [TotalAndGraphicComponent],
   providers: [UtilService],
