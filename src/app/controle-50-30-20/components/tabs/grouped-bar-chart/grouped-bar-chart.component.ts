@@ -39,13 +39,11 @@ export class GroupedBarChartComponent implements OnInit {
 
   private loadGraph() {
     this.controleService.monthEarning$.subscribe((total) => {
-      console.log("passou aqui2");
       this.totalEarningFixas = total * 0.5;
       this.totalEarningVariaveis = total * 0.3;
       this.totalEarningInvestimentos = total * 0.2;
     });
     this.controleService.monthLaunches$.subscribe((launches: Launch[]) => {
-      console.log("passou aqui3");
       this.showGraph.next(true);
       this.totalExpensesFixas = this.controleService.getTotalLaunchesByType(
         launches,

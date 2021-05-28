@@ -73,6 +73,9 @@ export class BottomSheetLaunchesByMonthComponent implements OnInit {
 
   public async findByRepeatedLaunch(item: Launch) {
     let user = this.storageService.getLocalUser();
+    if (!user) {
+      return;
+    }
     let launch = [];
     launch.push(
       await this.controleService

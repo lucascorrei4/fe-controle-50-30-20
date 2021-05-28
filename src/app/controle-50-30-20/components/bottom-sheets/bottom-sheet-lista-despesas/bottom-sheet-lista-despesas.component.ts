@@ -40,7 +40,6 @@ export class BottomSheetListaDespesasComponent
   ngAfterViewInit() {
     this.autoCompleteControl.valueChanges.pipe(
       map((name) => {
-        console.log("fired", name);
         return name;
       })
     );

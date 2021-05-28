@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+} from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { StorageService } from "src/app/services/storage.service";
@@ -18,6 +24,7 @@ import { ModalConfirmationComponent } from "../modal-confirmation/modal-confirma
   selector: "launches-by-month",
   templateUrl: "launches-by-month.component.html",
   styleUrls: ["launches-by-month.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LaunchesByMonthComponent implements OnInit {
   @Input() reloadLaunches: Subject<boolean> = new Subject<boolean>();

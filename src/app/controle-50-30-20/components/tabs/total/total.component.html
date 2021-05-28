@@ -5,7 +5,7 @@
       {{ selectedMonthDesc }}</small
     >
     <h2 class="month-earning m-0 p-0">
-      {{ (type === "IN" ? totalEarning : totalExpenses) | currency: "BRL" }}
+      {{ total | currency: "BRL" }}
     </h2>
   </div>
 </div>

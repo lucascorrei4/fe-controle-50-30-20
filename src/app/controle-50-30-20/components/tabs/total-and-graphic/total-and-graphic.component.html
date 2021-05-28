@@ -1,20 +1,41 @@
 <div class="ml-auto mr-auto text-center">
-    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
-        <mat-tab label="50 30 20 Ideal">
-            <ng-container *ngIf="showGraphTotalEarning$ | async">
-                <div id="pie-chart-parent" fxLayout="column" fxLayoutAlign="center center">
-                    <plotly-plot [data]="graphIn?.data" [layout]="graphIn?.layout" [useResizeHandler]="true" [style]="{ position: 'relative', width: '100%', height: '100%' }">
-                    </plotly-plot>
-                </div>
-            </ng-container>
-        </mat-tab>
-        <mat-tab label="50 30 20 Real">
-            <ng-container *ngIf="showGraphTotalExpenses$ | async">
-                <div id="pie-chart-parent" fxLayout="column" fxLayoutAlign="center center">
-                    <plotly-plot [data]="graphOut?.data" [layout]="graphOut?.layout" [useResizeHandler]="true" [style]="{ position: 'relative', width: '100%', height: '100%' }">
-                    </plotly-plot>
-                </div>
-            </ng-container>
-        </mat-tab>
-    </mat-tab-group>
+  <mat-tab-group
+    mat-stretch-tabs
+    class="example-stretched-tabs mat-elevation-z4"
+  >
+    <mat-tab label="50 30 20 Ideal">
+      <ng-container *ngIf="showGraphTotalEarning$ | async">
+        <div
+          id="pie-chart-parent"
+          fxLayout="column"
+          fxLayoutAlign="center center"
+        >
+          <plotly-plot
+            [data]="graphIn?.data"
+            [layout]="graphIn?.layout"
+            [useResizeHandler]="true"
+            [style]="{ position: 'relative', width: '100%', height: '100%' }"
+          >
+          </plotly-plot>
+        </div>
+      </ng-container>
+    </mat-tab>
+    <mat-tab label="50 30 20 Real">
+      <ng-container *ngIf="showGraphTotalExpenses$ | async">
+        <div
+          id="pie-chart-parent"
+          fxLayout="column"
+          fxLayoutAlign="center center"
+        >
+          <plotly-plot
+            [data]="graphOut?.data"
+            [layout]="graphOut?.layout"
+            [useResizeHandler]="true"
+            [style]="{ position: 'relative', width: '100%', height: '100%' }"
+          >
+          </plotly-plot>
+        </div>
+      </ng-container>
+    </mat-tab>
+  </mat-tab-group>
 </div>

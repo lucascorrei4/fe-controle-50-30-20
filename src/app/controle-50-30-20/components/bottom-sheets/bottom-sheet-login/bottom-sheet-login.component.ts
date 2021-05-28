@@ -129,6 +129,10 @@ export class BottomSheetLoginComponent implements OnInit {
     });
   }
 
+  close() {
+    this.bottomSheetRef.dismiss();
+  }
+
   get mail(): FormControl {
     return this.formGroup.get("mail") as FormControl;
   }

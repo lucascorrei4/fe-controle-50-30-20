@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 export const environment = {
   production: false,
-  urlServerNode: "http://localhost:3030/api",
-  //urlServerNode: "http://192.168.0.115:3000/api",
+  //urlServerNode: "http://localhost:3030/api",
+  urlServerNode: "http://192.168.0.115:3000/api",
   //urlService: 'http://52.15.67.18:8080'
 };
 

@@ -65,7 +65,7 @@ export class BottomSheetNovaDespesa implements OnInit {
     });
   }
 
-  fechar() {
+  close() {
     this.bottomSheetRef.dismiss();
   }
 

@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { distinctUntilChanged, flatMap, shareReplay } from "rxjs/operators";
 import { Controle503020Service } from "src/app/controle-50-30-20/controle-50-30-20.service";
@@ -17,6 +22,7 @@ export class GraphData {
   selector: "app-total-and-graphic",
   templateUrl: "./total-and-graphic.component.html",
   styleUrls: ["./total-and-graphic.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TotalAndGraphicComponent implements OnInit {
   @Input() type: string;
@@ -93,9 +99,6 @@ export class TotalAndGraphicComponent implements OnInit {
         this.showGraphTotalExpensesSubject.next(total > 0);
       });
     });
-
-    console.log(this.graphIn);
-    console.log(this.graphOut);
   }
 
   private loadGraphIn(total): any[] {

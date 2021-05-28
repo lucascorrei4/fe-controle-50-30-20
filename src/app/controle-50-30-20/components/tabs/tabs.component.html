@@ -1,12 +1,18 @@
-<mat-tab-group class="tabs mt-2" mat-align-tabs="center" (selectedTabChange)="tabChanged($event)" [(selectedIndex)]="tabIndex">
-    <mat-tab *ngFor="let mes of meses" (click)="selectedTabChange($event, mes)">
-        <ng-template mat-tab-label>
-            <div (mousedown)="selectedTabChange(mes)">
-                <span> {{ mes }}</span>
-            </div>
-        </ng-template>
-        <p class="text-center">
-            <small>SELECIONADO:
+<mat-tab-group
+  class="tabs mt-2"
+  mat-align-tabs="center"
+  (selectedTabChange)="tabChanged($event)"
+  [(selectedIndex)]="tabIndex"
+>
+  <mat-tab *ngFor="let mes of meses" (click)="selectedTabChange($event, mes)">
+    <ng-template mat-tab-label>
+      <div (mousedown)="selectedTabChange(mes)">
+        <span> {{ mes }}</span>
+      </div>
+    </ng-template>
+    <p class="text-center">
+      <small
+        >SELECIONADO:
         <span style="font-weight: bold">{{ selectedMonthDesc }}</span></small
       >
     </p>
@@ -51,11 +57,6 @@
             [selectedMonthDesc]="selectedMonthDesc"
             [total]="monthEarning$ | async"
           ></app-total>
-          <app-total-and-graphic
-            [type]="'IN'"
-            [selectedMonthDesc]="selectedMonthDesc"
-            [total]="monthEarning$ | async"
-          ></app-total-and-graphic>
         </div>
       </div>
       <div class="tab-pane text-center gallery" id="works">
@@ -77,6 +78,11 @@
           [reloadLaunches]="reloadLaunchesSubject.asObservable()"
         ></launches-by-month>
       </div>
+      <app-total-and-graphic
+        [type]="'IN'"
+        [selectedMonthDesc]="selectedMonthDesc"
+        [total]="monthEarning$ | async"
+      ></app-total-and-graphic>
       <ng-template #loading1>
         <loading-bar [title]="'Carregando...'"></loading-bar>
       </ng-template>

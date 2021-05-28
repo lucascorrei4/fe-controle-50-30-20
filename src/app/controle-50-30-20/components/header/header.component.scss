@@ -22,7 +22,7 @@
 .logo {
   margin-left: 20%;
   img {
-    max-width: 150px;
+    max-width: 90px;
   }
 }
 
@@ -39,7 +39,8 @@
 .slogan {
   position: fixed;
   top: 3%;
-  left: 3%;
+  text-align: right;
+  right: 3%;
 }
 
 .inner-div,
@@ -49,6 +50,6 @@
 
 .how-it-works {
   position: relative;
-  top: 10%;
+  top: 1%;
   z-index: 2;
 }

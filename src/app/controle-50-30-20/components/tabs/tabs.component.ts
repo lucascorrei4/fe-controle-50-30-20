@@ -109,6 +109,7 @@ export class TabsComponent implements OnInit {
       }
       return years;
     };
+    this.reloadLaunches();
   }
 
   initObservers() {

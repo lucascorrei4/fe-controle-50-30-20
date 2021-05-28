@@ -183,6 +183,9 @@ export class Controle503020Service {
 
   async updateLaunchTotals() {
     let user = this.storageService.getLocalUser();
+    if (!user) {
+      return;
+    }
     await this.findLaunchesByAccountIdAndMonthAndType(
       user.accountId,
       this.selectedMonth.value
@@ -204,7 +207,10 @@ export class Controle503020Service {
 
   async updateEarningTotals() {
     let user = this.storageService.getLocalUser();
-    await this.findEarningByUserIdAndRef(user._id, this.selectedMonth.value)
+    await this.findEarningByAccountIdAndRef(
+      user.accountId,
+      this.selectedMonth.value
+    )
       .toPromise()
       .then((launch) => {
         if (launch) {
@@ -282,12 +288,6 @@ export class Controle503020Service {
     return this.http.post<Earning>(`${this.url}/earning`, earning, {
       headers: this.token,
     });
-  }
-
-  findEarningByUserIdAndRef(userId: string, ref?: string): Observable<Earning> {
-    return this.http.get<Earning>(
-      `${this.url}/earning/findEarningByUserIdAndRef?userId=${userId}&ref=${ref}`
-    );
   }
 
   findEarningByAccountIdAndRef(

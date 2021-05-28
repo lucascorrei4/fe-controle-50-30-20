@@ -2,3 +2,14 @@
   line-height: 0.8;
   font-size: 2.5em;
 }
+#pie-chart-parent {
+  .user-select-none {
+    position: relative;
+    width: 350px !important;
+    margin: 0 auto !important;
+    height: 250px;
+  }
+}
+.js-plotly-plot .plotly .user-select-none {
+  width: auto !important;
+}
