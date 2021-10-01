@@ -5,7 +5,7 @@
       {{ selectedMonthDesc }}</small
     >
     <h2 class="month-earning m-0 p-0">
-      {{ total | currency: "BRL" }}
+      {{ isNumber(total) ? (total | currency: "BRL") : "R$ 0,00" }}
     </h2>
   </div>
 </div>

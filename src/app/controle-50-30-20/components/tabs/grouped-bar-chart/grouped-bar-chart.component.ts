@@ -94,4 +94,5 @@ export class GroupedBarChartComponent implements OnInit {
       this.totalEarningInvestimentos;
     this.showGraph.next(totalEarning > 0);
   }
+  
 }

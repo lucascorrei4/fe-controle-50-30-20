@@ -1,0 +1,125 @@
+$color-whatsapp: #21ba63;
+$color-facebook: #43609c;
+$color-email: #ffc107;
+$color-default: gray;
+
+.btn-close {
+  position: fixed;
+  top: 2%;
+  right: 2%;
+  border-radius: 30%;
+  button {
+    border-radius: 30px;
+    width: 60px;
+    height: 60px;
+  }
+}
+
+button,
+mat-button-toggle,
+input {
+  font-family: "Ubuntu";
+}
+
+h1 {
+  font-family: "Ubuntu";
+  font-weight: 400;
+  font-size: 18px;
+}
+
+div.content-dialog {
+  overflow: hidden;
+
+  p {
+    color: #708090;
+  }
+}
+
+mat-form-field.link {
+  width: 100%;
+}
+
+ul.line-icons {
+  width: 100%;
+  list-style-type: none;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+
+    &.email {
+      color: $color-email;
+    }
+
+    &.link {
+      color: $color-default;
+    }
+
+    &.whatsapp {
+      color: $color-whatsapp;
+    }
+
+    &.facebook {
+      color: $color-facebook;
+    }
+
+    &.whatsapp,
+    &.facebook {
+      mat-icon {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    &.link,
+    &.email {
+      mat-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 32px;
+      }
+    }
+
+    mat-icon {
+      margin: 0.5rem;
+    }
+
+    label {
+      font-size: 12px;
+    }
+  }
+}
+
+div.shared-whatsapp {
+  mat-button-toggle {
+    color: #007a35;
+    font-size: 13px;
+    white-space: pre-wrap;
+  }
+
+  .mat-button-toggle-label-content {
+    line-height: 1.5;
+    padding: 8px 12px;
+  }
+}
+
+div.shared-email {
+  mat-form-field {
+    width: 100%;
+  }
+
+  mat-chip.invalid {
+    background-color: #d93025;
+    color: white;
+
+    mat-icon {
+      color: white;
+    }
+  }
+
+  button.mat-stroked-button {
+    color: $color-email;
+  }
+}

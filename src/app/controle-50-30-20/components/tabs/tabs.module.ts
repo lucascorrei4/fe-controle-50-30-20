@@ -11,7 +11,6 @@ import {
   MatInputModule,
   MatProgressBarModule,
 } from "@angular/material";
-import { NgxCurrencyModule } from "ngx-currency";
 import { TotalAndGraphicModule } from "./total-and-graphic/total-and-graphic.module";
 import { LoadingBarModule } from "../loading-bar/loading-bar.module";
 import { LaunchesByMonthModule } from "../launches-by-month/launches-by-month.module";
@@ -28,7 +27,6 @@ import { TotalModule } from "./total/total.module";
     MatInputModule,
     MatIconModule,
     MatProgressBarModule,
-    NgxCurrencyModule,
     NgxChartsModule,
     MatButtonModule,
     TotalAndGraphicModule,

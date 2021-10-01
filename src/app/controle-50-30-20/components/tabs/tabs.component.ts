@@ -32,6 +32,7 @@ import { BottomSheetLoginComponent } from "../bottom-sheets/bottom-sheet-login/b
 import { BottomSheetEarningsComponent } from "../bottom-sheets/bottom-sheet-earnings/bottom-sheet-earnings.component";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { distinctUntilChanged, shareReplay } from "rxjs/operators";
+import { BottomSheet503020Component } from "../bottom-sheets/bottom-sheet-503020/bottom-sheet-503020.component";
 
 @Component({
   selector: "app-tabs",
@@ -236,6 +237,17 @@ export class TabsComponent implements OnInit {
         this.reloadLaunches();
       }
     });
+  }
+
+  abrirBottomSheet503020(): void {
+    this.loadMonthEarning();
+    const bottomSheefRef = this.bottomSheet.open(BottomSheet503020Component, {
+      data: {
+        selectedMonthDesc: this.selectedMonthDesc,
+        monthEarning: this.monthEarning$,
+      },
+    });
+    bottomSheefRef.afterDismissed().subscribe(() => {});
   }
 
   reloadLaunches() {

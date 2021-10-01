@@ -13,3 +13,9 @@
 .js-plotly-plot .plotly .user-select-none {
   width: auto !important;
 }
+
+.tab-rounded {
+  box-shadow: rgb(0 0 0 / 10%) 0px 10px 36px 0px,
+    rgb(0 0 0 / 3%) 0px 0px 0px 1px !important;
+  border-radius: 30px;
+}

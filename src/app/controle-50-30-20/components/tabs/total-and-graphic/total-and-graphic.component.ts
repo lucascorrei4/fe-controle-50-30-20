@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnInit,
@@ -25,9 +26,9 @@ export class GraphData {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TotalAndGraphicComponent implements OnInit {
-  @Input() type: string;
-  @Input() selectedMonthDesc: string;
-  @Input() total: number;
+  @Input("type") type: string;
+  @Input("selectedMonthDesc") selectedMonthDesc: string;
+  @Input("total") total: number;
 
   private showGraphTotalEarningSubject: BehaviorSubject<boolean> =
     new BehaviorSubject(false);
@@ -54,10 +55,13 @@ export class TotalAndGraphicComponent implements OnInit {
 
   constructor(
     private controleService: Controle503020Service,
-    public utilService: UtilService
+    public utilService: UtilService,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
+    this.controleService.updateEarningTotals();
+    this.controleService.updateLaunchTotals();
     this.controleService.monthEarning$.subscribe((total) => {
       this.totalEarning = total;
       this.totalEarningFixas = total * 0.5;
@@ -99,6 +103,7 @@ export class TotalAndGraphicComponent implements OnInit {
         this.showGraphTotalExpensesSubject.next(total > 0);
       });
     });
+    this.changeDetector.detectChanges();
   }
 
   private loadGraphIn(total): any[] {

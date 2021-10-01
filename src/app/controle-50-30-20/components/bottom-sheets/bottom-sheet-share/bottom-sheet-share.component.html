@@ -1,0 +1,48 @@
+<div class="ml-auto mr-auto text-center my-3">
+  <h3 class="main-color launch-title">CONTROLE 50 30 20</h3>
+  <h4 class="refer m-0 p-2">Este aplicativo pode ajudar outros casais.</h4>
+  <h4 class="refer m-0 p-2">Compartilhe com eles!</h4>
+  <div class="btn-close">
+    <button mat-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div [formGroup]="form">
+  <div class="content-dialog mb-4">
+    <div class="shared mt-4" fxLayout="column" fxLayoutAlign="center center">
+      <span class="secondary-text-color">Compartilhar via</span>
+      <ul class="line-icons" fxLayoutAlign="space-around center">
+        <li (click)="onClickWhatsApp()" class="whatsapp">
+          <mat-icon
+            id="whatsapp"
+            svgIcon="whatsapp"
+            aria-label="Compartilhar via WhatsApp"
+            matTooltip="Compartilhar via WhatsApp"
+          ></mat-icon>
+          <label for="whatsapp">WhatsApp</label>
+        </li>
+        <li (click)="enableSharedLink()" class="link">
+          <mat-icon id="link" aria-label="Copiar link" matTooltip="Copiar link"
+            >link</mat-icon
+          >
+          <label for="link">Copiar Link</label>
+        </li>
+      </ul>
+    </div>
+
+    <div
+      class="shared-link mt-4"
+      *ngIf="showSharedLink()"
+      [@expand]
+      (click)="inputLink.select(); copiarParaAreaTransferencia()"
+    >
+      <mat-form-field appearance="outline" class="link">
+        <input [value]="data.url" readonly matInput #inputLink />
+        <mat-label>Link Para Compartilhamento</mat-label>
+        <mat-hint>Clique no link para copiá-lo</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+</div>

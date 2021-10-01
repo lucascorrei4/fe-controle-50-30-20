@@ -6,4 +6,6 @@ export class RepeatedLaunch {
   description: string;
   valor: number;
   obs: string;
+  repeat: boolean;
+  maxMonth: string;
 }

@@ -24,7 +24,6 @@ import { ModalConfirmationComponent } from "../modal-confirmation/modal-confirma
   selector: "launches-by-month",
   templateUrl: "launches-by-month.component.html",
   styleUrls: ["launches-by-month.component.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LaunchesByMonthComponent implements OnInit {
   @Input() reloadLaunches: Subject<boolean> = new Subject<boolean>();
@@ -196,6 +195,14 @@ export class LaunchesByMonthComponent implements OnInit {
     }
 
     return this.getFormattedPrice(total);
+  }
+
+  public getLaunchName(launch) {
+    return launch == "VARIAVEIS"
+      ? "VARIÁVEIS"
+      : launch == "INVESTIMENTOS"
+      ? "INVEST."
+      : "FIXAS";
   }
 
   get launchesGroupedSubject$(): Observable<any[]> {

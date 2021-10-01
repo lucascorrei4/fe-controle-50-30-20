@@ -1,6 +1,12 @@
-<div class="btn-close">
+<div class="ml-auto mr-auto text-center my-3">
+  <h3 class="main-color launch-title">IDEAL X REAL</h3>
+  <h4 class="refer m-0 p-0">
+    Gráfico em barras de {{ data.selectedMonthDesc }}
+  </h4>
+  <div class="btn-close">
     <button mat-button (click)="close()">
-    <mat-icon>close</mat-icon>
-  </button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 </div>
 <app-grouped-bar-chart></app-grouped-bar-chart>

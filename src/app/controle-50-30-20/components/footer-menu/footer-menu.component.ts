@@ -15,12 +15,12 @@ import { Controle503020Service } from "../../controle-50-30-20.service";
 import { BottomSheetGraficoDespesasComponent } from "../bottom-sheets/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component";
 import { BottomSheetLoginComponent } from "../bottom-sheets/bottom-sheet-login/bottom-sheet-login.component";
 import { BottomSheetLaunchesByMonthComponent } from "../bottom-sheets/bottom-sheet-open-launches-by-month/bottom-sheet-open-launches-by-month.component";
+import { BottomSheetShareComponent } from "../bottom-sheets/bottom-sheet-share/bottom-sheet-share.component";
 
 @Component({
   selector: "app-footer-menu",
   templateUrl: "./footer-menu.component.html",
   styleUrls: ["./footer-menu.component.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterMenuComponent implements OnInit {
   public contLancamentoDespesas: number = 0;
@@ -52,14 +52,24 @@ export class FooterMenuComponent implements OnInit {
   }
 
   abrirGraficoDespesasBottomSheet() {
-    this.bottomSheet.open(BottomSheetGraficoDespesasComponent);
+    this.bottomSheet.open(BottomSheetGraficoDespesasComponent, {
+      data: {
+        selectedMonthDesc: this.selectedMontSubject.value,
+      },
+    });
   }
 
   openBottomSheetLaunchesByMonthComponent() {
+    this.updateCountLaunches();
     const bottomSheetRef = this.bottomSheet.open(
-      BottomSheetLaunchesByMonthComponent
+      BottomSheetLaunchesByMonthComponent,
+      {
+        data: {
+          selectedMonthDesc: this.selectedMontSubject.value,
+          monthExpenses: this.controleService.totalExpenses.value,
+        },
+      }
     );
-
     bottomSheetRef.afterDismissed().subscribe(() => {
       this.updateCountLaunches();
     });
@@ -92,6 +102,16 @@ export class FooterMenuComponent implements OnInit {
 
   abrirCodigoSecretoBottomSheet(): void {
     this.bottomSheet.open(BottomSheetLoginComponent);
+  }
+  abrirShareBottomSheet(): void {
+    this.bottomSheet.open(BottomSheetShareComponent, {
+      data: {
+        url: window.location.href,
+        message: "message",
+        messageWhatsapp: "Msg",
+        title: "title",
+      },
+    });
   }
 
   abrirMenuLateral(): void {

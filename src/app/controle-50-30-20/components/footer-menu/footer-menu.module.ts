@@ -7,6 +7,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatBadgeModule } from "@angular/material/badge";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [FooterMenuComponent],
@@ -17,7 +18,7 @@ import { MatBadgeModule } from "@angular/material/badge";
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
-    MatBadgeModule
+    MatBadgeModule,
   ],
   exports: [FooterMenuComponent],
 })

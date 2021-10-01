@@ -186,6 +186,7 @@ export class Controle503020Service {
     if (!user) {
       return;
     }
+    
     await this.findLaunchesByAccountIdAndMonthAndType(
       user.accountId,
       this.selectedMonth.value

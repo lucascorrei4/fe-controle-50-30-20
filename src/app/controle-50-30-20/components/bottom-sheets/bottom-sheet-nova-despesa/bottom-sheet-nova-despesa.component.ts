@@ -2,7 +2,13 @@ import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,
 } from "@angular/material/bottom-sheet";
-import { Component, OnInit, ViewChild, Inject } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
 import {
   FormGroup,
   FormBuilder,
@@ -12,7 +18,6 @@ import {
 import { MatHorizontalStepper } from "@angular/material/stepper";
 import { BehaviorSubject, Observable } from "rxjs";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { ApiService } from "src/app/services/api.service";
 import { StorageService } from "src/app/services/storage.service";
 import { Controle503020Service } from "../../../controle-50-30-20.service";
 import { Launch } from "src/app/models/launch";
@@ -23,6 +28,7 @@ import { RepeatedLaunch } from "src/app/models/repeated-launch";
   selector: "app-bottom-sheet-nova-despesa",
   templateUrl: "./bottom-sheet-nova-despesa.component.html",
   styleUrls: ["./bottom-sheet-nova-despesa.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class BottomSheetNovaDespesa implements OnInit {
   @ViewChild("stepper", { read: true, static: true })
@@ -35,6 +41,7 @@ export class BottomSheetNovaDespesa implements OnInit {
   private _isComplete: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
+  public startDate = new Date();
 
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
@@ -62,6 +69,7 @@ export class BottomSheetNovaDespesa implements OnInit {
       obsDespesa: [""],
       valorDespesa: [0, Validators.required],
       repeat: [false],
+      maxMonth: [""],
     });
   }
 
@@ -105,6 +113,8 @@ export class BottomSheetNovaDespesa implements OnInit {
     repeatedLaunch.categoryId = launch.categoryId;
     repeatedLaunch.valor = launch.valor;
     repeatedLaunch.obs = "NENHUMA";
+    repeatedLaunch.repeat = this.repeat.value;
+    repeatedLaunch.maxMonth = this.repeat.value ? this.maxMonth.value : null;
     this.controleService.newRepeatedLaunch(repeatedLaunch).subscribe((res) => {
       if (res) {
         this.controleService.updateBadges();
@@ -155,6 +165,10 @@ export class BottomSheetNovaDespesa implements OnInit {
 
   get repeat(): FormControl {
     return this.formGroup.get("repeat") as FormControl;
+  }
+
+  get maxMonth(): FormControl {
+    return this.formGroup.get("maxMonth") as FormControl;
   }
 
   get isComplete$(): Observable<boolean> {

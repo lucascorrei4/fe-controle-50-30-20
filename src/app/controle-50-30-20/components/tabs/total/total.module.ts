@@ -12,6 +12,7 @@ import * as PlotlyJS from "plotly.js/dist/plotly.js";
 import { PlotlyModule } from "angular-plotly.js";
 import { UtilService } from "src/app/services/util.service";
 import { LoadingBarModule } from "../../loading-bar/loading-bar.module";
+import { BottomSheet503020Module } from "../../bottom-sheets/bottom-sheet-503020/bottom-sheet-503020.module";
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -25,6 +26,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MatProgressBarModule,
     PlotlyModule,
     LoadingBarModule,
+    BottomSheet503020Module,
   ],
   exports: [TotalComponent],
   providers: [UtilService],

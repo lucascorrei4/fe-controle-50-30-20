@@ -50,6 +50,9 @@
               <mat-chip color="accent" (click)="openEarnings()"
                 >Adicionar Receitas</mat-chip
               >
+              <mat-chip color="accent" (click)="abrirBottomSheet503020()"
+                >Ver 50 30 20</mat-chip
+              >
             </mat-chip-list>
           </div>
           <app-total
@@ -66,6 +69,9 @@
               <mat-chip color="accent" (click)="abrirBottomSheetDespesas()"
                 >Adicionar Despesa</mat-chip
               >
+              <mat-chip color="accent" (click)="abrirBottomSheet503020()"
+                >Ver 50 30 20</mat-chip
+              >
             </mat-chip-list>
           </div>
           <app-total
@@ -78,11 +84,6 @@
           [reloadLaunches]="reloadLaunchesSubject.asObservable()"
         ></launches-by-month>
       </div>
-      <app-total-and-graphic
-        [type]="'IN'"
-        [selectedMonthDesc]="selectedMonthDesc"
-        [total]="monthEarning$ | async"
-      ></app-total-and-graphic>
       <ng-template #loading1>
         <loading-bar [title]="'Carregando...'"></loading-bar>
       </ng-template>

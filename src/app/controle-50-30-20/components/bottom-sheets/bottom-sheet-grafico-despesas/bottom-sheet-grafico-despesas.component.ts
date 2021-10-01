@@ -1,5 +1,8 @@
-import { Component } from "@angular/core";
-import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
+import { Component, Inject } from "@angular/core";
+import {
+  MatBottomSheetRef,
+  MAT_BOTTOM_SHEET_DATA,
+} from "@angular/material/bottom-sheet";
 import { Controle503020Service } from "../../../controle-50-30-20.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
@@ -11,6 +14,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 export class BottomSheetGraficoDespesasComponent {
   public despesas: any;
   constructor(
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
     private bottomSheetRef: MatBottomSheetRef<BottomSheetGraficoDespesasComponent>,
     private snackBar: MatSnackBar,
     private controleService: Controle503020Service

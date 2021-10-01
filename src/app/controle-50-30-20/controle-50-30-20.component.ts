@@ -19,7 +19,6 @@ import { formatDate } from "@angular/common";
   selector: "app-controle-50-30-20",
   templateUrl: "./controle-50-30-20.component.html",
   styleUrls: ["./controle-50-30-20.component.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Controle503020Component implements OnInit {
   public currentMonth: string;

@@ -18,7 +18,6 @@ export interface ModalData {
   selector: "app-modal-confirmation",
   templateUrl: "./modal-confirmation.component.html",
   styleUrls: ["./modal-confirmation.component.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalConfirmationComponent {
   constructor(
