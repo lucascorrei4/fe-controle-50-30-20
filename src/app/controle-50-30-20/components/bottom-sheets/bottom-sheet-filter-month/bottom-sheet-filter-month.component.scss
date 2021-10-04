@@ -1,0 +1,41 @@
+$color-whatsapp: #21ba63;
+$color-facebook: #43609c;
+$color-email: #ffc107;
+$color-default: gray;
+
+.btn-close {
+  position: fixed;
+  top: 2%;
+  right: 2%;
+  border-radius: 30%;
+  button {
+    border-radius: 30px;
+    width: 60px;
+    height: 60px;
+  }
+}
+
+button,
+mat-button-toggle,
+input {
+  font-family: "Ubuntu";
+}
+
+h1 {
+  font-family: "Ubuntu";
+  font-weight: 400;
+  font-size: 18px;
+}
+
+div.content-dialog {
+  overflow: hidden;
+
+  p {
+    color: #708090;
+  }
+}
+
+mat-form-field.link {
+  width: 100%;
+}
+

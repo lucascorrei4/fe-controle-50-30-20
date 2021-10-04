@@ -10,7 +10,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { StorageService } from "src/app/services/storage.service";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
-
+import { expand } from "src/app/shared/animations/animations";
 export enum AcaoStatus {
   INVITE = "INVITE",
   COMPARTILHAMENTO = "COMPARTILHAMENTO",
@@ -20,6 +20,7 @@ export enum AcaoStatus {
   selector: "bottom-sheet-share",
   templateUrl: "bottom-sheet-share.component.html",
   styleUrls: ["./bottom-sheet-share.component.scss"],
+  animations: [expand],
 })
 export class BottomSheetShareComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -38,7 +39,9 @@ export class BottomSheetShareComponent implements OnInit {
     private storageService: StorageService,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer
-  ) {}
+  ) {
+    this.addIcons(iconRegistry, sanitizer);
+  }
 
   close(): void {
     this.bottomSheetRef.dismiss();

@@ -12,6 +12,7 @@ import { distinctUntilChanged, map, shareReplay } from "rxjs/operators";
 import { Launch } from "src/app/models/launch";
 import { StorageService } from "src/app/services/storage.service";
 import { Controle503020Service } from "../../controle-50-30-20.service";
+import { BottomSheetFilterMonthComponent } from "../bottom-sheets/bottom-sheet-filter-month/bottom-sheet-filter-month.component";
 import { BottomSheetGraficoDespesasComponent } from "../bottom-sheets/bottom-sheet-grafico-despesas/bottom-sheet-grafico-despesas.component";
 import { BottomSheetLoginComponent } from "../bottom-sheets/bottom-sheet-login/bottom-sheet-login.component";
 import { BottomSheetLaunchesByMonthComponent } from "../bottom-sheets/bottom-sheet-open-launches-by-month/bottom-sheet-open-launches-by-month.component";
@@ -103,6 +104,11 @@ export class FooterMenuComponent implements OnInit {
   abrirCodigoSecretoBottomSheet(): void {
     this.bottomSheet.open(BottomSheetLoginComponent);
   }
+
+  abrirFilterMonthoBottomSheet(): void {
+    this.bottomSheet.open(BottomSheetFilterMonthComponent);
+  }
+
   abrirShareBottomSheet(): void {
     this.bottomSheet.open(BottomSheetShareComponent, {
       data: {

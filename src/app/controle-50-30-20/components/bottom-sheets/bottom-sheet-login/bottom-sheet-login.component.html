@@ -1,18 +1,17 @@
 <ng-template #logged>
-  <div class="container">
-    <div class="row" fxLayout="column" fxLayoutAlign="space-between center">
-      <h2 style="font-size: 1.5rem" class="title mt-3">Sua conta está OK!</h2>
-      <p class="description-small text-center">
-        Quanto mais você usa, mais dinheiro sobra! <br />
-        Aproveite o app. Ele é seu.<br />
-      </p>
-    </div>
+  <div class="ml-auto mr-auto text-center my-3">
+    <h3 class="main-color launch-title">SUA CONTA ESTÁ OK!</h3>
+    <h4 class="m-0 p-2">
+      Quanto mais vocês usam, mais dinheiro sobra!<br />
+      Aproveitem o app!<br />
+    </h4>
     <div class="btn-close">
       <button mat-button (click)="close()">
         <mat-icon>close</mat-icon>
       </button>
     </div>
   </div>
+
   <div fxLayout="row" fxLayoutAlign="center center">
     <img
       src="./../../../../../assets/img/svg/statistics.svg"
