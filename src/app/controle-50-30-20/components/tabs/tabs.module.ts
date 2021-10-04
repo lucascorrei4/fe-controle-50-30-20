@@ -15,6 +15,7 @@ import { TotalAndGraphicModule } from "./total-and-graphic/total-and-graphic.mod
 import { LoadingBarModule } from "../loading-bar/loading-bar.module";
 import { LaunchesByMonthModule } from "../launches-by-month/launches-by-month.module";
 import { TotalModule } from "./total/total.module";
+import { RepeatedLaunchesModule } from "../repeated-launches/repeated-launches.module";
 
 @NgModule({
   declarations: [TabsComponent],
@@ -33,6 +34,7 @@ import { TotalModule } from "./total/total.module";
     LoadingBarModule,
     LaunchesByMonthModule,
     TotalModule,
+    RepeatedLaunchesModule,
   ],
   exports: [TabsComponent],
 })

@@ -139,6 +139,16 @@ export class Controle503020Service {
       .pipe(take(1), share());
   }
 
+  removeRepeatedLaunch(id) {
+    let httpParams = new HttpParams().set("_id", id);
+
+    let options = { params: httpParams };
+
+    return this.http
+      .delete(`${this.url}/repeated-launch`, options)
+      .pipe(take(1), share());
+  }
+
   findLaunchesByUserIdAndMonthAndType(
     userId: string,
     month?: string,
@@ -186,7 +196,7 @@ export class Controle503020Service {
     if (!user) {
       return;
     }
-    
+
     await this.findLaunchesByAccountIdAndMonthAndType(
       user.accountId,
       this.selectedMonth.value
@@ -240,17 +250,17 @@ export class Controle503020Service {
   findRepeatedLaunchesByUserIdAndType(
     userId: string,
     type?: string
-  ): Observable<Launch[]> {
+  ): Observable<RepeatedLaunch[]> {
     if (type) {
-      return this.http.get<Launch[]>(
-        `${this.url}/launch/findByUserIdAndType?userId=${userId}&type=${type}`,
+      return this.http.get<RepeatedLaunch[]>(
+        `${this.url}/repeated-launch/findByUserIdAndType?userId=${userId}&type=${type}`,
         {
           headers: this.token,
         }
       );
     }
-    return this.http.get<Launch[]>(
-      `${this.url}/launch/findByUserIdAndType?userId=${userId}`,
+    return this.http.get<RepeatedLaunch[]>(
+      `${this.url}/repeated-launch/findByUserIdAndType?userId=${userId}`,
       {
         headers: this.token,
       }

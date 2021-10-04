@@ -1,7 +1,7 @@
 <div class="ml-auto mr-auto text-center my-3">
-  <h3 class="main-color launch-title">CONTROLE 50 30 20</h3>
+  <h3 class="main-color launch-title">DESPESAS RECORRENTES</h3>
   <h4 class="refer m-0 p-0">
-    Lançamentos de despesas do mês {{ data.selectedMonthDesc }}
+    Você definiu que as despesas abaixo vão se repetir mês a mês
   </h4>
   <div class="btn-close">
     <button mat-button (click)="close()">
@@ -18,8 +18,3 @@
   class="div-scroll"
   [reloadLaunches]="reloadLaunchesSubject.asObservable()"
 ></launches-by-month>
-<app-total-and-graphic
-  [type]="'IN'"
-  [selectedMonthDesc]="data.selectedMonthDesc"
-  [total]="data.monthEarning | async"
-></app-total-and-graphic>

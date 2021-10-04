@@ -7,6 +7,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatBadgeModule } from "@angular/material/badge";
+import { MatMenuModule } from "@angular/material";
 
 @NgModule({
   declarations: [FooterMenuComponent],
@@ -18,6 +19,7 @@ import { MatBadgeModule } from "@angular/material/badge";
     MatIconModule,
     MatTooltipModule,
     MatBadgeModule,
+    MatMenuModule,
   ],
   exports: [FooterMenuComponent],
 })

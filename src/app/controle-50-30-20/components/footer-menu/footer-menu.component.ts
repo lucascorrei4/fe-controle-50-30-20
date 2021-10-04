@@ -61,7 +61,8 @@ export class FooterMenuComponent implements OnInit {
   }
 
   openBottomSheetLaunchesByMonthComponent() {
-    this.updateCountLaunches();
+    console.log("this.selectedMontSubject.value", this.selectedMontSubject.value);
+    
     const bottomSheetRef = this.bottomSheet.open(
       BottomSheetLaunchesByMonthComponent,
       {

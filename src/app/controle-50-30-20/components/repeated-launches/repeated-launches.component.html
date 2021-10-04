@@ -1,0 +1,107 @@
+<div>
+  <ng-template #loading>
+    <div class="loading h-100">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+  <div *ngIf="launchesGroupedSubject$ | async; else loading">
+    <div class="div-outer-tabs">
+      <mat-tab-group
+        dynamicHeight
+        class="tabs"
+        mat-align-tabs="center"
+        (selectedTabChange)="tabChanged($event)"
+        [(selectedIndex)]="tabIndex"
+      >
+        <mat-tab
+          *ngFor="let launchGroup of launchesGrouped"
+          (click)="selectedTabChange($event)"
+        >
+          <ng-template mat-tab-label>
+            <div (mousedown)="selectedTabChange(launchGroup)">
+              <span
+                matBadge="{{ launchGroup?.subItems?.length }}"
+                matBadgeOverlap="false"
+                >{{ getLaunchName(launchGroup?.name) }}</span
+              >
+            </div>
+          </ng-template>
+          <div class="div-scroll">
+            <ng-container
+              *ngFor="
+                let item of launchGroup?.subItems;
+                let index = index;
+                last as isLast
+              "
+            >
+              <ng-container>
+                <mat-card class="launch-card m-1" *ngIf="item; else empty">
+                  <p class="text-center w-100 m-0">
+                    <small>
+                      {{ item.createdAt | date: "dd/MM/yyyy HH:mm:ss" }}
+                    </small>
+                  </p>
+                  <mat-card-header>
+                    <div
+                      mat-card-avatar
+                      style="border-radius: 50%; background-color: aqua"
+                    >
+                      <p class="numero">{{ index + 1 }}</p>
+                    </div>
+                    <mat-card-title class="title-type">{{
+                      item.description
+                    }}</mat-card-title>
+                    <mat-card-subtitle class="subtitle-type">{{
+                      item.type
+                    }}</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p class="valor-despesa">
+                      R$ {{ getFormattedPrice(item.valor) }}
+                    </p>
+                    <small>{{
+                      item.obs
+                        ? "OBS: " + item.obs.toUpperCase()
+                        : "OBS: NENHUMA"
+                    }}</small>
+                  </mat-card-content>
+                  <mat-card-actions>
+                    <button
+                      mat-icon-button
+                      color="warn"
+                      class="botao-remover"
+                      (click)="remove(item, launchGroup?.subItems)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </mat-card-actions>
+                </mat-card>
+                <p
+                  class="
+                    value-bar
+                    font-weight-bold
+                    text-center
+                    badge-info
+                    my-2
+                    py-2
+                  "
+                  *ngIf="isLast"
+                >
+                  TOTAL {{ launchGroup?.name }}: R$
+                  {{ calcularTotal(launchGroup?.subItems) }}
+                </p>
+              </ng-container>
+              <ng-template #empty>
+                <mat-chip-list style="display: inline-flex">
+                  <mat-chip color="accent" selected
+                    >Nenhuma despesa {{ item.type }} adicionada</mat-chip
+                  >
+                </mat-chip-list>
+              </ng-template>
+            </ng-container>
+          </div>
+        </mat-tab></mat-tab-group
+      >
+    </div>
+  </div>
+</div>

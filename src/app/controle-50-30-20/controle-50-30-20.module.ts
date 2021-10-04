@@ -64,6 +64,7 @@ import { TotalModule } from "./components/tabs/total/total.module";
 import { TotalAndGraphicModule } from "./components/tabs/total-and-graphic/total-and-graphic.module";
 import { BottomSheetShareComponent } from "./components/bottom-sheets/bottom-sheet-share/bottom-sheet-share.component";
 import { BottomSheetFilterMonthComponent } from "./components/bottom-sheets/bottom-sheet-filter-month/bottom-sheet-filter-month.component";
+import { BottomSheetRepeatedLaunchesComponent } from "./components/bottom-sheets/bottom-sheet-open-repeated-launches/bottom-sheet-open-repeated-launches.component";
 
 export const routes = [
   { path: "", component: Controle503020Component, pathMatch: "full" },
@@ -97,6 +98,7 @@ export const customCurrencyMaskConfig = {
     BottomSheetNovoUsuarioComponent,
     BottomSheetShareComponent,
     BottomSheetFilterMonthComponent,
+    BottomSheetRepeatedLaunchesComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,15 @@
+.div-scroll {
+  height: 100% !important;
+}
+
+.btn-close {
+  position: fixed;
+  top: 2%;
+  right: 2%;
+  border-radius: 30%;
+  button {
+    border-radius: 30px;
+    width: 60px;
+    height: 60px;
+  }
+}

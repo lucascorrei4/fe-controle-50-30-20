@@ -16,16 +16,34 @@
       <mat-icon>pie_chart</mat-icon>
     </button>
     <span class="mx-2"></span>
-    <button mat-icon-button (click)="abrirFilterMonthoBottomSheet()">
-      <mat-icon>today</mat-icon>
-    </button>
-    <span class="mx-2"></span>
-    <button mat-icon-button (click)="abrirCodigoSecretoBottomSheet()">
-      <mat-icon>person</mat-icon>
-    </button>
-    <span class="mx-2"></span>
     <button mat-icon-button (click)="abrirShareBottomSheet()">
       <mat-icon>share</mat-icon>
     </button>
+    <span class="mx-2"></span>
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      aria-label="Menu Controle 50 30 20"
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>price_change</mat-icon>
+        <span>Despesas Recorrentes</span>
+      </button>
+      <button mat-menu-item (click)="abrirFilterMonthoBottomSheet()">
+        <mat-icon>today</mat-icon>
+        <span>Consultar mês</span>
+      </button>
+      <button mat-menu-item (click)="abrirCodigoSecretoBottomSheet()">
+        <mat-icon>person</mat-icon>
+        <span>Minha Conta</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>power_off</mat-icon>
+        <span>Sair</span>
+      </button>
+    </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>

@@ -108,7 +108,7 @@ body {
   }
 }
 
-.js-plotly-plot>* {
+.js-plotly-plot > * {
   align-items: center;
 }
 
@@ -122,4 +122,9 @@ body {
 
 .mat-tab-label .mat-tab-label-content {
   font-size: 12px;
+}
+
+.main-raised {
+  max-width: 600px;
+  margin: 0 auto;
 }
