@@ -33,7 +33,7 @@
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.27.0",
     "mongodb": "^3.5.5",
-    "mongoose": "^5.9.5",
+    "mongoose": "^5.13.15",
     "ngx-currency": "^2.2.2",
     "plotly.js": "^1.58.4",
     "roboto-fontface": "^0.10.0",
